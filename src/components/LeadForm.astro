@@ -1,0 +1,100 @@
+---
+// Lead capture. Works three ways, in order of resilience:
+//  1. No-JS: native POST to Netlify Forms (action=/gracias) — never loses a lead.
+//  2. JS: fetch to Netlify Forms + /.netlify/functions/lead (GoHighLevel) + redirect.
+//  3. Conversion events fire on submit (GA4 + Meta Pixel) for ad optimization.
+const { id = 'lead' } = Astro.props;
+---
+<form
+  id={id}
+  class="leadform"
+  name="evaluacion"
+  method="POST"
+  action="/gracias"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <input type="hidden" name="form-name" value="evaluacion" />
+  <p class="hp" aria-hidden="true"><label>No llenar<input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+  <div class="leadform__row">
+    <div class="field">
+      <label for={`${id}-nombre`}>Nombre *</label>
+      <input id={`${id}-nombre`} name="nombre" type="text" required autocomplete="name" placeholder="Su nombre" />
+    </div>
+    <div class="field">
+      <label for={`${id}-tel`}>Telefono / WhatsApp *</label>
+      <input id={`${id}-tel`} name="telefono" type="tel" required autocomplete="tel" placeholder="(787) 000-0000" />
+    </div>
+  </div>
+
+  <div class="leadform__row">
+    <div class="field">
+      <label for={`${id}-mun`}>Municipio</label>
+      <input id={`${id}-mun`} name="municipio" type="text" autocomplete="address-level2" placeholder="Ej. Ponce" />
+    </div>
+    <div class="field">
+      <label for={`${id}-tipo`}>Necesidad</label>
+      <select id={`${id}-tipo`} name="tipo">
+        <option value="">Seleccione</option>
+        <option>Limpieza de tanque</option>
+        <option>Pulido de combustible</option>
+        <option>Mantenimiento preventivo</option>
+        <option>Emergencia / generador no enciende</option>
+        <option>Otro</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for={`${id}-msg`}>Mensaje (opcional)</label>
+    <textarea id={`${id}-msg`} name="mensaje" rows="3" placeholder="Cantidad de tanques, capacidad, o detalles"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn--gold btn--lg btn--block">Solicitar evaluacion gratis</button>
+  <p class="leadform__note" data-status>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 7v5l3 2"/></svg>
+    Respondemos en minutos. Sus datos solo se usan para preparar su evaluacion.
+  </p>
+</form>
+
+<style>
+  .leadform { display: flex; flex-direction: column; gap: 16px; }
+  .leadform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .hp { position: absolute; left: -9999px; }
+  .leadform__note { display: flex; align-items: center; gap: 9px; font-family: var(--f-body); font-size: 0.78rem; letter-spacing: 0.01em; color: var(--bone-dim); margin: 2px 0 0; }
+  .leadform__note svg { width: 16px; height: 16px; color: var(--gold); flex: none; }
+  .leadform__note.is-error { color: #f0a3a3; }
+  .leadform__note.is-error svg { color: #f0a3a3; }
+  @media (max-width: 560px) { .leadform__row { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll('form.leadform').forEach((form) => {
+    const f = form as HTMLFormElement;
+    const note = f.querySelector('[data-status]') as HTMLElement | null;
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = f.querySelector('button[type=submit]') as HTMLButtonElement;
+      const data = new FormData(f);
+      if ((data.get('bot-field') as string)?.length) return; // honeypot
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      const body = new URLSearchParams(data as any).toString();
+      const payload = Object.fromEntries(data.entries());
+      try {
+        // 1) Netlify Forms capture (always)
+        await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+        // 2) GoHighLevel forward (best-effort; inert if not configured)
+        fetch('/.netlify/functions/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(() => {});
+        // 3) Conversion event
+        if ((window as any).bcTrack) (window as any).bcTrack('lead_submit', { tipo: payload.tipo || '' });
+        window.location.href = '/gracias';
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Solicitar evaluacion gratis';
+        if (note) { note.classList.add('is-error'); note.lastChild!.textContent = ' No se pudo enviar. Llamenos o escriba por WhatsApp.'; }
+      }
+    });
+  });
+</script>

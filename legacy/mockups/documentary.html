@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es-PR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Coast Developers — Gestión integral de combustible diésel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b1219;
+    --ink-2:#0e1822;
+    --ink-3:#121f2b;
+    --paper:#f4f1ea;
+    --white:#ffffff;
+    --gold:#c9a14a;
+    --line:rgba(244,241,234,.16);
+    --line-strong:rgba(244,241,234,.34);
+    --muted:rgba(244,241,234,.62);
+    --grotesk:"Space Grotesk", system-ui, sans-serif;
+    --mono:"Space Mono", ui-monospace, monospace;
+    --body:"Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--white);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  .mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em}
+  .gold{color:var(--gold)}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px clamp(18px,4vw,56px);
+    background:linear-gradient(to bottom, rgba(11,18,25,.85), rgba(11,18,25,0));
+    backdrop-filter:saturate(120%);
+  }
+  .lockup{display:flex;flex-direction:column;line-height:.92}
+  .lockup .name{
+    font-family:var(--grotesk);font-weight:700;font-size:20px;
+    letter-spacing:.14em;display:flex;align-items:center;gap:8px;
+  }
+  .lockup .name svg{flex:none}
+  .lockup .sub{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.5em;
+    color:var(--gold);padding-left:30px;margin-top:3px;text-transform:uppercase;
+  }
+  .topbar nav{display:flex;gap:30px;align-items:center}
+  .topbar nav a{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);transition:color .2s;
+  }
+  .topbar nav a:hover{color:var(--white)}
+  .topbar .nav-cta{
+    color:var(--ink);background:var(--gold);padding:9px 16px;
+    font-weight:700;color:#0b1219;
+  }
+  .topbar .nav-cta:hover{color:#0b1219;background:#dab863}
+  @media(max-width:880px){.topbar nav a:not(.nav-cta){display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:92vh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:#05090d;
+    overflow:hidden;
+  }
+  .hero__photo{
+    position:absolute;inset:0;
+    background:url("../assets/img/hospital-damas-ponce.jpg") center 30%/cover no-repeat;
+    filter:saturate(.92) contrast(1.05);
+  }
+  .hero__grad{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(105deg, rgba(5,9,13,.92) 0%, rgba(5,9,13,.55) 38%, rgba(5,9,13,.05) 70%),
+      linear-gradient(to top, rgba(5,9,13,.96) 0%, rgba(5,9,13,.30) 45%, rgba(5,9,13,.15) 100%);
+  }
+  .hero__corner{
+    position:absolute;top:96px;right:clamp(18px,4vw,56px);
+    text-align:right;z-index:3;
+  }
+  .hero__corner .tag{
+    font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+    color:var(--white);background:rgba(11,18,25,.55);
+    border:1px solid var(--line-strong);padding:7px 12px;display:inline-block;
+  }
+  .hero__corner .tag b{color:var(--gold);font-weight:700}
+  .hero__index{
+    position:absolute;top:96px;left:clamp(18px,4vw,56px);z-index:3;
+    font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--muted);
+  }
+  .hero__index b{color:var(--white)}
+  .hero__body{
+    position:relative;z-index:3;
+    padding:0 clamp(18px,4vw,56px) clamp(40px,6vw,72px);
+    max-width:1000px;
+  }
+  .hero__kicker{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;
+    color:var(--gold);margin-bottom:20px;
+    border-left:2px solid var(--gold);padding-left:12px;
+  }
+  .hero h1{
+    font-family:var(--grotesk);font-weight:600;
+    font-size:clamp(34px,6vw,72px);line-height:1.02;
+    letter-spacing:-.02em;max-width:18ch;
+    text-shadow:0 2px 40px rgba(0,0,0,.4);
+  }
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero__sub{
+    margin-top:24px;max-width:46ch;font-size:18px;
+    color:rgba(244,241,234,.86);line-height:1.55;
+  }
+  .hero__cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+  .btn{
+    font-family:var(--grotesk);font-weight:600;font-size:15px;
+    padding:15px 26px;display:inline-flex;align-items:center;gap:10px;
+    transition:transform .15s, background .2s, color .2s;
+  }
+  .btn-primary{background:var(--gold);color:#0b1219}
+  .btn-primary:hover{background:#dab863;transform:translateY(-2px)}
+  .btn-ghost{
+    border:1px solid var(--line-strong);color:var(--white);
+    background:rgba(11,18,25,.3);
+  }
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn svg{flex:none}
+  .hero__scroll{
+    position:absolute;bottom:clamp(40px,6vw,72px);right:clamp(18px,4vw,56px);
+    z-index:3;font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    color:var(--muted);display:flex;align-items:center;gap:10px;writing-mode:horizontal-tb;
+  }
+  @media(max-width:680px){.hero__corner,.hero__scroll{display:none}}
+
+  /* ---------- MARQUEE STRIP ---------- */
+  .strip{
+    background:var(--gold);color:#0b1219;overflow:hidden;
+    border-top:1px solid rgba(0,0,0,.15);
+  }
+  .strip__track{
+    display:flex;gap:48px;white-space:nowrap;padding:13px 0;
+    font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;
+    animation:scroll-x 32s linear infinite;
+  }
+  .strip__track span{display:inline-flex;align-items:center;gap:48px}
+  .strip__track span::after{content:"◆";color:rgba(11,18,25,.5)}
+  @keyframes scroll-x{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- INTRO / FIELD NOTE ---------- */
+  .intro{
+    background:var(--ink);
+    display:grid;grid-template-columns:1.1fr .9fr;
+    border-bottom:1px solid var(--line);
+  }
+  .intro__text{
+    padding:clamp(48px,7vw,96px) clamp(18px,4vw,56px);
+    border-right:1px solid var(--line);
+  }
+  .intro__label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+    color:var(--gold);margin-bottom:22px;
+  }
+  .intro__text p{
+    font-family:var(--grotesk);font-weight:400;
+    font-size:clamp(22px,2.6vw,30px);line-height:1.4;letter-spacing:-.01em;
+    color:rgba(244,241,234,.92);
+  }
+  .intro__text p b{color:var(--white);font-weight:600}
+  .intro__photo{
+    position:relative;min-height:380px;
+    background:url("../assets/img/hospital-auxilio-mutuo.jpg") center/cover no-repeat;
+    filter:grayscale(.15) contrast(1.05);
+  }
+  .intro__photo .doc-caption{position:absolute;left:0;bottom:0}
+  @media(max-width:880px){
+    .intro{grid-template-columns:1fr}
+    .intro__text{border-right:none;border-bottom:1px solid var(--line)}
+    .intro__photo{min-height:300px}
+  }
+
+  /* ---------- DOC CAPTION (reusable field-doc bar) ---------- */
+  .doc-caption{
+    background:rgba(5,9,13,.78);backdrop-filter:blur(2px);
+    border-top:1px solid var(--line-strong);
+    padding:11px 16px;display:flex;gap:18px;flex-wrap:wrap;align-items:baseline;
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .doc-caption .c-idx{color:var(--gold);font-weight:700}
+  .doc-caption .c-client{color:var(--white);font-weight:700}
+  .doc-caption .c-loc{color:var(--muted)}
+  .doc-caption .c-cap{color:var(--white);margin-left:auto}
+
+  /* ---------- SERVICES ---------- */
+  .services{
+    position:relative;background:var(--ink-2);
+    padding:clamp(56px,7vw,104px) 0 clamp(40px,5vw,72px);
+    border-bottom:1px solid var(--line);
+  }
+  .services::before{
+    content:"";position:absolute;inset:0;opacity:.10;pointer-events:none;
+    background:url("../assets/img/boston-scientific.jpg") center/cover no-repeat;
+    filter:grayscale(1) contrast(1.1);
+  }
+  .services__inner{position:relative;z-index:2;padding:0 clamp(18px,4vw,56px)}
+  .services__head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;flex-wrap:wrap;margin-bottom:48px;
+    border-bottom:1px solid var(--line);padding-bottom:26px;
+  }
+  .services__head .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold)}
+  .services__head h2{
+    font-family:var(--grotesk);font-weight:600;
+    font-size:clamp(28px,4vw,46px);line-height:1.04;letter-spacing:-.02em;max-width:16ch;
+  }
+  .services__head .meta{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right}
+  .svc-list{display:flex;flex-direction:column}
+  .svc-row{
+    display:grid;grid-template-columns:90px 1fr 1.1fr;gap:clamp(16px,3vw,48px);
+    align-items:baseline;padding:30px 0;border-top:1px solid var(--line);
+    transition:background .25s;
+  }
+  .svc-row:hover{background:rgba(201,161,74,.05)}
+  .svc-row:last-child{border-bottom:1px solid var(--line)}
+  .svc-num{font-family:var(--mono);font-size:14px;color:var(--gold);font-weight:700;letter-spacing:.1em}
+  .svc-title{
+    font-family:var(--grotesk);font-weight:600;font-size:clamp(20px,2.4vw,28px);
+    letter-spacing:-.01em;line-height:1.1;
+  }
+  .svc-desc{color:var(--muted);font-size:16px;line-height:1.55;max-width:48ch}
+  .svc-row:hover .svc-title{color:var(--gold)}
+  @media(max-width:760px){
+    .svc-row{grid-template-columns:54px 1fr;gap:14px 16px}
+    .svc-desc{grid-column:1 / -1}
+  }
+
+  /* ---------- FULL-BLEED BAND (evidence: fuel compare) ---------- */
+  .band{position:relative;min-height:78vh;display:flex;align-items:flex-end;background:#05090d}
+  .band__photo{
+    position:absolute;inset:0;
+    background:url("../assets/img/fuel-compare.jpg") center/cover no-repeat;
+    filter:contrast(1.08);
+  }
+  .band__grad{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(5,9,13,.92), rgba(5,9,13,.15) 55%, rgba(5,9,13,.55) 100%);
+  }
+  .band__content{position:relative;z-index:2;padding:clamp(32px,5vw,64px) clamp(18px,4vw,56px);max-width:760px}
+  .band__content .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:16px}
+  .band__content h3{
+    font-family:var(--grotesk);font-weight:600;font-size:clamp(24px,3.6vw,42px);
+    line-height:1.06;letter-spacing:-.02em;
+  }
+  .band__content p{margin-top:16px;color:rgba(244,241,234,.84);max-width:52ch}
+  .band .doc-caption{position:absolute;top:96px;left:0;right:auto;width:max-content;border:1px solid var(--line-strong);border-left:none}
+
+  /* ---------- STATS ---------- */
+  .stats{
+    background:var(--ink);display:grid;grid-template-columns:repeat(3,1fr);
+    border-bottom:1px solid var(--line);
+  }
+  .stat{
+    padding:clamp(40px,6vw,72px) clamp(18px,3vw,44px);
+    border-right:1px solid var(--line);position:relative;
+  }
+  .stat:last-child{border-right:none}
+  .stat .num{
+    font-family:var(--grotesk);font-weight:700;
+    font-size:clamp(46px,7vw,84px);line-height:.92;letter-spacing:-.03em;color:var(--gold);
+  }
+  .stat .lbl{
+    margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);max-width:22ch;
+  }
+  .stat .idx{position:absolute;top:18px;right:18px;font-family:var(--mono);font-size:10px;color:var(--line-strong);letter-spacing:.2em}
+  @media(max-width:760px){
+    .stats{grid-template-columns:1fr}
+    .stat{border-right:none;border-bottom:1px solid var(--line)}
+  }
+
+  /* ---------- PROJECTS GALLERY ---------- */
+  .projects{background:var(--ink);padding:clamp(48px,6vw,88px) 0 0}
+  .projects__head{
+    padding:0 clamp(18px,4vw,56px);margin-bottom:40px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
+  }
+  .projects__head .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:14px}
+  .projects__head h2{
+    font-family:var(--grotesk);font-weight:600;font-size:clamp(28px,4vw,46px);
+    letter-spacing:-.02em;line-height:1.04;max-width:18ch;
+  }
+  .projects__head .note{font-family:var(--mono);font-size:11px;color:var(--muted);max-width:24ch;text-align:right}
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-auto-rows:300px;
+    gap:0;
+  }
+  .shot{position:relative;overflow:hidden;background:#05090d;border:1px solid var(--ink)}
+  .shot img{
+    width:100%;height:100%;object-fit:cover;
+    filter:contrast(1.05) saturate(.95);
+    transition:transform .7s cubic-bezier(.2,.7,.2,1), filter .4s;
+  }
+  .shot:hover img{transform:scale(1.05);filter:contrast(1.1) saturate(1.05)}
+  .shot .big-idx{
+    position:absolute;top:14px;left:16px;z-index:3;
+    font-family:var(--grotesk);font-weight:700;font-size:clamp(30px,4vw,52px);
+    color:var(--white);line-height:1;text-shadow:0 2px 18px rgba(0,0,0,.6);mix-blend-mode:difference;
+  }
+  .shot .doc-caption{position:absolute;left:0;right:0;bottom:0;opacity:.96;transition:padding .25s}
+  .shot:hover .doc-caption{background:rgba(5,9,13,.9)}
+  /* spans for asymmetric documentary layout */
+  .shot--a{grid-column:span 4;grid-row:span 2}
+  .shot--b{grid-column:span 2;grid-row:span 1}
+  .shot--c{grid-column:span 2;grid-row:span 1}
+  .shot--d{grid-column:span 2;grid-row:span 2}
+  .shot--e{grid-column:span 2;grid-row:span 2}
+  .shot--f{grid-column:span 2;grid-row:span 2}
+  @media(max-width:900px){
+    .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:260px}
+    .shot--a,.shot--b,.shot--c,.shot--d,.shot--e,.shot--f{grid-column:span 1;grid-row:span 1}
+    .shot--a{grid-column:span 2;grid-row:span 2}
+  }
+  @media(max-width:540px){
+    .gallery{grid-template-columns:1fr;grid-auto-rows:300px}
+    .shot--a{grid-column:span 1;grid-row:span 1}
+  }
+
+  /* ---------- CLOSING CTA ---------- */
+  .closer{position:relative;background:#05090d;overflow:hidden}
+  .closer__photo{
+    position:absolute;inset:0;opacity:.4;
+    background:url("../assets/img/paulson-agi-tower.jpg") center 35%/cover no-repeat;
+    filter:grayscale(.3) contrast(1.1);
+  }
+  .closer__grad{position:absolute;inset:0;background:linear-gradient(115deg, rgba(5,9,13,.9) 30%, rgba(5,9,13,.5))}
+  .closer__inner{
+    position:relative;z-index:2;padding:clamp(64px,9vw,128px) clamp(18px,4vw,56px);
+    max-width:1000px;
+  }
+  .closer .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px}
+  .closer h2{
+    font-family:var(--grotesk);font-weight:600;font-size:clamp(30px,5.2vw,64px);
+    line-height:1.04;letter-spacing:-.02em;max-width:20ch;
+  }
+  .closer h2 em{font-style:normal;color:var(--gold)}
+  .closer .closer__cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .closer .closer__cta .phone{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.08em}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:clamp(44px,5vw,68px) clamp(18px,4vw,56px) 36px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;align-items:start}
+  .foot-grid .lockup .name{font-size:22px}
+  .foot-brand p{margin-top:18px;color:var(--muted);max-width:34ch;font-size:15px}
+  .foot-col h4{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+  .foot-col a,.foot-col span{display:block;color:rgba(244,241,234,.82);font-size:15px;margin-bottom:10px;transition:color .2s}
+  .foot-col a:hover{color:var(--gold)}
+  .foot-bottom{
+    margin-top:48px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;
+  }
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a href="#" class="lockup" aria-label="Blue Coast Developers">
+      <span class="name">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="20" height="20" stroke="#c9a14a" stroke-width="1.4"/>
+          <path d="M1 14.5C4.5 11 7 17 11 13.5S18 10 21 13" stroke="#c9a14a" stroke-width="1.4" fill="none"/>
+          <path d="M1 18C4.5 14.5 7 20.5 11 17S18 13.5 21 16.5" stroke="#f4f1ea" stroke-width="1.1" fill="none" opacity=".6"/>
+        </svg>
+        BLUE COAST
+      </span>
+      <span class="sub">Developers</span>
+    </a>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajo">Trabajo Real</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto" class="nav-cta">Solicitar Evaluación</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__photo"></div>
+    <div class="hero__grad"></div>
+    <div class="hero__index">EXP. <b>001</b> / TRABAJO REAL</div>
+    <div class="hero__corner">
+      <span class="tag">PONCE, PR — <b>93,000 GAL</b></span>
+    </div>
+    <div class="hero__body">
+      <div class="hero__kicker">GESTIÓN INTEGRAL DE COMBUSTIBLE DIÉSEL</div>
+      <h1>Protegemos sus generadores para que funcionen <em>cuando más los necesita.</em></h1>
+      <p class="hero__sub">Gestión integral de combustible diésel. Más de 15 años protegiendo los sistemas de respaldo de Puerto Rico.</p>
+      <div class="hero__cta">
+        <a href="#contacto" class="btn btn-primary">
+          Solicitar Evaluación
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 3l5 5-5 5" stroke="#0b1219" stroke-width="1.6"/></svg>
+        </a>
+        <a href="https://wa.me/19399699999" class="btn btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 00-5.6 9.8L1.5 14.5l3.3-.85A6.5 6.5 0 108 1.5z" stroke="#f4f1ea" stroke-width="1.2"/><path d="M5.6 5.2c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.5 1.2c.1.1 0 .3 0 .4l-.3.4c-.1.1-.2.2-.1.4.2.4.6.9 1 1.2.5.4.8.5 1 .6.1 0 .3 0 .4-.1l.4-.5c.1-.2.3-.1.4-.1l1.1.6c.2.1.3.2.3.3 0 .3 0 .8-.3 1.1-.3.3-1 .6-1.5.5-1.2-.2-2.4-.9-3.3-1.9C5.7 9 5 7.8 4.9 6.6c0-.5.2-1 .7-1.4z" fill="#f4f1ea"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="hero__scroll">
+      <span>DESPLAZAR</span>
+      <svg width="14" height="30" viewBox="0 0 14 30" fill="none"><path d="M7 0v26M2 21l5 6 5-6" stroke="#c9a14a" stroke-width="1.2"/></svg>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="strip" aria-hidden="true">
+    <div class="strip__track">
+      <span>Limpieza de Tanques Diésel</span>
+      <span>Pulido de Combustible</span>
+      <span>Mantenimiento Preventivo</span>
+      <span>Sistemas de Generadores</span>
+      <span>Servicio en todo Puerto Rico</span>
+      <span>Limpieza de Tanques Diésel</span>
+      <span>Pulido de Combustible</span>
+      <span>Mantenimiento Preventivo</span>
+      <span>Sistemas de Generadores</span>
+      <span>Servicio en todo Puerto Rico</span>
+    </div>
+  </div>
+
+  <!-- INTRO / FIELD NOTE -->
+  <section class="intro">
+    <div class="intro__text">
+      <div class="intro__label">// NOTA DE CAMPO</div>
+      <p>El diésel se degrada. Acumula <b>agua, sedimentos y lodos</b> en el fondo del tanque. Cuando llega el apagón, ese combustible sucio es lo que decide si su generador arranca — o falla. <b>Nosotros lo intervenimos antes de que eso pase.</b></p>
+    </div>
+    <div class="intro__photo">
+      <div class="doc-caption">
+        <span class="c-idx">REG. 014</span>
+        <span class="c-client">HOSPITAL AUXILIO MUTUO</span>
+        <span class="c-loc">Río Piedras, PR</span>
+        <span class="c-cap">20,000 GAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="servicios">
+    <div class="services__inner">
+      <div class="services__head">
+        <div>
+          <span class="lbl">// 04 ÁREAS DE SERVICIO</span>
+          <h2>Lo que hacemos dentro y fuera del tanque.</h2>
+        </div>
+        <div class="meta">CAMPO · PUERTO RICO<br>2010 — 2026</div>
+      </div>
+      <div class="svc-list">
+        <div class="svc-row">
+          <div class="svc-num">01</div>
+          <div class="svc-title">Limpieza de Tanques Diésel</div>
+          <div class="svc-desc">Removemos sedimentos, agua y lodos del interior del tanque.</div>
+        </div>
+        <div class="svc-row">
+          <div class="svc-num">02</div>
+          <div class="svc-title">Pulido de Combustible</div>
+          <div class="svc-desc">Filtración y recirculación que restauran la calidad del diésel.</div>
+        </div>
+        <div class="svc-row">
+          <div class="svc-num">03</div>
+          <div class="svc-title">Mantenimiento Preventivo</div>
+          <div class="svc-desc">Inspecciones y muestreo programados que evitan fallas.</div>
+        </div>
+        <div class="svc-row">
+          <div class="svc-num">04</div>
+          <div class="svc-title">Sistemas de Generadores</div>
+          <div class="svc-desc">Instalación y soporte de sistemas de combustible de respaldo.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVIDENCE BAND (fuel compare) -->
+  <section class="band" id="trabajo">
+    <div class="band__photo"></div>
+    <div class="band__grad"></div>
+    <div class="doc-caption">
+      <span class="c-idx">EVID. 007</span>
+      <span class="c-client">MUESTRA ANTES / DESPUÉS</span>
+      <span class="c-loc">Pulido de combustible</span>
+    </div>
+    <div class="band__content">
+      <div class="lbl">// EVIDENCIA DE CAMPO</div>
+      <h3>La diferencia que no se ve hasta que se filtra.</h3>
+      <p>A la izquierda, diésel contaminado extraído del fondo del tanque. A la derecha, el mismo combustible después de filtración y recirculación. Esto es lo que separa un arranque limpio de una falla en el peor momento.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat">
+      <span class="idx">/ 01</span>
+      <div class="num">+15</div>
+      <div class="lbl">Años de experiencia en campo</div>
+    </div>
+    <div class="stat">
+      <span class="idx">/ 02</span>
+      <div class="num">500+</div>
+      <div class="lbl">Tanques intervenidos</div>
+    </div>
+    <div class="stat">
+      <span class="idx">/ 03</span>
+      <div class="num">100%</div>
+      <div class="lbl">Cobertura en Puerto Rico</div>
+    </div>
+  </section>
+
+  <!-- PROJECTS GALLERY -->
+  <section class="projects" id="proyectos">
+    <div class="projects__head">
+      <div>
+        <span class="lbl">// ARCHIVO DE TRABAJO</span>
+        <h2>Hospitales, torres y plantas que dependen de su respaldo.</h2>
+      </div>
+      <div class="note">Documentación real de trabajos ejecutados en sitio.</div>
+    </div>
+    <div class="gallery">
+      <figure class="shot shot--a">
+        <span class="big-idx">001</span>
+        <img src="../assets/img/hospital-damas-ponce.jpg" alt="Hospital de Damas, Ponce">
+        <figcaption class="doc-caption">
+          <span class="c-idx">001</span>
+          <span class="c-client">HOSPITAL DE DAMAS</span>
+          <span class="c-loc">Ponce, PR</span>
+          <span class="c-cap">93,000 GAL</span>
+        </figcaption>
+      </figure>
+      <figure class="shot shot--b">
+        <span class="big-idx">002</span>
+        <img src="../assets/img/boston-scientific.jpg" alt="Boston Scientific">
+        <figcaption class="doc-caption">
+          <span class="c-idx">002</span>
+          <span class="c-client">BOSTON SCIENTIFIC</span>
+          <span class="c-cap">20,000 GAL</span>
+        </figcaption>
+      </figure>
+      <figure class="shot shot--c">
+        <span class="big-idx">003</span>
+        <img src="../assets/img/hospital-menonita-cayey.jpg" alt="Hospital Menonita Cayey">
+        <figcaption class="doc-caption">
+          <span class="c-idx">003</span>
+          <span class="c-client">HOSP. MENONITA</span>
+          <span class="c-loc">Cayey, PR</span>
+          <span class="c-cap">30,000 GAL</span>
+        </figcaption>
+      </figure>
+      <figure class="shot shot--d">
+        <span class="big-idx">004</span>
+        <img src="../assets/img/hospital-auxilio-mutuo.jpg" alt="Hospital Auxilio Mutuo">
+        <figcaption class="doc-caption">
+          <span class="c-idx">004</span>
+          <span class="c-client">AUXILIO MUTUO</span>
+          <span class="c-loc">Río Piedras, PR</span>
+          <span class="c-cap">20,000 GAL</span>
+        </figcaption>
+      </figure>
+      <figure class="shot shot--e">
+        <span class="big-idx">005</span>
+        <img src="../assets/img/torre-del-cardenal.jpg" alt="Condominio Torre del Cardenal">
+        <figcaption class="doc-caption">
+          <span class="c-idx">005</span>
+          <span class="c-client">TORRE DEL CARDENAL</span>
+          <span class="c-loc">Condominio</span>
+          <span class="c-cap">6,000 GAL</span>
+        </figcaption>
+      </figure>
+      <figure class="shot shot--f">
+        <span class="big-idx">006</span>
+        <img src="../assets/img/paulson-agi-tower.jpg" alt="Paulson AGI Tower">
+        <figcaption class="doc-caption">
+          <span class="c-idx">006</span>
+          <span class="c-client">PAULSON AGI TOWER</span>
+          <span class="c-cap">20,000 GAL</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="closer" id="contacto">
+    <div class="closer__photo"></div>
+    <div class="closer__grad"></div>
+    <div class="closer__inner">
+      <div class="lbl">// 015 / PRÓXIMO TRABAJO: EL SUYO</div>
+      <h2>No espere al próximo apagón para descubrir un problema en su <em>tanque.</em></h2>
+      <div class="closer__cta">
+        <a href="https://wa.me/19399699999" class="btn btn-primary">
+          Solicitar Evaluación
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 3l5 5-5 5" stroke="#0b1219" stroke-width="1.6"/></svg>
+        </a>
+        <span class="phone">O LLAME · (939) 969-9999</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="lockup">
+          <span class="name">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="20" height="20" stroke="#c9a14a" stroke-width="1.4"/>
+              <path d="M1 14.5C4.5 11 7 17 11 13.5S18 10 21 13" stroke="#c9a14a" stroke-width="1.4" fill="none"/>
+              <path d="M1 18C4.5 14.5 7 20.5 11 17S18 13.5 21 16.5" stroke="#f4f1ea" stroke-width="1.1" fill="none" opacity=".6"/>
+            </svg>
+            BLUE COAST
+          </span>
+          <span class="sub">Developers</span>
+        </div>
+        <p>Gestión integral de combustible diésel para sistemas de respaldo. Servicio en todo Puerto Rico.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <a href="tel:+19399699999">(939) 969-9999</a>
+        <a href="mailto:info@bluecoastpr.com">info@bluecoastpr.com</a>
+        <a href="https://bluecoastpr.com">bluecoastpr.com</a>
+      </div>
+      <div class="foot-col">
+        <h4>Cobertura</h4>
+        <span>Servicio en todo Puerto Rico</span>
+        <span>Hospitales · Torres · Plantas</span>
+        <a href="https://wa.me/19399699999">WhatsApp directo</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 BLUE COAST DEVELOPERS</span>
+      <span>SERVICIO EN TODO PUERTO RICO</span>
+    </div>
+  </footer>
+
+</body>
+</html>

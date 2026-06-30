@@ -1,0 +1,53 @@
+---
+// Progressive motion layer: Lenis smooth scroll synced to the GSAP ticker,
+// subtle hero parallax, and a count-up on the stats. Everything here is
+// enhancement only - the page is fully functional without it, and it bails
+// entirely under prefers-reduced-motion. Loaded as a deferred module script
+// so it never blocks the hero / critical path.
+---
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import Lenis from 'lenis';
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduce) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Lenis smooth scroll, driven by GSAP's ticker (single rAF loop).
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // Hero background parallax - drifts slower than the page for depth.
+    const heroBg = document.querySelector('.hero__bg');
+    if (heroBg) {
+      gsap.to(heroBg, {
+        yPercent: 18,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+      });
+    }
+
+    // Stat count-up: parse "+15" / "500+" / "93K" into prefix + number + suffix.
+    document.querySelectorAll<HTMLElement>('.stats .stat b').forEach((el) => {
+      const raw = el.textContent?.trim() ?? '';
+      const m = raw.match(/^(\D*)(\d+)(\D*)$/);
+      if (!m) return;
+      const [, pre, numStr, suf] = m;
+      const target = parseInt(numStr, 10);
+      const obj = { v: 0 };
+      el.textContent = `${pre}0${suf}`;
+      gsap.to(obj, {
+        v: target,
+        duration: 1.4,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        onUpdate: () => { el.textContent = `${pre}${Math.round(obj.v)}${suf}`; },
+        onComplete: () => { el.textContent = raw; },
+      });
+    });
+  }
+</script>

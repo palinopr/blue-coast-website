@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site, waLink, phoneDisplay, services, steps } from '../lib/site';
+
+// "Que incluye" detail lists, matched by index to `services` from site.ts.
+const includes = [
+  ['Remocion de lodo, sedimento y agua', 'Limpieza interior del tanque', 'Disposicion adecuada de residuos'],
+  ['Filtracion multietapa', 'Separacion de agua', 'Recirculacion hasta restaurar la calidad', 'Analisis de muestra'],
+  ['Inspecciones programadas', 'Muestreo de combustible', 'Tratamiento del diesel', 'Reportes de condicion'],
+  ['Diagnostico del sistema de combustible', 'Soporte tecnico de punta a punta'],
+];
+
+const plans = [
+  {
+    name: 'Plan Inspeccion',
+    sub: 'Visibilidad continua de su combustible',
+    feats: ['Muestreo de combustible', 'Reporte de condicion anual', 'Recomendaciones por escrito'],
+    rec: false,
+  },
+  {
+    name: 'Plan Semestral',
+    sub: 'Mantenimiento programado durante el ano',
+    feats: ['Pulido y limpieza programada', 'Dos visitas al ano', 'Atencion prioritaria'],
+    rec: true,
+  },
+  {
+    name: 'Plan Cumplimiento',
+    sub: 'Para hospitales e industria regulada',
+    feats: ['Documentacion lista para auditoria', 'Respuesta prioritaria', 'Historial y evidencia de cada servicio'],
+    rec: false,
+  },
+];
+---
+<Base
+  title="Servicios | Blue Coast Developers - Limpieza de Tanques y Pulido de Combustible Diesel en Puerto Rico"
+  description="Servicios de limpieza de tanques diesel, pulido de combustible, mantenimiento preventivo y sistemas de generadores en Puerto Rico. Planes que se adaptan a su operacion."
+>
+  <PageHeader
+    eyebrow="Servicios"
+    title="Todo el ciclo de confiabilidad del combustible"
+    sub="Del analisis del diesel a la rehabilitacion completa del tanque, en un solo equipo."
+    current="Servicios"
+  />
+
+  <!-- SERVICE EXHIBITS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 class="display">Cuatro servicios, un solo responsable</h2>
+        <p class="muted">Cada intervencion incluye lo necesario para devolver el sistema a condicion de operar.</p>
+      </div>
+      <div class="svc-list">
+        {services.map((s, i) => (
+          <article class="svc-block reveal">
+            <div class="svc-block__lead">
+              <div>
+                <h3 class="display svc-block__t">{s.title}</h3>
+                <p class="muted svc-block__body">{s.body}</p>
+              </div>
+            </div>
+            <div class="svc-block__incl">
+              <p class="eyebrow eyebrow--plain">Que incluye</p>
+              <ul class="checks">
+                {includes[i].map((d) => <li>{d}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MAINTENANCE PLANS -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 class="display">Planes que no dependen de la suerte</h2>
+        <p class="muted">Elija el nivel de cobertura que su operacion necesita. Nosotros lo mantenemos listo durante todo el ano.</p>
+      </div>
+      <div class="plans">
+        {plans.map((p) => (
+          <article class={`plan reveal${p.rec ? ' plan--rec' : ''}`}>
+            {p.rec && <span class="plan__badge">Recomendado</span>}
+            <h3 class="plan__name">{p.name}</h3>
+            <p class="plan__sub">{p.sub}</p>
+            <hr class="rule" />
+            <ul class="checks">
+              {p.feats.map((f) => <li>{f}</li>)}
+            </ul>
+            <a href="/contacto" class={`btn ${p.rec ? 'btn--gold' : 'btn--ghost'} btn--block plan__cta`}>Solicitar plan</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 class="display">Como trabajamos en sitio</h2>
+      </div>
+      <div class="steps">
+        {steps.map((s) => (
+          <div class="step reveal">
+            <span class="step__n">{s.n}</span>
+            <h3 class="step__t">{s.title}</h3>
+            <p class="muted">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="section cta">
+    <div class="container cta__in reveal">
+      <h2 class="display">Hablemos de su tanque y su sistema de respaldo</h2>
+      <p class="muted cta__sub">Coordinamos una evaluacion y le recomendamos el plan que mejor protege su operacion. Respondemos en minutos.</p>
+      <div class="cta__btns">
+        <a href="/contacto" class="btn btn--gold btn--lg">Solicitar evaluacion</a>
+        <a href={`tel:${site.phone}`} class="btn btn--ghost btn--lg" data-track="call" data-src="servicios-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Llamar &middot; {phoneDisplay(site.phone)}
+        </a>
+        <a href={waLink()} target="_blank" rel="noopener" class="btn btn--wa btn--lg" data-track="whatsapp" data-src="servicios-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* SERVICE EXHIBITS */
+  .svc-list { display: flex; flex-direction: column; margin-top: 50px; }
+  .svc-block { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px, 5vw, 64px); align-items: start; padding-block: clamp(32px, 4.5vw, 54px); border-top: 1px solid var(--line); }
+  .svc-block__lead { display: flex; gap: clamp(16px, 2vw, 28px); align-items: baseline; }
+  .svc-block__t { font-size: var(--step-2); margin: 0; }
+  .svc-block__body { margin-top: 14px; max-width: 46ch; }
+  .svc-block__incl { padding-top: clamp(4px, 1vw, 12px); }
+  @media (max-width: 820px) {
+    .svc-block { grid-template-columns: 1fr; gap: 22px; }
+  }
+
+  /* shared gold-check list (services + plans) */
+  .checks { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 13px; }
+  .checks li { position: relative; padding-left: 28px; font-size: var(--step--1); color: var(--bone-dim); line-height: 1.4; }
+  .checks li::before { content: ''; position: absolute; left: 3px; top: 0.1em; width: 6px; height: 11px; border: solid var(--gold); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+
+  /* MAINTENANCE PLANS */
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 50px; align-items: stretch; }
+  .plan { position: relative; display: flex; flex-direction: column; background: var(--navy); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: clamp(26px, 3vw, 40px) clamp(22px, 2.5vw, 32px); transition: transform 0.25s var(--ease), border-color 0.25s; }
+  .plan:hover { transform: translateY(-4px); border-color: var(--rule-gold); }
+  .plan--rec { border-color: var(--gold); background: linear-gradient(180deg, var(--surface), var(--navy)); }
+  .plan--rec:hover { border-color: var(--gold-bright); }
+  .plan__badge { position: absolute; top: -1px; right: -1px; font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; background: var(--gold); color: var(--navy-900); padding: 6px 12px; border-radius: 0 var(--radius) 0 var(--radius); }
+  .plan__name { font-family: var(--f-display); text-transform: uppercase; font-size: 1.5rem; line-height: 1; margin: 0; }
+  .plan__sub { font-family: var(--f-body); font-weight: 600; font-size: 0.74rem; letter-spacing: 0.02em; text-transform: uppercase; color: var(--gold-deep); margin: 12px 0 0; line-height: 1.4; }
+  .plan .rule { margin: 22px 0; }
+  .plan .checks { flex: 1; margin-top: 0; }
+  .plan__cta { margin-top: 28px; }
+  @media (max-width: 900px) { .plans { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; } }
+
+  /* PROCESS */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 50px; }
+  .step { border-top: 2px solid var(--rule-gold); padding-top: 20px; }
+  .step__n { font-family: var(--f-display); font-size: 2.4rem; color: var(--gold); line-height: 1; }
+  .step__t { font-family: var(--f-display); text-transform: uppercase; font-size: 1.1rem; margin: 12px 0 10px; }
+  @media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; gap: 22px; } }
+  @media (max-width: 460px) { .steps { grid-template-columns: 1fr; } }
+
+  /* CLOSING CTA */
+  .cta { background: linear-gradient(180deg, var(--navy-deep), var(--navy-900)); text-align: center; }
+  .cta__in { max-width: 760px; margin-inline: auto; }
+  .cta .display { margin: 16px 0 0; }
+  .cta__sub { margin: 16px auto 0; max-width: 52ch; }
+  .cta__btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 32px; }
+</style>

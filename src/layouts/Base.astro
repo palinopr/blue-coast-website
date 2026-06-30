@@ -1,0 +1,124 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import Motion from '../components/Motion.astro';
+import { site } from '../lib/site';
+import ogHero from '../assets/img/hero-generator.jpg';
+
+interface Props {
+  title: string;
+  description: string;
+  transparentHeader?: boolean;
+  ogImage?: string;
+  motion?: boolean;
+}
+const {
+  title,
+  description,
+  transparentHeader = false,
+  ogImage = ogHero.src,
+  motion = false,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="es-PR">
+  <head>
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0b1622" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+    <meta property="og:locale" content="es_PR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        name: site.name,
+        description:
+          'Limpieza de tanques diesel, pulido de combustible y mantenimiento preventivo de generadores en Puerto Rico.',
+        telephone: site.phone,
+        email: site.email,
+        url: `https://${site.domain}`,
+        areaServed: 'Puerto Rico',
+        address: { '@type': 'PostalAddress', addressRegion: 'PR', addressCountry: 'PR' },
+      })}
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip">Saltar al contenido</a>
+    <Header transparent={transparentHeader} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <StickyBar />
+    {motion && <Motion />}
+
+    <!-- analytics bootstrap (inert when IDs are blank) -->
+    <script is:inline define:vars={{ ga4: site.ga4, pixel: site.pixel }}>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      if (ga4) {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ga4;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', ga4);
+      }
+      if (pixel) {
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+          if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+          t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+        })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', pixel); fbq('track', 'PageView');
+      }
+      // Unified conversion tracker
+      window.bcTrack = function (event, params) {
+        params = params || {};
+        if (window.gtag && ga4) gtag('event', event, params);
+        if (window.fbq && pixel) {
+          var fb = { whatsapp_click: 'Contact', call_click: 'Contact', lead_submit: 'Lead' }[event] || 'Lead';
+          fbq('track', fb, params);
+        }
+      };
+    </script>
+
+    <script>
+      // Reveal on scroll
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // Conversion events on contact intents
+      const track = (ev) => (e) => (window.bcTrack ? window.bcTrack(ev, { source: e.currentTarget.dataset.src || '' }) : null);
+      document.querySelectorAll('[data-track="call"]').forEach((a) => a.addEventListener('click', track('call_click')));
+      document.querySelectorAll('[data-track="whatsapp"]').forEach((a) => a.addEventListener('click', track('whatsapp_click')));
+    </script>
+  </body>
+</html>

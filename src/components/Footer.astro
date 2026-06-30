@@ -1,0 +1,63 @@
+---
+import { nav, services, site, waLink, phoneDisplay } from '../lib/site';
+import Logo from './Logo.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="ft">
+  <div class="container ft__grid">
+    <div class="ft__brand">
+      <a href="/" class="logo" aria-label="Blue Coast Developers">
+        <Logo size={34} />
+      </a>
+      <p class="muted">Gestion integral de combustible diesel y confiabilidad de energia de respaldo en todo Puerto Rico.</p>
+    </div>
+
+    <nav class="ft__col" aria-label="Paginas">
+      <h4>Navegacion</h4>
+      <ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+    </nav>
+
+    <div class="ft__col">
+      <h4>Servicios</h4>
+      <ul>{services.map((s) => <li><a href="/servicios">{s.title}</a></li>)}</ul>
+    </div>
+
+    <div class="ft__col">
+      <h4>Contacto</h4>
+      <ul class="ft__contact">
+        <li><a href={`tel:${site.phone}`} data-track="call" data-src="footer">{phoneDisplay(site.phone)}</a></li>
+        <li><a href={`tel:${site.phoneAlt}`} data-track="call" data-src="footer">{phoneDisplay(site.phoneAlt)}</a></li>
+        <li><a href={waLink()} target="_blank" rel="noopener" data-track="whatsapp" data-src="footer">WhatsApp</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li class="muted">Puerto Rico</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container ft__bottom">
+    <span class="muted">&copy; {year} {site.name}. Todos los derechos reservados.</span>
+    <span class="ft__sig">DIESEL &middot; PULIDO &middot; GENERADORES</span>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--navy-900); border-top: 1px solid var(--line); padding-top: clamp(48px, 7vw, 88px); }
+  .ft__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: 40px; }
+  .ft__brand .logo { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+  .logo__txt { display: flex; flex-direction: column; line-height: 1; }
+  .logo__txt b { font-family: var(--f-display); font-size: 1.02rem; letter-spacing: 0.04em; }
+  .logo__txt i { font-family: var(--f-mono); font-style: normal; font-size: 0.6rem; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); margin-top: 3px; }
+  .ft__brand p { max-width: 34ch; font-size: var(--step--1); }
+
+  .ft__col h4 { font-family: var(--f-body); font-weight: 700; font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin: 0 0 16px; }
+  .ft__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .ft__col a { font-size: var(--step--1); color: var(--bone-dim); transition: color 0.16s; }
+  .ft__col a:hover { color: var(--gold); }
+
+  .ft__bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(40px, 6vw, 72px); padding-block: 26px; border-top: 1px solid var(--line); font-family: var(--f-body); font-size: 0.74rem; letter-spacing: 0.04em; }
+  .ft__sig { color: var(--gold-deep); letter-spacing: 0.2em; }
+
+  @media (max-width: 880px) { .ft__grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  @media (max-width: 520px) { .ft__grid { grid-template-columns: 1fr; } }
+</style>

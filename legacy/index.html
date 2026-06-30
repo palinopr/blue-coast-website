@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blue Coast Developers | Limpieza y Pulido de Combustible Diésel en Puerto Rico</title>
+  <meta name="description" content="Especialistas en limpieza de tanques diésel, pulido de combustible y mantenimiento preventivo de generadores en Puerto Rico. Protegemos sus sistemas de respaldo para cuando más los necesita." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html" aria-label="Blue Coast Developers">
+        <svg class="logo-mark" viewBox="0 0 48 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="14,3 34,3 46,26 34,49 14,49 2,26" stroke="#c9a14a" stroke-width="2.4" fill="none" stroke-linejoin="round" />
+          <text x="24" y="35" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="25" font-weight="800" fill="#ffffff">B</text>
+        </svg>
+        <span class="logo-text"><strong>BLUE COAST</strong><em>DEVELOPERS</em></span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" class="is-active">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="industrias.html">Industrias</a></li>
+          <li><a href="trabajos.html">Trabajos Realizados</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="contacto.html" class="btn btn--primary">Solicitar Inspección</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-bg" src="assets/img/hero-generator.jpg" alt="Generador diésel industrial en sala de máquinas con técnico de Blue Coast" />
+    <div class="container">
+      <div class="hero-inner">
+        <h1>Protegemos sus generadores para que funcionen cuando más los necesita</h1>
+        <p class="hero-sub">Gestión integral de combustible diésel — más de 15 años de experiencia manteniendo los sistemas de respaldo de Puerto Rico.</p>
+        <div class="hero-cta">
+          <a href="contacto.html" class="btn btn--primary btn--lg">Solicitar Evaluación
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="https://wa.me/19399699999" class="btn btn--whatsapp btn--lg" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 001.523 5.26l-.999 3.648 3.465-.81zM17.45 14.3c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+        <div class="hero-badges">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/><path d="M8.5 12l2.3 2.3L16 9"/></svg>
+            <div><b>15+ años</b><span>de experiencia</span></div>
+          </div>
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.2" rx="7.5" ry="2.8"/><path d="M4.5 5.2v13.6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V5.2"/><path d="M4.5 11.8c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8"/></svg>
+            <div><b>500+ tanques</b><span>intervenidos</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="section section--navy" id="video">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">En video</span>
+        <h2>De la contaminación a la confiabilidad</h2>
+        <p>Cómo protegemos su energía de respaldo, en menos de un minuto.</p>
+      </div>
+      <div style="max-width:1040px;margin:0 auto;border-radius:14px;overflow:hidden;border:1px solid rgba(201,161,74,.25);box-shadow:0 24px 60px rgba(0,0,0,.45);">
+        <video controls preload="none" playsinline poster="assets/video/blue-coast-film-final-poster.jpg" style="width:100%;display:block;background:#04070c;aspect-ratio:16/9;">
+          <source src="assets/video/blue-coast-film-final.mp4" type="video/mp4" />
+          Su navegador no soporta video HTML5.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="servicios">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Nuestros Servicios</span>
+        <h2>Soluciones integrales para su sistema de combustible</h2>
+        <p>Del análisis del combustible a la rehabilitación completa del tanque, cubrimos todo el ciclo de confiabilidad.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12v10a2 2 0 01-2 2H8a2 2 0 01-2-2V8z"/><path d="M6 12h12M6 16.5h12"/><path d="M9 8V6a2 2 0 012-2h2a2 2 0 012 2v2"/><path d="M12 12.5c-1.2 1.4-1.9 2.4-1.9 3.2a1.9 1.9 0 003.8 0c0-.8-.7-1.8-1.9-3.2z" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Limpieza de Tanques Diésel</h3>
+          <p>Eliminamos sedimentos, lodos y contaminantes acumulados para asegurar combustible limpio y seguro.</p>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-6.2 7.4v6.1l-3.6 1.8v-7.9L4 4z"/><path d="M9.5 9h5"/><path d="M12 19.5v1.8"/><circle cx="12" cy="22.6" r="0.7" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Pulido de Combustible</h3>
+          <p>Filtración y recirculación que restauran la calidad del diésel para un rendimiento óptimo.</p>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M8.8 12l2 2 4-4"/><path d="M9 17.5h6"/></svg></div>
+          <h3>Mantenimiento Preventivo</h3>
+          <p>Programas e inspecciones periódicas que minimizan fallas y extienden la vida de sus generadores.</p>
+        </article>
+        <article class="service-card reveal">
+          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M7.5 8V6M16.5 8V6"/><path d="M6 12h3.5M6 15.5h3.5"/><path d="M15 10.5l-2.2 3.2h2.2l-1 3 3.2-4.2h-2.2l1-2z" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Sistemas de Generadores</h3>
+          <p>Instalación, diagnóstico y soporte técnico para sistemas de combustible de respaldo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section process">
+    <svg class="motif-drop" style="top:-40px;right:-30px;width:230px;height:230px;" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-4 6-7 10.2-7 13.6A7 7 0 0019 15.6C19 12.2 16 8 12 2z"/></svg>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Nuestro Proceso</span>
+        <h2>Cómo devolvemos la confiabilidad a su combustible</h2>
+        <p>Un método probado, paso a paso, para diagnosticar, limpiar y certificar su sistema de combustible.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="process-art">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 16h12M25 16v3.5M33 16v3.5"/>
+              <rect x="20" y="19.5" width="18" height="28" rx="3"/>
+              <path d="M20.5 33h17"/>
+              <rect x="21" y="33" width="16" height="14" rx="2" fill="#c9a14a" stroke="none" opacity=".22"/>
+              <circle cx="43" cy="42" r="9" fill="#fff" stroke="currentColor"/>
+              <path d="M50 49l5.5 5.5" stroke="#c9a14a" stroke-width="2.6"/>
+              <path d="M43 38.5v7M39.5 42h7" stroke="#c9a14a" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <span class="process-num">01</span>
+          <h3>Inspección y Muestreo</h3>
+          <p>Tomamos una muestra y evaluamos el estado real del combustible y del tanque.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-art">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="22" y="20" width="20" height="22" rx="3"/>
+              <path d="M22 26h20M22 31h20M22 36h20" stroke="#c9a14a" stroke-width="1.7"/>
+              <path d="M32 8v11M28 15l4 4 4-4"/>
+              <path d="M32 42v7"/>
+              <path d="M32 49c-2.4 3-3.8 5-3.8 6.5a3.8 3.8 0 007.6 0c0-1.5-1.4-3.5-3.8-6.5z" fill="#c9a14a" stroke="none"/>
+            </svg>
+          </div>
+          <span class="process-num">02</span>
+          <h3>Pulido y Filtración</h3>
+          <p>Filtramos y recirculamos el diésel para remover agua, sedimentos y bacterias.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-art">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="17" y="21" width="22" height="26" rx="4"/>
+              <path d="M17 28h22M17 40h22"/>
+              <path d="M23 21v-3a3 3 0 013-3h4a3 3 0 013 3v3"/>
+              <path d="M47 21l1.5 3.4L52 25.9l-3.5 1.5L47 31l-1.5-3.6L42 25.9l3.5-1.5z" fill="#c9a14a" stroke="none"/>
+              <path d="M49 35l.9 2 2 .9-2 .9-.9 2-.9-2-2-.9 2-.9z" fill="#c9a14a" stroke="none"/>
+            </svg>
+          </div>
+          <span class="process-num">03</span>
+          <h3>Limpieza del Tanque</h3>
+          <p>Removemos lodos y residuos del interior para dejar el tanque limpio.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-art">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 14h16l8 8v22a2 2 0 01-2 2H20a2 2 0 01-2-2V16a2 2 0 012-2z"/>
+              <path d="M36 14v8h8"/>
+              <path d="M24 30h13M24 35h10" stroke="#c9a14a" stroke-width="1.8"/>
+              <circle cx="40" cy="44" r="8.5" fill="#fff" stroke="currentColor"/>
+              <path d="M36 44l2.6 2.6 5-5" stroke="#c9a14a" stroke-width="2.6"/>
+            </svg>
+          </div>
+          <span class="process-num">04</span>
+          <h3>Reporte y Certificación</h3>
+          <p>Entregamos un reporte de condición con la evidencia del trabajo realizado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="why-grid">
+        <div>
+          <span class="eyebrow">Por qué elegirnos</span>
+          <h2>Experiencia, tecnología y compromiso con la confiabilidad</h2>
+          <div class="stats-row">
+            <div class="stat"><b>+15</b><span>años de experiencia<br>en Puerto Rico</span></div>
+            <div class="stat"><b>500+</b><span>tanques<br>intervenidos</span></div>
+          </div>
+        </div>
+        <div class="features">
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4"/><path d="M12 4v2"/><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 2.2"/><path d="M18.5 6l1.5-1.5"/></svg>
+            <div><h4>Respuesta rápida y confiable</h4><p>Atención ágil cuando más lo necesita.</p></div>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M4 20c0-3.3 2.7-6 6-6 1 0 1.9.2 2.7.6"/><circle cx="17.5" cy="16.5" r="3.5"/><path d="M16 16.4l1.1 1.1 1.9-2"/></svg>
+            <div><h4>Expertos técnicos certificados</h4><p>Personal capacitado y mejores prácticas.</p></div>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 11.4c1.7-.8 3.6-1.1 5.7-1.1 1.8 0 2.9.3 4.6.3 1.9 0 3.2-.5 5.1-.4 1.5.1 2.8.2 3.9.8.6.3.6 1.3 0 1.7-.9.6-2.2.7-3.7.9-1.8.2-3.1.6-5.2.7-2.3.1-3.8-.3-6.1-.4-1.7-.1-3 .2-4.6-.2-1.3-.3-1.8-1.4-1.4-2.2.2-.5.6-.9 1.1-1.2z"/><circle cx="15.5" cy="11.2" r="0.7" fill="currentColor" stroke="none"/></svg>
+            <div><h4>Cobertura en todo Puerto Rico</h4><p>Servimos a clientes en toda la isla.</p></div>
+          </div>
+          <div class="feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/><path d="M8.5 12l2.3 2.3L16 9"/></svg>
+            <div><h4>Cumplimiento y seguridad</h4><p>Trabajamos bajo normas ambientales y de seguridad.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TANK ANATOMY -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="tank-grid">
+        <div class="tank-art reveal">
+          <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Corte de un tanque diésel mostrando las capas de contaminación">
+            <defs>
+              <clipPath id="tankClip">
+                <path d="M70 70 v260 a80 22 0 0 0 160 0 V70 Z" />
+              </clipPath>
+            </defs>
+            <ellipse cx="150" cy="70" rx="80" ry="22" fill="#eef0f3" stroke="#0d1b2a" stroke-width="2.5" />
+            <g clip-path="url(#tankClip)">
+              <rect x="68" y="70" width="164" height="166" fill="#d9a94e" />
+              <ellipse cx="150" cy="70" rx="80" ry="22" fill="#e7bd66" />
+              <rect x="68" y="236" width="164" height="15" fill="#5a93ad" />
+              <rect x="68" y="251" width="164" height="52" fill="#7d5e34" />
+              <g fill="#5c4424">
+                <circle cx="96" cy="266" r="3.2" /><circle cx="120" cy="276" r="2.6" /><circle cx="146" cy="263" r="3" /><circle cx="172" cy="278" r="2.8" /><circle cx="200" cy="268" r="3.1" /><circle cx="110" cy="290" r="2.6" /><circle cx="158" cy="292" r="3" /><circle cx="188" cy="288" r="2.7" /><circle cx="132" cy="285" r="2.4" />
+              </g>
+              <rect x="68" y="303" width="164" height="62" fill="#241c12" />
+            </g>
+            <path d="M70 70 v260 a80 22 0 0 0 160 0 V70" fill="none" stroke="#0d1b2a" stroke-width="2.5" stroke-linejoin="round" />
+            <ellipse cx="150" cy="70" rx="80" ry="22" fill="none" stroke="#0d1b2a" stroke-width="2.5" />
+            <path d="M92 352 v22 M208 352 v22" stroke="#0d1b2a" stroke-width="3" stroke-linecap="round" />
+            <path d="M150 48 v-14 M138 40 h24" stroke="#0d1b2a" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="tank-layers">
+          <span class="eyebrow">¿Qué hay dentro de su tanque?</span>
+          <h2>Anatomía de un tanque contaminado</h2>
+          <p>Con el tiempo, el diésel almacenado se degrada y se separa en capas. Solo la capa superior está lista para operar; el resto puede hacer que su generador no arranque cuando más lo necesita.</p>
+          <ul>
+            <li><span class="sw sw--clean"></span><div><b>Combustible limpio</b> — la única capa realmente lista para operar.</div></li>
+            <li><span class="sw sw--water"></span><div><b>Agua por condensación</b> — favorece la corrosión y el crecimiento de bacterias.</div></li>
+            <li><span class="sw sw--sed"></span><div><b>Sedimentos</b> — tapan filtros e inyectores y reducen la potencia.</div></li>
+            <li><span class="sw sw--sludge"></span><div><b>Lodo (sludge)</b> — se acumula en el fondo y obstruye todo el sistema.</div></li>
+          </ul>
+          <a href="contacto.html" class="btn btn--primary">Solicitar una evaluación</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PULIDO DIAGRAM -->
+  <section class="section section--navy">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Cómo funciona el pulido</span>
+        <h2>Filtramos y recirculamos su combustible</h2>
+        <p>Extraemos el diésel del tanque, lo pasamos por filtración multietapa y lo devolvemos limpio, en un ciclo continuo hasta restaurar su calidad.</p>
+      </div>
+      <div class="pulido-flow">
+        <div class="pulido-node">
+          <div class="art">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="14" y="13" width="20" height="25" rx="3" />
+              <path d="M19 13v-2a2 2 0 012-2h6a2 2 0 012 2v2" />
+              <rect x="15.2" y="25" width="17.6" height="11.8" rx="2" fill="#3b3024" stroke="none" />
+              <path d="M14 25h20" />
+            </svg>
+          </div>
+          <span>Tanque con diésel contaminado</span>
+        </div>
+        <svg class="pulido-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="pulido-node">
+          <div class="art">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="22" cy="21" r="10" />
+              <path d="M22 14a7 7 0 015.5 11.3" stroke="#c9a14a" />
+              <path d="M27 24l1 3 3-1" stroke="#c9a14a" />
+              <path d="M22 33v4M15 37h14" />
+              <path d="M32 17l5-3" />
+            </svg>
+          </div>
+          <span>Bomba de succión</span>
+        </div>
+        <svg class="pulido-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="pulido-node">
+          <div class="art">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="13" width="8" height="22" rx="3" />
+              <rect x="20" y="13" width="8" height="22" rx="3" />
+              <rect x="31" y="13" width="8" height="22" rx="3" />
+              <path d="M9 20h8M20 20h8M31 20h8M9 28h8M20 28h8M31 28h8" stroke="#c9a14a" stroke-width="1.6" />
+            </svg>
+          </div>
+          <span>Filtración y separación de agua</span>
+        </div>
+        <svg class="pulido-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="pulido-node">
+          <div class="art">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="14" y="13" width="20" height="25" rx="3" />
+              <path d="M19 13v-2a2 2 0 012-2h6a2 2 0 012 2v2" />
+              <rect x="15.2" y="22" width="17.6" height="14.8" rx="2" fill="#c9a14a" stroke="none" opacity=".88" />
+              <path d="M14 22h20" />
+            </svg>
+          </div>
+          <span>Diésel limpio de regreso al tanque</span>
+        </div>
+      </div>
+      <div class="pulido-loop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 019-9 9 9 0 016.7 3M21 12a9 9 0 01-9 9 9 9 0 01-6.7-3"/><path d="M18 2v4h-4M6 22v-4h4"/></svg>
+        Recirculación continua hasta restaurar la calidad del combustible
+      </div>
+    </div>
+  </section>
+
+  <!-- FUEL COMPARE -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Antes y Después</span>
+        <h2>Calidad de combustible que marca la diferencia</h2>
+        <p>Recuperamos el diésel almacenado eliminando agua, sedimentos y contaminación para devolverlo listo para operar.</p>
+      </div>
+      <div style="max-width:680px;margin:0 auto;">
+        <div class="fuel-compare">
+          <figure class="fuel-card">
+            <figcaption class="tag-before">Antes</figcaption>
+            <img src="assets/img/fuel-antes.jpg" alt="Muestra de combustible diésel contaminado antes del servicio" />
+          </figure>
+          <div class="fuel-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+          <figure class="fuel-card">
+            <figcaption class="tag-after">Después</figcaption>
+            <img src="assets/img/fuel-despues.jpg" alt="Muestra de combustible diésel limpio después del pulido" />
+          </figure>
+        </div>
+        <p class="fuel-note">Combustible limpio = sistemas más eficientes, menos fallas y mayor vida útil del equipo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Industrias que servimos</span>
+        <h2>Operaciones críticas que no pueden detenerse</h2>
+      </div>
+      <div class="industries-grid">
+        <div class="industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-5 8 5v12"/><path d="M2 21h20"/><rect x="9.5" y="14" width="5" height="7"/><path d="M12 6.5v3.4M10.3 8.2h3.4"/></svg>
+          <span>Hospitales</span><div class="u"></div>
+        </div>
+        <div class="industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="13"/><path d="M3 21h18"/><path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01M8 15h.01M16 15h.01"/><rect x="10.3" y="17" width="3.4" height="4"/><g fill="currentColor" stroke="none"><path d="M8 3.4l.5 1 1.1.1-.8.8.2 1.1-1-.6-1 .6.2-1.1-.8-.8 1.1-.1z"/><path d="M12 3l.5 1 1.1.1-.8.8.2 1.1-1-.6-1 .6.2-1.1-.8-.8 1.1-.1z"/><path d="M16 3.4l.5 1 1.1.1-.8.8.2 1.1-1-.6-1 .6.2-1.1-.8-.8 1.1-.1z"/></g></svg>
+          <span>Hoteles</span><div class="u"></div>
+        </div>
+        <div class="industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V11l6 3.5V11l6 3.5V8l3 1.5"/><path d="M3 21h18V21"/><path d="M18 9.5V21"/><path d="M7 7l.7-3h1.6l.7 3"/><path d="M6 18h3M13 18h3"/></svg>
+          <span>Industria</span><div class="u"></div>
+        </div>
+        <div class="industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="18.5"/><path d="M3 21h18"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 9.5h.01M12 9.5h.01M16 9.5h.01M8 13h.01M16 13h.01"/><rect x="10.3" y="16.5" width="3.4" height="4.5"/></svg>
+          <span>Condominios</span><div class="u"></div>
+        </div>
+        <div class="industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="17.5" cy="20" r="1.5"/><path d="M2 3h2.6l2.5 11.4a1.6 1.6 0 001.6 1.3h7.9a1.6 1.6 0 001.6-1.2L21.5 7.5H6"/></svg>
+          <span>Supermercados</span><div class="u"></div>
+        </div>
+        <div class="industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.2"/><rect x="3" y="14" width="18" height="6" rx="1.2"/><path d="M6.5 7h.01M6.5 17h.01"/><path d="M10 7h6M10 17h6"/></svg>
+          <span>Data Centers</span><div class="u"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--left" style="display:flex;justify-content:space-between;align-items:flex-end;max-width:none;text-align:left;gap:20px;flex-wrap:wrap;">
+        <div>
+          <span class="eyebrow">Trabajos Realizados</span>
+          <h2 style="margin:0;">Proyectos reales en Puerto Rico</h2>
+        </div>
+        <a href="trabajos.html" class="btn btn--outline-dark">Ver más proyectos
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card reveal">
+          <img src="assets/img/hospital-auxilio-mutuo.jpg" alt="Hospital Auxilio Mutuo - tanque diésel" />
+          <div class="project-body">
+            <h3>Hospital Auxilio Mutuo</h3>
+            <div class="project-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Río Piedras, PR</div>
+            <div class="project-cap-row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-3 4.5-5 7.6-5 10.2A5 5 0 0017 12.2C17 9.6 15 6.5 12 2z"/></svg>Tanque de 20,000 galones</div>
+            <p class="project-desc">Limpieza y mantenimiento de tanque diésel de 20,000 galones.</p>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <img src="assets/img/boston-scientific.jpg" alt="Boston Scientific - tanque diésel" />
+          <div class="project-body">
+            <h3>Boston Scientific</h3>
+            <div class="project-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Puerto Rico</div>
+            <div class="project-cap-row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-3 4.5-5 7.6-5 10.2A5 5 0 0017 12.2C17 9.6 15 6.5 12 2z"/></svg>Tanque de 20,000 galones</div>
+            <p class="project-desc">Limpieza y pulido de combustible, tanque de 20,000 galones.</p>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <img src="assets/img/hospital-damas-ponce.jpg" alt="Hospital de Damas Ponce - tanque diésel" />
+          <div class="project-body">
+            <h3>Hospital de Damas</h3>
+            <div class="project-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ponce, PR</div>
+            <div class="project-cap-row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-3 4.5-5 7.6-5 10.2A5 5 0 0017 12.2C17 9.6 15 6.5 12 2z"/></svg>Tanque de 93,000 galones</div>
+            <p class="project-desc">Pulido de combustible a gran escala, tanque de 93,000 galones.</p>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <img src="assets/img/torre-del-cardenal.jpg" alt="Condominio Torre del Cardenal - tanque diésel" />
+          <div class="project-body">
+            <h3>Condominio Torre del Cardenal</h3>
+            <div class="project-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Puerto Rico</div>
+            <div class="project-cap-row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-3 4.5-5 7.6-5 10.2A5 5 0 0017 12.2C17 9.6 15 6.5 12 2z"/></svg>Tanque de 6,000 galones</div>
+            <p class="project-desc">Limpieza de tanque diésel de 6,000 galones.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVERAGE MAP -->
+  <section class="section section--navy">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Cobertura</span>
+        <h2>Presentes en todo Puerto Rico</h2>
+        <p>De la costa norte al sur, atendemos hospitales, industrias, hoteles y comercios en toda la isla. Estos son algunos de los lugares donde hemos trabajado.</p>
+      </div>
+      <div class="map-wrap">
+        <div id="map" role="img" aria-label="Mapa de Puerto Rico con las ubicaciones de los proyectos de Blue Coast Developers"></div>
+        <aside class="map-aside">
+          <div class="map-stat"><b>78</b><span>municipios dentro de nuestra cobertura de servicio</span></div>
+          <div class="map-stat"><b>500+</b><span>tanques intervenidos en toda la isla</span></div>
+          <div class="map-stat"><b>93,000</b><span>galones — nuestro proyecto de mayor capacidad, en Ponce</span></div>
+          <a href="trabajos.html" class="btn btn--primary">Ver todos los trabajos</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>No espere al próximo apagón para descubrir un problema en su tanque</h2>
+      <p>Solicite una inspección y evaluación de combustible. Identificamos contaminación antes de que detenga su operación.</p>
+      <div class="cta-actions">
+        <a href="contacto.html" class="btn btn--primary btn--lg">Solicitar Evaluación</a>
+        <a href="tel:+19399699999" class="btn btn--outline btn--lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (939) 969-9999
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="logo" href="index.html" aria-label="Blue Coast Developers">
+            <svg class="logo-mark" viewBox="0 0 48 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polygon points="14,3 34,3 46,26 34,49 14,49 2,26" stroke="#c9a14a" stroke-width="2.4" fill="none" stroke-linejoin="round" />
+              <text x="24" y="35" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="25" font-weight="800" fill="#ffffff">B</text>
+            </svg>
+            <span class="logo-text"><strong>BLUE COAST</strong><em>DEVELOPERS</em></span>
+          </a>
+          <p>Soluciones integrales para la confiabilidad de sus sistemas de combustible diésel y energía de respaldo.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Enlaces</h4>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="industrias.html">Industrias</a></li>
+            <li><a href="trabajos.html">Trabajos Realizados</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="servicios.html">Limpieza de Tanques Diésel</a></li>
+            <li><a href="servicios.html">Pulido de Combustible</a></li>
+            <li><a href="servicios.html">Mantenimiento Preventivo</a></li>
+            <li><a href="servicios.html">Sistemas de Generadores</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul class="footer-contact">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:+19399699999">(939) 969-9999</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:+17873470799">(787) 347-0799</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:info@bluecoastpr.com">info@bluecoastpr.com</a></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>www.bluecoastpr.com</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Puerto Rico</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Blue Coast Developers. Todos los derechos reservados.</span>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v7h3v-7H16l.5-3h-3V9.5c0-.3.2-.5.5-.5z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4 0 2 2 0 014 0zM3 8.5h3.9V21H3V8.5zM9.5 8.5h3.7v1.7h.05c.52-.93 1.78-1.9 3.66-1.9 3.9 0 4.6 2.4 4.6 5.6V21h-3.9v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9.5V8.5z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

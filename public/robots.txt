@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /gracias
+
+Sitemap: https://www.bluecoastpr.com/sitemap.xml

@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { site, waLink, phoneDisplay } from '../lib/site';
+---
+<Base
+  title="Contacto | Blue Coast Developers — Solicite su evaluacion de combustible"
+  description="Solicite una inspeccion y evaluacion de combustible diesel para sus generadores de respaldo en Puerto Rico. Respondemos en minutos por telefono o WhatsApp."
+>
+  <PageHeader
+    eyebrow="Contacto"
+    title="Hablemos de su tanque"
+    sub="Solicite una inspeccion y evaluacion de combustible. Respondemos en minutos."
+    current="Contacto"
+  />
+
+  <section class="section">
+    <div class="container contact">
+      <div class="contact__aside reveal">
+        <div class="cbox">
+          <p class="eyebrow">Directo</p>
+          <a href={`tel:${site.phone}`} class="cbox__line" data-track="call" data-src="contacto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span><i>Llamar</i><b>{phoneDisplay(site.phone)}</b></span>
+          </a>
+          <a href={`tel:${site.phoneAlt}`} class="cbox__line" data-track="call" data-src="contacto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span><i>Alterno</i><b>{phoneDisplay(site.phoneAlt)}</b></span>
+          </a>
+          <a href={waLink()} target="_blank" rel="noopener" class="cbox__line" data-track="whatsapp" data-src="contacto">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
+            <span><i>Escribir</i><b>WhatsApp</b></span>
+          </a>
+          <a href={`mailto:${site.email}`} class="cbox__line">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <span><i>Correo</i><b>{site.email}</b></span>
+          </a>
+        </div>
+        <div class="cbox cbox--muted">
+          <p class="eyebrow eyebrow--plain">Cobertura</p>
+          <p class="muted" style="margin:10px 0 0;">Servimos hospitales, industrias, hoteles, condominios y data centers en todo Puerto Rico.</p>
+        </div>
+      </div>
+
+      <div class="contact__form reveal">
+        <h2 class="display" style="font-size:var(--step-2);margin:0 0 20px;">Solicitar evaluacion gratis</h2>
+        <LeadForm id="lead-contacto" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 5vw, 60px); align-items: start; }
+  .cbox { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 28px 26px; }
+  .cbox + .cbox { margin-top: 20px; }
+  .cbox--muted { background: var(--navy-deep); }
+  .cbox__line { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .cbox__line:last-child { border-bottom: 0; }
+  .cbox__line svg { width: 21px; height: 21px; color: var(--gold); flex: none; }
+  .cbox__line i { display: block; font-family: var(--f-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-dim); }
+  .cbox__line b { display: block; font-size: 1.18rem; }
+  .cbox__line:hover b { color: var(--gold); }
+  .contact__form { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: clamp(24px, 3vw, 38px); }
+  @media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+</style>

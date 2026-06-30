@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blue Coast — Direcciones de diseño</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Archivo", system-ui, sans-serif;
+      background: #0a1622;
+      color: #e8ebf0;
+      min-height: 100vh;
+      padding: 64px 24px;
+    }
+    .wrap { max-width: 1140px; margin: 0 auto; }
+    .kicker { font-family: "Space Mono", monospace; color: #c9a14a; letter-spacing: 0.2em; font-size: 0.78rem; text-transform: uppercase; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin: 12px 0 8px; letter-spacing: -0.01em; }
+    .lead { color: #9aa6b4; max-width: 620px; line-height: 1.6; margin-bottom: 48px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .card {
+      display: block;
+      background: #11283f;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover { transform: translateY(-5px); border-color: #c9a14a; box-shadow: 0 18px 40px rgba(0,0,0,0.4); }
+    .card .num { font-family: "Space Mono", monospace; color: #c9a14a; font-size: 0.8rem; }
+    .card .body { padding: 26px 24px 28px; }
+    .card h2 { font-size: 1.3rem; font-weight: 800; margin: 10px 0 8px; }
+    .card p { color: #9aa6b4; font-size: 0.92rem; line-height: 1.55; }
+    .swatch { height: 90px; display: flex; }
+    .swatch span { flex: 1; }
+    .tag { display: inline-block; margin-top: 16px; font-family: "Space Mono", monospace; font-size: 0.72rem; color: #c9a14a; border: 1px solid rgba(201,161,74,0.4); padding: 5px 10px; border-radius: 20px; }
+    .footer-links { margin-top: 44px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.88rem; color: #9aa6b4; }
+    .footer-links a { color: #c9a14a; text-decoration: none; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="kicker">Blue Coast Developers · Mockups</span>
+    <h1>Tres direcciones de diseño</h1>
+    <p class="lead">Cada una usa el mismo contenido y las fotos reales de los trabajos, pero con un lenguaje visual distinto. Abra cada una y compare. La idea es alejarnos del look genérico de plantilla.</p>
+
+    <div class="grid">
+      <a class="card" href="industrial.html">
+        <div class="swatch"><span style="background:#0a1622"></span><span style="background:#c9a14a"></span><span style="background:#11283f"></span></div>
+        <div class="body">
+          <div class="num">01</div>
+          <h2>Industrial / Editorial</h2>
+          <p>Tipografía condensada en mayúsculas, números grandes, bordes rectos, composición asimétrica. Serio y de alto contraste.</p>
+          <span class="tag">Anton · Archivo</span>
+        </div>
+      </a>
+
+      <a class="card" href="minimal.html">
+        <div class="swatch"><span style="background:#f6f4ee"></span><span style="background:#b1925a"></span><span style="background:#182433"></span></div>
+        <div class="body">
+          <div class="num">02</div>
+          <h2>Minimal / Premium</h2>
+          <p>Serif elegante, mucho espacio en blanco, líneas finas, paleta crema. Sobrio y de alta gama.</p>
+          <span class="tag">Fraunces · Inter</span>
+        </div>
+      </a>
+
+      <a class="card" href="documentary.html">
+        <div class="swatch"><span style="background:#0b1219"></span><span style="background:#c9a14a"></span><span style="background:#1d2630"></span></div>
+        <div class="body">
+          <div class="num">03</div>
+          <h2>Documental / Fotográfico</h2>
+          <p>Fotos reales a sangre completa, leyendas en monoespaciada, sensación de trabajo de campo. Crudo y auténtico.</p>
+          <span class="tag">Space Grotesk · Mono</span>
+        </div>
+      </a>
+    </div>
+
+    <p class="footer-links">Referencia: <a href="../index.html">ver la versión actual</a> (la que parece plantilla)</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+node_modules
+dist
+.astro
+.DS_Store
+npm-debug.log
+.env
+.netlify
+
+# Unused legacy video renders (~178MB) - site no longer references these
+public/assets/video
