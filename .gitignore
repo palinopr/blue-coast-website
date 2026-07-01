@@ -8,9 +8,6 @@ npm-debug.log
 
 # Renders de video sin usar (se conservan localmente, no en git)
 media-archivo
-public/assets/video/*
-!public/assets/video/blue-coast-film-final.mp4
-!public/assets/video/blue-coast-film-final-poster.jpg
 
 # Remotion renders
 remotion/out

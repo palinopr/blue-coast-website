@@ -210,32 +210,6 @@ const galeria = [
     </div>
   </section>
 
-  <!-- PELÍCULA -->
-  <section class="sec">
-    <div class="sheet cine">
-      <div class="cine__copy">
-        <span class="kicker rv">Nuestra película</span>
-        <h2 class="h-display rv" style="--d:.05s">Un minuto sobre lo que hay dentro de su tanque.</h2>
-        <p class="lede rv" style="--d:.1s">
-          El apagón, el generador y el diésel que decide — la historia completa, narrada
-          y subtitulada en español.
-        </p>
-      </div>
-      <div class="cine__wrap rv" style="--d:.1s">
-        <div class="cine__player edge">
-          <video controls playsinline preload="none" poster="/assets/video/blue-coast-film-final-poster.jpg" width="1920" height="1080">
-            <source src="/assets/video/blue-coast-film-final.mp4" type="video/mp4" />
-            Su navegador no puede reproducir este video.
-          </video>
-        </div>
-        <p class="small muted cine__cta">
-          ¿Así se ve el suyo?
-          <a class="cine__link" href={waLink(waMsg.muestra)} target="_blank" rel="noopener" data-track="whatsapp" data-src="pelicula">Pida su muestra gratis →</a>
-        </p>
-      </div>
-    </div>
-  </section>
-
   <!-- PROCESO -->
   <section class="sec sec--band">
     <div class="sheet">
@@ -470,17 +444,6 @@ const galeria = [
   .gal__item figcaption b { display: block; font-size: 0.95rem; }
   .gal__item figcaption span { color: var(--ink-70); }
   @media (max-width: 860px) { .gal { grid-template-columns: repeat(2, 1fr); } }
-
-  /* ---------- PELÍCULA ---------- */
-  .cine { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(30px, 5vw, 70px); align-items: center; }
-  .cine__copy h2 { margin-top: 16px; }
-  .cine__copy .lede { margin-top: 16px; }
-  .cine__player { overflow: clip; padding: 10px; }
-  .cine__player video { width: 100%; height: auto; border-radius: calc(var(--r-lg) - 8px); background: #000; }
-  .cine__cta { margin-top: 14px; text-align: right; }
-  .cine__link { color: var(--ambar); font-weight: 800; text-decoration: none; margin-left: 6px; }
-  .cine__link:hover { text-decoration: underline; }
-  @media (max-width: 900px) { .cine { grid-template-columns: 1fr; } }
 
   /* ---------- PROCESO ---------- */
   .proc {
