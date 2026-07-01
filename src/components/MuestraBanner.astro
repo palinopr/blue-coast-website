@@ -1,0 +1,172 @@
+---
+// LA MUESTRA GRATIS — el imán de mensajes. Un frasco llenándose de diésel
+// desde la válvula del tanque, sello GRATIS, y el CTA de WhatsApp con el
+// mensaje ya escrito. SVG + CSS puro.
+import { waLink, waMsg } from '../lib/site';
+---
+<section class="muestra" id="muestra">
+  <div class="sheet muestra__in">
+    <div class="muestra__jar" aria-hidden="true">
+      <svg viewBox="0 0 268 240">
+        <defs>
+          <linearGradient id="mj-fuel" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8a6524" />
+            <stop offset="0.45" stop-color="#54390f" />
+            <stop offset="1" stop-color="#2a1a08" />
+          </linearGradient>
+          <clipPath id="mj-clip"><rect x="74" y="96" width="72" height="108" rx="8" /></clipPath>
+        </defs>
+        <!-- válvula del tanque -->
+        <rect x="10" y="18" width="70" height="26" rx="8" fill="#31486e" stroke="#7d92b8" stroke-width="1.8" />
+        <rect x="76" y="24" width="26" height="14" rx="7" fill="#3d5680" stroke="#7d92b8" stroke-width="1.8" />
+        <rect x="36" y="4" width="14" height="18" rx="4" fill="#3d5680" stroke="#7d92b8" stroke-width="1.8" />
+        <!-- gotas cayendo -->
+        <g class="mj-drops">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <path d={`M${106} ${44} c3 5 5 8 5 11a5 5 0 0 1-10 0c0-3 2-6 5-11Z`} fill="#8a6a30" style={`--del:${i * 0.55}s`} class="mj-drop" />
+          ))}
+        </g>
+        <!-- frasco -->
+        <path d="M70 74 h80 v14 a10 10 0 0 1 -6 6 v112 a14 14 0 0 1 -14 14 h-40 a14 14 0 0 1 -14 -14 V94 a10 10 0 0 1 -6 -6 Z" fill="rgba(148,170,210,0.08)" stroke="#7d92b8" stroke-width="2.5" />
+        <line x1="70" y1="80" x2="150" y2="80" stroke="#7d92b8" stroke-width="2" opacity=".6" />
+        <!-- diésel sucio: entra gota a gota, el lodo se asienta al final -->
+        <g clip-path="url(#mj-clip)">
+          <rect class="mj-level" x="74" y="96" width="72" height="108" fill="url(#mj-fuel)" />
+          <ellipse class="mj-surface" cx="110" cy="96" rx="37" ry="3.5" fill="#6e5620" opacity=".8" />
+          <!-- lodo grumoso: se asienta cuando el frasco ya se llenó -->
+          <g class="mj-sludge">
+            <path d="M74 190 c8 -6 14 4 22 1 s12 -6 20 -2 12 5 18 1 8 -3 12 0 V204 H74 Z" fill="#140c04" />
+            <path d="M74 197 c10 -4 20 3 34 2 s24 -4 38 -1 V204 H74 Z" fill="#0d0802" />
+          </g>
+          <!-- partículas hundiéndose: aparecen con el líquido -->
+          <g fill="#1c1206" class="mj-dirt">
+            {Array.from({ length: 7 }).map((_, i) => (
+              <circle class="mj-speck" cx={82 + ((i * 19) % 58)} cy={110 + ((i * 23) % 60)} r={i % 2 ? 1.6 : 2.3} style={`--dur:${5 + (i % 3)}s; --del:${(i * 0.8) % 4}s`} />
+            ))}
+          </g>
+        </g>
+        <!-- brillo del vidrio -->
+        <path d="M84 100 v96" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".13" />
+        <!-- etiqueta GRATIS colgando a la derecha -->
+        <g class="mj-stamp">
+          <path d="M150 88 q22 6 34 30" fill="none" stroke="#9fb4d8" stroke-width="1.6" stroke-dasharray="3 3" />
+          <g transform="rotate(8 214 138)">
+            <rect x="172" y="118" width="88" height="40" rx="9" fill="#0b1322" stroke="var(--ambar)" stroke-width="2.4" />
+            <circle cx="182" cy="138" r="3.2" fill="none" stroke="var(--ambar)" stroke-width="1.7" />
+            <text x="222" y="145" text-anchor="middle" font-family="var(--f-display)" font-size="19" font-weight="800" fill="var(--ambar)" letter-spacing="0.8">GRATIS</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="muestra__copy">
+      <h2 class="h-display">Su primera muestra es <span class="grad-text">gratis.</span></h2>
+      <p class="muted">
+        Vamos donde usted, tomamos una muestra de su tanque y usted ve el estado de su
+        combustible. Sin costo y sin compromiso.
+      </p>
+    </div>
+
+    <div class="muestra__act">
+      <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="muestra">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
+        Pedir mi muestra gratis
+      </a>
+      <p class="small muted muestra__nota">Respondemos en minutos · 78 municipios</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .muestra {
+    border-block: 1px solid rgba(255, 176, 58, 0.28);
+    background:
+      radial-gradient(700px 300px at 12% 50%, rgba(255, 176, 58, 0.12), transparent 65%),
+      linear-gradient(180deg, rgba(255, 176, 58, 0.05), rgba(255, 138, 0, 0.02));
+  }
+  .muestra__in {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(22px, 4vw, 56px);
+    padding-block: clamp(28px, 4vw, 44px);
+  }
+  .muestra__jar svg { width: clamp(160px, 16vw, 200px); height: auto; }
+  .muestra__copy h2 { font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.5rem); }
+  .muestra__copy p { margin-top: 10px; max-width: 52ch; }
+  .muestra__act { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .muestra__nota { margin: 0; }
+  @media (max-width: 860px) {
+    .muestra__in { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 18px; }
+    .muestra__copy p { max-width: 40ch; }
+  }
+
+  /* Ciclo de 9 s: el frasco EMPIEZA VACÍO y cada gota sube el nivel un
+     escalón; la suciedad aparece con el líquido; el lodo se asienta al
+     final; el goteo se detiene cuando está lleno; y todo vuelve a empezar. */
+  .mj-level { transform-origin: bottom; transform-box: fill-box; transform: scaleY(0.02); animation: mj-fill 9s linear infinite; }
+  .mj-surface { transform: translateY(105px); animation: mj-rise 9s linear infinite; }
+  @keyframes mj-fill {
+    0%, 6% { transform: scaleY(0.02); }
+    12%, 18% { transform: scaleY(0.22); }
+    24%, 30% { transform: scaleY(0.42); }
+    36%, 42% { transform: scaleY(0.64); }
+    48%, 88% { transform: scaleY(0.86); }
+    96%, 100% { transform: scaleY(0.02); }
+  }
+  @keyframes mj-rise {
+    0%, 6% { transform: translateY(105px); }
+    12%, 18% { transform: translateY(84px); }
+    24%, 30% { transform: translateY(63px); }
+    36%, 42% { transform: translateY(39px); }
+    48%, 88% { transform: translateY(15px); }
+    96%, 100% { transform: translateY(105px); }
+  }
+  /* lodo: invisible hasta que el frasco se llena; entonces se asienta */
+  .mj-sludge { opacity: 0; animation: mj-settle 9s linear infinite; }
+  @keyframes mj-settle {
+    0%, 46% { opacity: 0; transform: translateY(10px); }
+    62%, 88% { opacity: 1; transform: translateY(0); }
+    94%, 100% { opacity: 0; }
+  }
+  /* partículas: solo mientras hay líquido */
+  .mj-dirt { opacity: 0; animation: mj-dirt-gate 9s linear infinite; }
+  @keyframes mj-dirt-gate {
+    0%, 14% { opacity: 0; }
+    22%, 86% { opacity: 1; }
+    92%, 100% { opacity: 0; }
+  }
+  .mj-speck { animation: mj-sink var(--dur, 6s) linear var(--del, 0s) infinite; }
+  @keyframes mj-sink {
+    0% { transform: translateY(-8px); opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { transform: translateY(70px); opacity: 0; }
+  }
+  /* goteo: activo solo mientras se llena */
+  .mj-drops { animation: mj-drops-gate 9s linear infinite; }
+  @keyframes mj-drops-gate {
+    0%, 48% { opacity: 1; }
+    54%, 92% { opacity: 0; }
+    98%, 100% { opacity: 1; }
+  }
+  .mj-drop { opacity: 0; animation: mj-drip 1.08s linear var(--del) infinite; }
+  @keyframes mj-drip {
+    0% { opacity: 0; transform: translateY(0); }
+    12% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(46px); }
+  }
+  .mj-stamp { animation: mj-pulse 3.4s ease-in-out infinite; }
+  @keyframes mj-pulse {
+    0%, 100% { opacity: 0.92; }
+    50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 176, 58, 0.7)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mj-level, .mj-surface, .mj-drop, .mj-drops, .mj-stamp, .mj-speck, .mj-sludge, .mj-dirt { animation: none; }
+    .mj-level { transform: scaleY(0.86); }
+    .mj-surface { transform: translateY(15px); }
+    .mj-sludge, .mj-dirt { opacity: 1; }
+    .mj-drop { opacity: 0; }
+  }
+</style>

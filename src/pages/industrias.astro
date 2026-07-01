@@ -1,121 +1,105 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHeader from '../components/PageHeader.astro';
-import { site, waLink, phoneDisplay, stats } from '../lib/site';
+import MuestraBanner from '../components/MuestraBanner.astro';
+import { site, waLink, waMsg, phoneDisplay, sectores } from '../lib/site';
 
-const sectors = [
-  { name: 'Hospitales', why: 'Vidas dependen del respaldo; cumplimiento de normas como NFPA 110.' },
-  { name: 'Hoteles', why: 'Operacion 24/7 y experiencia del huesped, sin interrupciones.' },
-  { name: 'Data Centers', why: 'El uptime lo es todo; cada segundo de caida cuesta.' },
-  { name: 'Condominios', why: 'Ascensores, agua y seguridad para los residentes.' },
-  { name: 'Supermercados', why: 'Cadena de frio e inventario perecedero en riesgo.' },
-  { name: 'Industria', why: 'Lineas de produccion que no pueden parar.' },
-];
-
-const yrs = stats.find((s) => s.label.includes('anos'))?.big ?? '+15';
-const muni = stats.find((s) => s.label.includes('municipios'))?.big ?? '78';
-
-const reasons = [
-  { tag: 'En minutos', title: 'Respuesta rapida', body: 'Cuando ocurre el apagon, su generador no puede esperar. Llegamos rapido para que su operacion siga.' },
-  { tag: `${yrs} anos`, title: 'Tecnicos con experiencia', body: 'Mas de 15 anos y 500+ tanques intervenidos protegiendo sistemas de respaldo en Puerto Rico.' },
-  { tag: `${muni} municipios`, title: 'Cobertura en toda la isla', body: 'Damos servicio en los 78 municipios, donde sea que operen sus generadores.' },
-  { tag: 'NFPA 110', title: 'Cumplimiento y seguridad', body: 'Mantenemos su sistema de respaldo listo y conforme a normas como NFPA 110.' },
+const razones = [
+  { title: 'Respuesta rápida', body: 'Cuando ocurre el apagón, su generador no puede esperar. Llegamos rápido para que su operación siga.' },
+  { title: 'Técnicos con experiencia', body: 'Más de 15 años y 500+ tanques intervenidos protegiendo sistemas de respaldo en Puerto Rico.' },
+  { title: 'Cobertura en toda la isla', body: 'Damos servicio en los 78 municipios, donde sea que operen sus generadores.' },
+  { title: 'Cumplimiento y seguridad', body: 'Mantenemos su sistema de respaldo listo y conforme a normas como NFPA 110, con reporte para auditoría.' },
 ];
 ---
 <Base
-  title="Industrias que Servimos | Blue Coast Developers Puerto Rico"
-  description="Atendemos hospitales, hoteles, data centers, condominios, supermercados e industria en Puerto Rico. Mantenemos los sistemas de respaldo de operaciones criticas que no pueden detenerse."
+  title="Industrias | Blue Coast Developers Puerto Rico"
+  description="Hospitales, hoteles, data centers, condominios, supermercados e industria: mantenemos el diésel de las operaciones críticas que no pueden detenerse en Puerto Rico."
 >
-  <PageHeader
-    eyebrow="Industrias"
-    title="Operaciones criticas que no pueden detenerse"
-    sub="Cuando ocurre un apagon, su generador es la diferencia entre seguir operando o parar."
-    current="Industrias"
-  />
-
-  <!-- SECTORS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Donde un apagon no es una opcion</h2>
-        <p class="muted">Cada sector tiene un costo distinto al detenerse. Protegemos el combustible que mantiene su respaldo listo.</p>
-      </div>
-      <div class="sectors">
-        {sectors.map((s, idx) => (
-          <article class="sector reveal">
-            <span class="sector__n">{String(idx + 1).padStart(2, '0')}</span>
-            <h3 class="sector__t">{s.name}</h3>
-            <p class="sector__why">{s.why}</p>
-          </article>
-        ))}
+  <section class="cover" data-hero>
+    <div class="sheet">
+      <span class="kicker rv">Industrias</span>
+      <h1 class="h-display rv" style="--d:.05s">Donde un apagón <span class="grad-text">no es una opción.</span></h1>
+      <p class="lede rv" style="--d:.1s">
+        Cada sector paga la parada de forma distinta. Protegemos el combustible que
+        mantiene su respaldo listo.
+      </p>
+      <div class="cover__cta rv" style="--d:.15s">
+        <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="industrias-hero">Pedir muestra gratis</a>
+        <a href={`tel:${site.phone}`} class="btn btn-glass" data-track="call" data-src="industrias-hero">Llamar · {phoneDisplay(site.phone)}</a>
       </div>
     </div>
   </section>
 
-  <!-- WHY BLUE COAST -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">El respaldo de su respaldo</h2>
+  <section class="sec sec--tightop">
+    <div class="sheet">
+      <ol class="sect">
+        {sectores.map((s, i) => (
+          <li class="sect__row rv" style={`--d:${0.04 * i}s`}>
+            <span class="sect__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="h-display sect__t">{s.name}</h2>
+            <p class="muted sect__why">{s.why}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec--band">
+    <div class="sheet">
+      <div class="sec-head">
+        <span class="kicker rv">Por qué Blue Coast</span>
+        <h2 class="h-display rv" style="--d:.05s">El respaldo de su respaldo.</h2>
       </div>
-      <div class="why">
-        {reasons.map((r) => (
-          <div class="why__item reveal">
-            <span class="why__tag">{r.tag}</span>
-            <h3 class="why__t">{r.title}</h3>
-            <p class="muted">{r.body}</p>
+      <div class="raz">
+        {razones.map((r, i) => (
+          <div class="raz__item rv" style={`--d:${0.05 * i}s`}>
+            <h3 class="h-display">{r.title}</h3>
+            <p class="muted small">{r.body}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section cta" id="contacto">
-    <div class="container cta__in reveal">
-      <h2 class="display">Asegure el respaldo antes del proximo apagon</h2>
-      <p class="muted">Cuente su caso y le decimos como mantener su generador listo. Respondemos en minutos.</p>
-      <div class="cta__actions">
-        <a href="/contacto" class="btn btn--gold btn--lg">Solicitar evaluacion gratis</a>
-        <a href={`tel:${site.phone}`} class="btn btn--ghost btn--lg" data-track="call" data-src="industrias">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          {phoneDisplay(site.phone)}
-        </a>
-        <a href={waLink()} target="_blank" rel="noopener" class="btn btn--wa btn--lg" data-track="whatsapp" data-src="industrias">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
-          WhatsApp
-        </a>
-      </div>
-    </div>
-  </section>
+  <MuestraBanner />
 </Base>
 
 <style>
-  /* SECTORS — exhibit grid (mirrors .svc) */
-  .sectors { margin-top: clamp(36px, 5vw, 50px); border-top: 1px solid var(--line); }
-  .sector { display: grid; grid-template-columns: 60px minmax(180px, 1fr) 1.7fr; gap: clamp(14px, 3vw, 46px); align-items: start; padding: clamp(22px, 2.6vw, 32px) 0; border-bottom: 1px solid var(--line); transition: background 0.25s; }
-  .sector:hover { background: var(--navy-deep); }
-  .sector__n { font-family: var(--f-mono); font-size: 0.82rem; letter-spacing: 0.1em; color: var(--gold); padding-top: 10px; }
-  .sector__t { font-family: var(--f-display); text-transform: uppercase; font-size: clamp(1.5rem, 1.1rem + 1vw, 1.9rem); line-height: 1.02; margin: 0; }
-  .sector__why { color: var(--bone-dim); font-size: var(--step--1); line-height: 1.5; margin: 0; }
-  @media (max-width: 760px) {
-    .sector { grid-template-columns: auto 1fr; column-gap: 16px; row-gap: 8px; }
-    .sector__n { grid-row: 1 / span 2; }
-    .sector__t { grid-column: 2; }
-    .sector__why { grid-column: 2; }
+  .cover { padding-block: clamp(56px, 8vw, 110px) clamp(20px, 3vw, 40px); }
+  .cover h1 { margin-top: 18px; max-width: 20ch; }
+  .cover .lede { margin-top: 16px; max-width: 52ch; }
+  .cover__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .sec--tightop { padding-top: clamp(24px, 4vw, 56px); }
+
+  .sect { list-style: none; margin: 0; padding: 0; }
+  .sect__row {
+    display: grid;
+    grid-template-columns: 64px minmax(180px, 0.7fr) 1.3fr;
+    gap: clamp(14px, 3vw, 48px);
+    align-items: baseline;
+    padding-block: clamp(22px, 3vw, 36px);
+    border-top: 1px solid var(--line);
+    transition: background 0.15s;
+  }
+  .sect__row:hover { background: rgba(148, 170, 210, 0.04); }
+  .sect__row:last-child { border-bottom: 1px solid var(--line); }
+  .sect__n { font-family: var(--f-display); font-weight: 700; color: var(--ambar); font-size: 1.05rem; }
+  .sect__t { font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.4rem); margin: 0; }
+  .sect__why { margin: 0; max-width: 48ch; }
+  @media (max-width: 700px) {
+    .sect__row { grid-template-columns: 48px 1fr; }
+    .sect__why { grid-column: 2; }
   }
 
-  /* WHY — gold-ruled points (mirrors .proc) */
-  .why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 50px; }
-  .why__item { border-top: 2px solid var(--rule-gold); padding-top: 20px; }
-  .why__tag { font-family: var(--f-body); font-weight: 700; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
-  .why__t { font-family: var(--f-display); text-transform: uppercase; font-size: 1.15rem; margin: 12px 0 10px; }
-  @media (max-width: 860px) { .why { grid-template-columns: 1fr 1fr; gap: 22px; } }
-  @media (max-width: 460px) { .why { grid-template-columns: 1fr; } }
-
-  /* CTA — centered */
-  .cta { background: linear-gradient(180deg, var(--navy-deep), var(--navy-900)); text-align: center; }
-  .cta__in { max-width: 720px; }
-  .cta .display { margin: 16px 0; }
-  .cta__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 30px; }
+  .sec--band {
+    background:
+      radial-gradient(1000px 500px at 80% -10%, rgba(47, 107, 255, 0.12), transparent 60%),
+      linear-gradient(180deg, var(--bg-2), var(--bg));
+    border-block: 1px solid var(--line);
+  }
+  .raz { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(24px, 4vw, 48px); margin-top: clamp(28px, 4vw, 44px); }
+  .raz__item { position: relative; padding-top: 20px; }
+  .raz__item::before { content: ''; position: absolute; top: 0; left: 0; width: 42px; height: 5px; border-radius: 4px; background: linear-gradient(90deg, var(--ambar), var(--ambar-2)); }
+  .raz__item h3 { font-size: 1.2rem; }
+  .raz__item p { margin-top: 8px; max-width: 44ch; }
+  @media (max-width: 700px) { .raz { grid-template-columns: 1fr; } }
 </style>

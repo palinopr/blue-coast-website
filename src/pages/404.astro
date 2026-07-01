@@ -1,25 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, waLink, phoneDisplay } from '../lib/site';
+import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
 ---
-<Base title="Pagina no encontrada | Blue Coast Developers" description="La pagina que busca no existe.">
-  <section class="section nf">
-    <div class="container nf__in">
-      <p class="display nf__code">404</p>
-      <h1 class="display">Esta pagina no existe</h1>
-      <p class="lead muted">El enlace puede estar roto o la pagina fue movida. Volvamos a terreno firme.</p>
+<Base title="Página no encontrada | Blue Coast Developers" description="La página que busca no existe.">
+  <section class="nf" data-hero>
+    <div class="sheet nf__in">
+      <p class="nf__code h-display grad-text" aria-hidden="true">404</p>
+      <h1 class="h-display">Esta página no existe.</h1>
+      <p class="lede">El enlace puede estar roto o la página fue movida.</p>
       <div class="nf__cta">
-        <a href="/" class="btn btn--gold btn--lg">Ir al inicio</a>
-        <a href={`tel:${site.phone}`} class="btn btn--ghost btn--lg" data-track="call" data-src="404">Llamar &middot; {phoneDisplay(site.phone)}</a>
+        <a href="/" class="btn btn-ambar">Ir al inicio</a>
+        <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="404">Pedir muestra gratis</a>
+        <a href={`tel:${site.phone}`} class="btn btn-glass" data-track="call" data-src="404">Llamar · {phoneDisplay(site.phone)}</a>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .nf { min-height: 66svh; display: grid; place-items: center; text-align: center; }
-  .nf__in { max-width: 560px; }
-  .nf__code { font-size: clamp(5rem, 3rem + 12vw, 11rem); color: var(--gold); line-height: 0.9; }
-  .nf .display { margin: 4px 0 16px; }
-  .nf__cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .nf { min-height: 62svh; display: grid; place-items: center; padding-block: clamp(56px, 8vw, 100px); }
+  .nf__in { max-width: 640px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .nf__code { font-size: clamp(4.5rem, 3rem + 8vw, 9rem); font-weight: 800; line-height: 1; }
+  .nf__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
 </style>

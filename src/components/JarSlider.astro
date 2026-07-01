@@ -1,0 +1,98 @@
+---
+// Comparador ANTES/DESPUÉS con arrastre — la prueba visual del servicio.
+// Un <input type="range"> invisible cubre el área: accesible con teclado,
+// arrastrable con dedo o mouse, y el mango brillante sigue el valor.
+import { Image } from 'astro:assets';
+import antes from '../assets/img/jar-antes.jpg';
+import despues from '../assets/img/jar-despues.jpg';
+---
+<div class="cmp" data-cmp style="--x: 50%">
+  <div class="cmp__stage">
+    <Image src={despues} alt="Diésel pulido: color ámbar limpio" widths={[480, 720, 900]} sizes="(max-width: 900px) 92vw, 46vw" format="webp" loading="lazy" />
+    <div class="cmp__over" aria-hidden="true">
+      <Image src={antes} alt="" widths={[480, 720, 900]} sizes="(max-width: 900px) 92vw, 46vw" format="webp" loading="lazy" />
+    </div>
+    <span class="cmp__tag cmp__tag--a">Antes</span>
+    <span class="cmp__tag cmp__tag--d">Después</span>
+    <div class="cmp__handle" aria-hidden="true">
+      <i>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 3 12l6 6M15 6l6 6-6 6"/></svg>
+      </i>
+    </div>
+    <input class="cmp__range" type="range" min="0" max="100" value="50" aria-label="Comparar el diésel antes y después del pulido" />
+  </div>
+  <p class="cmp__hint small muted">← Arrastre para comparar →</p>
+</div>
+
+<style>
+  .cmp__stage {
+    position: relative;
+    border-radius: var(--r-lg);
+    overflow: clip;
+    border: 1px solid var(--line-2);
+    box-shadow: 0 40px 90px -30px rgba(2, 6, 18, 0.9), 0 0 80px -20px rgba(255, 176, 58, 0.25);
+    touch-action: pan-y; /* el gesto vertical sigue haciendo scroll */
+  }
+  .cmp__stage :global(img) { width: 100%; height: auto; display: block; }
+  .cmp__over {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--x)) 0 0);
+  }
+  .cmp__over :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  .cmp__tag {
+    position: absolute;
+    top: 14px;
+    padding: 7px 14px;
+    border-radius: 99px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+  .cmp__tag--a { left: 14px; background: rgba(30, 18, 6, 0.72); color: #ffb38a; border: 1px solid rgba(255, 179, 138, 0.35); }
+  .cmp__tag--d { right: 14px; background: rgba(255, 176, 58, 0.92); color: #221200; }
+
+  .cmp__handle {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: var(--x);
+    width: 3px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, transparent, #fff 18%, #fff 82%, transparent);
+    pointer-events: none;
+  }
+  .cmp__handle i {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #ffffff, #d9e4f5);
+    color: #0a1224;
+    box-shadow: 0 10px 30px rgba(2, 6, 18, 0.55), inset 0 -2px 6px rgba(10, 18, 36, 0.2);
+  }
+  .cmp__handle svg { width: 22px; height: 22px; }
+
+  .cmp__range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+    margin: 0;
+  }
+  .cmp__hint { text-align: center; margin-top: 12px; letter-spacing: 0.04em; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-cmp]').forEach((cmp) => {
+    const range = cmp.querySelector<HTMLInputElement>('.cmp__range');
+    range?.addEventListener('input', () => cmp.style.setProperty('--x', `${range.value}%`));
+  });
+</script>

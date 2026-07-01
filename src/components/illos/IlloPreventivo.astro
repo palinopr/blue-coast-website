@@ -1,0 +1,37 @@
+---
+// Ilustración: mantenimiento preventivo — calendario + medidor de condición.
+---
+<svg class="illo" viewBox="0 0 180 140" aria-hidden="true">
+  <defs>
+    <linearGradient id="iv-cal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22345a" /><stop offset="1" stop-color="#121d36" />
+    </linearGradient>
+  </defs>
+  <!-- calendario -->
+  <rect x="22" y="30" width="88" height="88" rx="12" fill="url(#iv-cal)" stroke="#41598a" />
+  <rect x="22" y="30" width="88" height="24" rx="12" fill="#2f4a78" />
+  <rect x="38" y="22" width="8" height="16" rx="4" fill="#8fb2ea" />
+  <rect x="86" y="22" width="8" height="16" rx="4" fill="#8fb2ea" />
+  {Array.from({ length: 3 }).map((_, r) =>
+    Array.from({ length: 4 }).map((_, c) => (
+      <rect x={34 + c * 17} y={62 + r * 16} width="11" height="10" rx="3" fill={r === 1 && c === 2 ? '#ffb03a' : '#24365a'} />
+    ))
+  )}
+  <path class="check" d="M64 96l7 7 13-14" fill="none" stroke="#25d366" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- medidor -->
+  <g class="gauge">
+    <path d="M112 118a38 38 0 0 1 56-33" fill="none" stroke="#24365a" stroke-width="8" stroke-linecap="round" />
+    <path class="gauge__arc" d="M112 118a38 38 0 0 1 56-33" fill="none" stroke="#ffb03a" stroke-width="8" stroke-linecap="round" stroke-dasharray="70 100" />
+    <g class="gauge__aguja" transform-origin="150 118">
+      <line x1="150" y1="118" x2="122" y2="96" stroke="#eaf0fb" stroke-width="3.5" stroke-linecap="round" />
+    </g>
+    <circle cx="150" cy="118" r="5" fill="#eaf0fb" />
+  </g>
+  <style>
+    .gauge__aguja { animation: iv-needle 3.4s ease-in-out infinite; }
+    @keyframes iv-needle { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(26deg); } }
+    .check { stroke-dasharray: 34; stroke-dashoffset: 0; animation: iv-check 3.4s ease-in-out infinite; }
+    @keyframes iv-check { 0% { stroke-dashoffset: 34; } 30%, 100% { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) { .gauge__aguja, .check { animation: none; } }
+  </style>
+</svg>

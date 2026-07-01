@@ -1,63 +1,59 @@
 ---
-import { nav, services, site, waLink, phoneDisplay } from '../lib/site';
-import Logo from './Logo.astro';
+import { nav, site, waLink, waMsg, phoneDisplay } from '../lib/site';
 const year = new Date().getFullYear();
 ---
-
-<footer class="ft">
-  <div class="container ft__grid">
-    <div class="ft__brand">
-      <a href="/" class="logo" aria-label="Blue Coast Developers">
-        <Logo size={34} />
-      </a>
-      <p class="muted">Gestion integral de combustible diesel y confiabilidad de energia de respaldo en todo Puerto Rico.</p>
+<footer class="ftr">
+  <div class="sheet">
+    <div class="ftr__grid">
+      <div>
+        <div class="ftr__brand">
+          <svg width="26" height="30" viewBox="0 0 40 46" fill="none" aria-hidden="true">
+            <path d="M20 2.5C27.5 14 33 22.2 33 29.5A13 13 0 0 1 7 29.5C7 22.2 12.5 14 20 2.5Z" stroke="#59c2ff" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M21.8 16.4 13.6 28.2h5.1l-1.4 7.6 9.1-12.2h-5.2l1.6-7.2z" fill="var(--ambar)"/>
+          </svg>
+          <b>Blue Coast Developers</b>
+        </div>
+        <p class="muted small ftr__desc">
+          Gestión integral de combustible diésel: limpieza de tanques, pulido de combustible
+          y mantenimiento de sistemas de respaldo en los 78 municipios de Puerto Rico.
+        </p>
+      </div>
+      <nav class="ftr__col" aria-label="Páginas">
+        <h4>Navegación</h4>
+        {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      </nav>
+      <div class="ftr__col">
+        <h4>Contacto directo</h4>
+        <a href={`tel:${site.phone}`} data-track="call" data-src="footer">{phoneDisplay(site.phone)}</a>
+        <a href={`tel:${site.phoneAlt}`} data-track="call" data-src="footer">{phoneDisplay(site.phoneAlt)}</a>
+        <a href={waLink(waMsg.general)} target="_blank" rel="noopener" data-track="whatsapp" data-src="footer">WhatsApp</a>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
     </div>
-
-    <nav class="ft__col" aria-label="Paginas">
-      <h4>Navegacion</h4>
-      <ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
-    </nav>
-
-    <div class="ft__col">
-      <h4>Servicios</h4>
-      <ul>{services.map((s) => <li><a href="/servicios">{s.title}</a></li>)}</ul>
+    <div class="ftr__base small muted">
+      <span>© {year} {site.name} · Puerto Rico</span>
+      <span>Servicio 24/7 · Emergencias y mantenimiento programado</span>
     </div>
-
-    <div class="ft__col">
-      <h4>Contacto</h4>
-      <ul class="ft__contact">
-        <li><a href={`tel:${site.phone}`} data-track="call" data-src="footer">{phoneDisplay(site.phone)}</a></li>
-        <li><a href={`tel:${site.phoneAlt}`} data-track="call" data-src="footer">{phoneDisplay(site.phoneAlt)}</a></li>
-        <li><a href={waLink()} target="_blank" rel="noopener" data-track="whatsapp" data-src="footer">WhatsApp</a></li>
-        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-        <li class="muted">Puerto Rico</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container ft__bottom">
-    <span class="muted">&copy; {year} {site.name}. Todos los derechos reservados.</span>
-    <span class="ft__sig">DIESEL &middot; PULIDO &middot; GENERADORES</span>
   </div>
 </footer>
 
 <style>
-  .ft { background: var(--navy-900); border-top: 1px solid var(--line); padding-top: clamp(48px, 7vw, 88px); }
-  .ft__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: 40px; }
-  .ft__brand .logo { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 16px; }
-  .logo__txt { display: flex; flex-direction: column; line-height: 1; }
-  .logo__txt b { font-family: var(--f-display); font-size: 1.02rem; letter-spacing: 0.04em; }
-  .logo__txt i { font-family: var(--f-mono); font-style: normal; font-size: 0.6rem; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); margin-top: 3px; }
-  .ft__brand p { max-width: 34ch; font-size: var(--step--1); }
-
-  .ft__col h4 { font-family: var(--f-body); font-weight: 700; font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin: 0 0 16px; }
-  .ft__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
-  .ft__col a { font-size: var(--step--1); color: var(--bone-dim); transition: color 0.16s; }
-  .ft__col a:hover { color: var(--gold); }
-
-  .ft__bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(40px, 6vw, 72px); padding-block: 26px; border-top: 1px solid var(--line); font-family: var(--f-body); font-size: 0.74rem; letter-spacing: 0.04em; }
-  .ft__sig { color: var(--gold-deep); letter-spacing: 0.2em; }
-
-  @media (max-width: 880px) { .ft__grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
-  @media (max-width: 520px) { .ft__grid { grid-template-columns: 1fr; } }
+  .ftr { border-top: 1px solid var(--line); margin-top: clamp(40px, 6vw, 80px); padding-bottom: 90px; }
+  @media (min-width: 961px) { .ftr { padding-bottom: 0; } }
+  .ftr__grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr 1fr;
+    gap: clamp(28px, 5vw, 72px);
+    padding-block: clamp(36px, 5vw, 60px);
+  }
+  @media (max-width: 820px) { .ftr__grid { grid-template-columns: 1fr; gap: 30px; } }
+  .ftr__brand { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 700; letter-spacing: -0.01em; }
+  .ftr__desc { margin-top: 14px; max-width: 40ch; }
+  .ftr__col h4 { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 14px; }
+  .ftr__col a { display: block; padding: 6px 0; color: var(--ink-70); text-decoration: none; font-weight: 600; }
+  .ftr__col a:hover { color: var(--ambar); }
+  .ftr__base {
+    display: flex; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap;
+    padding-block: 20px; border-top: 1px solid var(--line);
+  }
 </style>

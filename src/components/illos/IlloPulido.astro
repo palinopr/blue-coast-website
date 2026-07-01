@@ -1,0 +1,33 @@
+---
+// Ilustración: pulido de combustible — circuito de filtración multietapa.
+---
+<svg class="illo" viewBox="0 0 180 140" aria-hidden="true">
+  <defs>
+    <linearGradient id="ip-filtro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a3c5c" /><stop offset="1" stop-color="#141f36" />
+    </linearGradient>
+  </defs>
+  <!-- gota sucia -->
+  <path d="M42 26c11 15 17 24 17 32a17 17 0 0 1-34 0c0-8 6-17 17-32Z" fill="#4a3a16" stroke="#6b5426" />
+  <!-- circuito -->
+  <path class="tubo" d="M42 78v22a14 14 0 0 0 14 14h28" fill="none" stroke="#2c4166" stroke-width="8" stroke-linecap="round" />
+  <path class="tubo-flujo" d="M42 78v22a14 14 0 0 0 14 14h28" fill="none" stroke="#8a6a30" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round" />
+  <path class="tubo" d="M124 114h14a14 14 0 0 0 14-14V80" fill="none" stroke="#2c4166" stroke-width="8" stroke-linecap="round" />
+  <path class="tubo-flujo t2" d="M124 114h14a14 14 0 0 0 14-14V80" fill="none" stroke="#ffb03a" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round" />
+  <!-- filtro multietapa -->
+  <rect x="84" y="96" width="40" height="36" rx="8" fill="url(#ip-filtro)" stroke="#41598a" />
+  <line x1="90" y1="106" x2="118" y2="106" stroke="#5b7db8" stroke-width="2.5" />
+  <line x1="90" y1="114" x2="118" y2="114" stroke="#8fb2ea" stroke-width="2.5" />
+  <line x1="90" y1="122" x2="118" y2="122" stroke="#ffb03a" stroke-width="2.5" />
+  <!-- gota limpia -->
+  <path class="gota-limpia" d="M152 22c11 15 17 24 17 32a17 17 0 0 1-34 0c0-8 6-17 17-32Z" fill="#ffb03a" stroke="#ffd98a" />
+  <path d="M146 44a8 8 0 0 0 5 9" stroke="#fff3d8" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".8" />
+  <style>
+    .tubo-flujo { animation: ip-flow 1.1s linear infinite; }
+    .t2 { animation-delay: 0.5s; }
+    @keyframes ip-flow { to { stroke-dashoffset: -18; } }
+    .gota-limpia { animation: ip-glow 2.8s ease-in-out infinite; }
+    @keyframes ip-glow { 50% { filter: drop-shadow(0 0 8px rgba(255, 176, 58, 0.8)); } }
+    @media (prefers-reduced-motion: reduce) { .tubo-flujo, .gota-limpia { animation: none; } }
+  </style>
+</svg>

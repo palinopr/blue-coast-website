@@ -1,10 +1,13 @@
 import { defineConfig } from 'astro/config';
 
-// Static output. Lead capture uses Netlify Forms (no-JS safe) plus a Netlify
-// Function (netlify/functions/lead.js) that forwards to GoHighLevel when
-// GHL_WEBHOOK_URL is set. No SSR adapter needed.
+// Sitio estático. Captura de leads: Netlify Forms (funciona sin JS) más una
+// Netlify Function (netlify/functions/lead.mjs) que reenvía a GoHighLevel
+// cuando GHL_WEBHOOK_URL está configurado. Sin adaptador SSR.
+// compressHTML: true — el modo 'jsx' de Astro 7 puede pegar palabras alrededor
+// de <em>/<a> en línea en textos en español.
 export default defineConfig({
   site: 'https://www.bluecoastpr.com',
+  compressHTML: true,
   build: { inlineStylesheets: 'auto' },
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
 });

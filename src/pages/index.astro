@@ -1,192 +1,281 @@
 ---
 import Base from '../layouts/Base.astro';
-import Ticker from '../components/Ticker.astro';
-import BeforeAfter from '../components/BeforeAfter.astro';
+import JarSlider from '../components/JarSlider.astro';
+import MuestraBanner from '../components/MuestraBanner.astro';
+import TankDemo from '../components/TankDemo.astro';
 import LeadForm from '../components/LeadForm.astro';
-import PRMap from '../components/PRMap.astro';
-import { site, waLink, phoneDisplay, services, steps, industries, projects, stats } from '../lib/site';
+import IlloLimpieza from '../components/illos/IlloLimpieza.astro';
+import IlloPulido from '../components/illos/IlloPulido.astro';
+import IlloPreventivo from '../components/illos/IlloPreventivo.astro';
+import IlloSistemas from '../components/illos/IlloSistemas.astro';
+import { site, waLink, waMsg, phoneDisplay, servicios, pasos, obras } from '../lib/site';
 import { Image } from 'astro:assets';
-import { img } from '../lib/images';
-import hero from '../assets/img/hero-generator.jpg';
+
+import heroImg from '../assets/img/hero-generator.jpg';
+import fotoDamas from '../assets/img/field/hospital-damas-ponce.jpg';
+import fotoAuxilio from '../assets/img/field/hospital-auxilio-mutuo.jpg';
+import fotoBoston from '../assets/img/field/boston-scientific.jpg';
+import fotoTorre from '../assets/img/field/torre-del-cardenal.jpg';
+import fotoCayey from '../assets/img/field/hospital-menonita-cayey.jpg';
+
+const clientes = [
+  { name: 'Hospital de Damas', img: '/logos/damas.png', h: 44 },
+  { name: 'Hospital Auxilio Mutuo', img: '/logos/auxilio-mutuo.png', h: 27 },
+  { name: 'Boston Scientific', img: '/logos/boston-scientific.svg', h: 22 },
+  { name: 'Sistema de Salud Menonita', img: '/logos/menonita.png', h: 27 },
+];
+
+const galeria = [
+  { img: fotoAuxilio, t: 'Hospital Auxilio Mutuo', d: 'San Juan · 20,000 gal' },
+  { img: fotoBoston, t: 'Boston Scientific', d: 'Tanque 20,000 gal' },
+  { img: fotoTorre, t: 'Torre del Cardenal', d: 'Condominio · 6,000 gal' },
+  { img: fotoCayey, t: 'Hospital Menonita', d: 'Cayey · 30,000 gal' },
+];
 ---
 <Base
-  title="Blue Coast Developers | Limpieza de Tanques y Pulido de Combustible Diesel en Puerto Rico"
-  description="Gestion integral de combustible diesel en Puerto Rico: limpieza de tanques, pulido de combustible y mantenimiento de generadores. Protegemos su energia de respaldo. Respuesta en minutos."
-  transparentHeader={true}
-  motion={true}
+  title="Blue Coast Developers | Limpieza de tanques y pulido de diésel en Puerto Rico"
+  description="Limpieza de tanques diésel, pulido de combustible y mantenimiento de generadores en los 78 municipios de Puerto Rico. Hospitales, condominios e industria. Respondemos en minutos, 24/7."
 >
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero__bg">
-      <Image src={hero} alt="Generador diesel industrial en sala de maquinas" sizes="100vw" widths={[640, 1024, 1600, 2000]} format="webp" loading="eager" fetchpriority="high" />
+  <section class="hero" data-hero>
+    <div class="hero__bg" aria-hidden="true">
+      <Image src={heroImg} alt="" widths={[800, 1280, 1800]} sizes="100vw" format="webp" loading="eager" fetchpriority="high" />
+      <div class="hero__shade"></div>
+      <div class="hero__glow"></div>
     </div>
-    <div class="container hero__in">
-      <h1 class="display hero__title">Protegemos sus generadores para que arranquen <span class="gold">cuando mas los necesita</span></h1>
-      <p class="lead hero__sub">Limpieza de tanques, pulido de combustible y mantenimiento preventivo en todo Puerto Rico. 15+ anos protegiendo los sistemas de respaldo de hospitales, industrias y condominios.</p>
-      <div class="hero__cta">
-        <a href={waLink()} target="_blank" rel="noopener" class="btn btn--wa btn--lg" data-track="whatsapp" data-src="hero">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
-          Escribir por WhatsApp
-        </a>
-        <a href={`tel:${site.phone}`} class="btn btn--ghost btn--lg" data-track="call" data-src="hero">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Llamar &middot; {phoneDisplay(site.phone)}
-        </a>
-      </div>
-      <div class="hero__stats">
-        <div class="hstat"><b>+15</b><span>anos de experiencia</span></div>
-        <div class="hstat"><b>500+</b><span>tanques intervenidos</span></div>
-        <div class="hstat"><b>93K</b><span>galones, mayor proyecto</span></div>
+
+    <div class="sheet hero__in">
+      <div class="hero__copy">
+        <p class="hero__status rv"><i aria-hidden="true"></i> Atendemos 24/7 en toda la isla — respondemos en minutos</p>
+        <h1 class="h-display rv" style="--d:.06s">
+          Su generador arranca.
+          <span class="grad-text">Del diésel nos encargamos nosotros.</span>
+        </h1>
+        <p class="lede rv" style="--d:.12s">
+          Limpieza de tanques, pulido de combustible y mantenimiento preventivo para
+          hospitales, condominios e industria en Puerto Rico.
+        </p>
+        <div class="hero__cta rv" style="--d:.18s">
+          <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="hero">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
+            Pedir muestra gratis
+          </a>
+          <a href={`tel:${site.phone}`} class="btn btn-glass" data-track="call" data-src="hero">
+            Llamar · {phoneDisplay(site.phone)}
+          </a>
+        </div>
+        <p class="hero__oferta rv" style="--d:.21s">
+          <b>Muestra gratis:</b> usted ve el estado de su combustible, sin compromiso.
+        </p>
+        <p class="hero__record muted rv" style="--d:.24s">
+          Más de 15 años y 500+ tanques intervenidos en los 78 municipios — desde
+          condominios hasta el tanque de <b>93,000 galones</b> del Hospital de Damas en Ponce.
+        </p>
       </div>
     </div>
-    <a href="#servicios" class="hero__scroll" aria-label="Desplazar"><span></span></a>
+
+    <div class="hero__trust">
+      <div class="sheet hero__trust-in">
+        <span class="small muted hero__trust-label">Confían en nosotros</span>
+        <div class="hero__trust-logos">
+          {clientes.map((c, i) => (
+            <img class="hero__client--logo" style={`--i:${i}; --h:${c.h}px`} src={c.img} alt={c.name} height={c.h} loading="lazy" />
+          ))}
+        </div>
+      </div>
+    </div>
   </section>
 
-  <Ticker />
-
-  <!-- CLIENTS -->
-  <section class="section section--tight">
-    <div class="container">
-      <p class="eyebrow" style="justify-content:center;display:flex;">Confian en nosotros</p>
-      <div class="clients">
-        <span>Hospital Auxilio Mutuo</span><span>Boston Scientific</span><span>Hospital de Damas</span><span>Torre del Cardenal</span><span>Paulson AGI</span>
+  <!-- DEMO: DENTRO DEL TANQUE -->
+  <section class="sec sec-demo" id="demo">
+    <div class="sheet demo">
+      <div class="demo__copy">
+        <span class="kicker rv">Dentro de su tanque</span>
+        <h2 class="h-display rv" style="--d:.05s">Un tanque «lleno» <span class="grad-text">no es un tanque listo.</span></h2>
+        <p class="lede rv" style="--d:.1s">
+          Con los años, el diésel almacenado se separa en capas: agua de condensación,
+          sedimento y un lodo biológico que tapa los filtros justo cuando el generador
+          arranca. Mire lo que hace nuestro ciclo de pulido:
+        </p>
+        <p class="muted small demo__nota rv" style="--d:.15s">
+          Demostración técnica — así trabajamos su tanque en sitio, sin sacarlo de servicio.
+        </p>
+      </div>
+      <div class="demo__stage rv" style="--d:.1s">
+        <TankDemo />
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="section section--alt" id="servicios">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Todo el ciclo de confiabilidad del combustible</h2>
-        <p class="muted">Del analisis del diesel a la rehabilitacion completa del tanque, en un solo equipo.</p>
+  <!-- LA PRUEBA -->
+  <section class="sec sec--band">
+    <div class="sheet prueba">
+      <div class="prueba__copy">
+        <span class="kicker rv">La prueba</span>
+        <h2 class="h-display rv" style="--d:.05s">El mismo tanque, <span class="grad-text">antes y después</span> del pulido.</h2>
+        <p class="lede rv" style="--d:.1s">
+          Así entregamos cada trabajo: usted compara la muestra de entrada con el resultado
+          final, y recibe un reporte de condición certificado, listo para auditoría.
+        </p>
+        <ul class="prueba__puntos rv" style="--d:.15s">
+          <li>Filtración multietapa y separación de agua</li>
+          <li>Remoción de lodo y sedimento del fondo</li>
+          <li>Reporte de condición listo para auditoría (NFPA 110)</li>
+        </ul>
+        <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-ambar rv" style="--d:.2s" data-track="whatsapp" data-src="prueba">
+          ¿Quiere ver el suyo? Muestra gratis
+        </a>
       </div>
-      <div class="svc">
-        {services.map((s) => (
-          <article class="svc__row reveal">
-            <span class="svc__n">{s.n}</span>
-            <h3 class="svc__t">{s.title}</h3>
-            <p class="svc__d muted">{s.body}</p>
+      <div class="prueba__media rv" style="--d:.1s">
+        <JarSlider />
+      </div>
+    </div>
+  </section>
+
+  <!-- MUESTRA GRATIS -->
+  <MuestraBanner />
+
+  <!-- SERVICIOS -->
+  <section class="sec" id="servicios">
+    <div class="sheet">
+      <div class="sec-head">
+        <span class="kicker rv">Servicios</span>
+        <h2 class="h-display rv" style="--d:.05s">Todo el ciclo del combustible, un solo responsable.</h2>
+      </div>
+      <div class="srv">
+        {servicios.map((s, i) => (
+          <article class:list={['srv__row', 'rv', { 'srv__row--flip': i % 2 === 1 }]} style={`--d:${0.05 * i}s`}>
+            <div class="srv__illo">
+              {s.code === 'SRV·A' && <IlloLimpieza />}
+              {s.code === 'SRV·B' && <IlloPulido />}
+              {s.code === 'SRV·C' && <IlloPreventivo />}
+              {s.code === 'SRV·D' && <IlloSistemas />}
+            </div>
+            <div class="srv__copy">
+              <h3 class="h-display">{s.title}</h3>
+              <p class="muted srv__body">{s.body}</p>
+              <p class="srv__dato small">{s.dato}</p>
+              <a class="srv__link" href={waLink(waMsg.servicio(s.title.toLowerCase()))} target="_blank" rel="noopener" data-track="whatsapp" data-src="servicios">
+                Cotizar este servicio
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- SIGNATURE: before/after + contamination -->
-  <section class="section">
-    <div class="container sig">
-      <div class="sig__media reveal"><BeforeAfter /></div>
-      <div class="sig__copy reveal">
-        <h2 class="display">El diesel almacenado se degrada. Nosotros lo devolvemos listo.</h2>
-        <p class="muted">Arrastre para ver la diferencia. Con el tiempo el combustible se separa en capas: solo la de arriba esta lista para operar.</p>
-        <ul class="layers">
-          <li><span class="sw" style="--c:#d8a93c"></span><div><b>Combustible limpio</b> &mdash; la unica capa lista para operar.</div></li>
-          <li><span class="sw" style="--c:#5a93ad"></span><div><b>Agua por condensacion</b> &mdash; corrosion y bacterias.</div></li>
-          <li><span class="sw" style="--c:#7d5e34"></span><div><b>Sedimentos</b> &mdash; tapan filtros e inyectores.</div></li>
-          <li><span class="sw" style="--c:#241c12"></span><div><b>Lodo (sludge)</b> &mdash; obstruye todo el sistema.</div></li>
-        </ul>
-        <a href="/contacto" class="btn btn--ghost">Solicitar una evaluacion</a>
+  <!-- OBRAS -->
+  <section class="sec sec--band" id="trabajos">
+    <div class="sheet">
+      <div class="sec-head">
+        <span class="kicker rv">Trabajos reales</span>
+        <h2 class="h-display rv" style="--d:.05s">Obra entregada, con nombre y galones.</h2>
+        <p class="lede rv" style="--d:.1s">Fotos de nuestros técnicos en el sitio — no banco de imágenes.</p>
       </div>
-    </div>
-  </section>
 
-  <!-- COVERAGE MAP -->
-  <section class="section--alt">
-    <div class="container">
-      <PRMap />
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Cuatro pasos, una sola promesa</h2>
-      </div>
-      <div class="proc">
-        {steps.map((s) => (
-          <div class="proc__step reveal">
-            <span class="proc__n">{s.n}</span>
-            <h3 class="proc__t">{s.title}</h3>
-            <p class="muted">{s.body}</p>
+      <div class="feat edge rv" style="--d:.1s">
+        <div class="feat__media">
+          <Image src={fotoDamas} alt="Tanque de 93,000 galones del Hospital de Damas en Ponce" widths={[420, 720]} sizes="(max-width: 860px) 92vw, 40vw" format="webp" loading="lazy" />
+        </div>
+        <div class="feat__copy">
+          <span class="kicker">Proyecto destacado</span>
+          <p class="feat__num h-display grad-text">93,000 <small>gal</small></p>
+          <h3 class="h-display">Hospital de Damas · Ponce</h3>
+          <p class="muted">
+            Pulido de combustible a gran escala para el sistema de respaldo del hospital.
+            El proyecto de mayor capacidad en nuestro registro — empezó con una muestra
+            como la que usted puede pedir hoy.
+          </p>
+          <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-ambar" data-track="whatsapp" data-src="obras">
+            Pedir mi muestra gratis
+          </a>
+          <div class="feat__row">
+            {obras.slice(4, 7).map((o) => (
+              <div class="feat__mini"><b>{o.tanque}</b><span class="small muted">{o.cliente}</span></div>
+            ))}
           </div>
+        </div>
+      </div>
+
+      <div class="gal">
+        {galeria.map((g, i) => (
+          <figure class="gal__item rv" style={`--d:${0.05 * i}s`}>
+            <Image src={g.img} alt={`${g.t} — ${g.d}`} widths={[420, 640]} sizes="(max-width: 720px) 92vw, 24vw" format="webp" loading="lazy" />
+            <figcaption><b>{g.t}</b><span class="small">{g.d}</span></figcaption>
+          </figure>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- STATS -->
-  <section class="section section--alt">
-    <div class="container stats">
-      {stats.map((s) => (
-        <div class="stat reveal"><b class="display">{s.big}</b><span class="muted">{s.label}</span></div>
-      ))}
+  <!-- PELÍCULA -->
+  <section class="sec">
+    <div class="sheet cine">
+      <div class="cine__copy">
+        <span class="kicker rv">Nuestra película</span>
+        <h2 class="h-display rv" style="--d:.05s">Un minuto sobre lo que hay dentro de su tanque.</h2>
+        <p class="lede rv" style="--d:.1s">
+          El apagón, el generador y el diésel que decide — la historia completa, narrada
+          y subtitulada en español.
+        </p>
+      </div>
+      <div class="cine__wrap rv" style="--d:.1s">
+        <div class="cine__player edge">
+          <video controls playsinline preload="none" poster="/assets/video/blue-coast-film-final-poster.jpg" width="1920" height="1080">
+            <source src="/assets/video/blue-coast-film-final.mp4" type="video/mp4" />
+            Su navegador no puede reproducir este video.
+          </video>
+        </div>
+        <p class="small muted cine__cta">
+          ¿Así se ve el suyo?
+          <a class="cine__link" href={waLink(waMsg.muestra)} target="_blank" rel="noopener" data-track="whatsapp" data-src="pelicula">Pida su muestra gratis →</a>
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- INDUSTRIES -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Operaciones criticas que no pueden detenerse</h2>
+  <!-- PROCESO -->
+  <section class="sec sec--band">
+    <div class="sheet">
+      <div class="sec-head">
+        <span class="kicker rv">Cómo trabajamos</span>
+        <h2 class="h-display rv" style="--d:.05s">Cuatro pasos, evidencia incluida.</h2>
       </div>
-      <ul class="inds">
-        {industries.map((i) => (
-          <li class="ind reveal"><span class="ind__t">{i}</span></li>
+      <ol class="proc">
+        {pasos.map((p, i) => (
+          <li class="proc__step rv" style={`--d:${0.06 * i}s`}>
+            <span class="proc__n" aria-hidden="true">{p.n}</span>
+            <h3 class="h-display">{p.title}</h3>
+            <p class="muted small">{p.body}</p>
+          </li>
         ))}
-      </ul>
+      </ol>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Proyectos reales en Puerto Rico</h2>
-      </div>
-      <div class="proj">
-        <a href="/trabajos" class="proj__feat reveal">
-          <Image src={img(projects[0].img)} alt={`${projects[0].client} — tanque diesel`} widths={[800, 1400]} sizes="(max-width: 900px) 100vw, 60vw" format="webp" loading="lazy" />
-          <div class="proj__feat-copy">
-            <span class="proj__cap">{projects[0].cap}</span>
-            <h3 class="proj__t">{projects[0].client}</h3>
-            <p class="proj__loc">{projects[0].loc}</p>
-            <p class="muted">{projects[0].desc}</p>
-          </div>
-        </a>
-        <div class="proj__rest">
-          {projects.slice(1).map((p) => (
-            <a href="/trabajos" class="proj__item reveal">
-              <div class="proj__img"><Image src={img(p.img)} alt={`${p.client} — tanque diesel`} widths={[400, 800]} sizes="(max-width: 760px) 100vw, 33vw" format="webp" loading="lazy" /><span class="proj__cap">{p.cap}</span></div>
-              <h3 class="proj__t">{p.client}</h3>
-              <p class="proj__loc">{p.loc}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-      <div class="proj__more reveal"><a href="/trabajos" class="btn btn--ghost">Ver todos los trabajos</a></div>
-    </div>
-  </section>
-
-  <!-- LEAD CTA -->
-  <section class="section cta" id="contacto">
-    <div class="container cta__grid">
-      <div class="cta__copy reveal">
-        <h2 class="display">No espere al proximo apagon para descubrir un problema en su tanque</h2>
-        <p class="muted">Identificamos contaminacion antes de que detenga su operacion. Respondemos en minutos.</p>
-        <div class="cta__contacts">
-          <a href={`tel:${site.phone}`} class="cta__contact" data-track="call" data-src="cta">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span><i>Llamar</i><b>{phoneDisplay(site.phone)}</b></span>
+  <!-- SOLICITUD -->
+  <section class="sec" id="contacto">
+    <div class="sheet cta">
+      <div class="cta__copy">
+        <span class="kicker rv">Hablemos de su tanque</span>
+        <h2 class="h-display rv" style="--d:.05s">No espere al próximo apagón para conocer su tanque.</h2>
+        <p class="lede rv" style="--d:.1s">Pida su evaluación gratis: respondemos en minutos, no en días.</p>
+        <div class="cta__canales rv" style="--d:.15s">
+          <a href={`tel:${site.phone}`} class="cta__canal" data-track="call" data-src="cta">
+            <span class="small muted">¿Emergencia? Llame ahora</span>
+            <b>{phoneDisplay(site.phone)} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
           </a>
-          <a href={waLink()} target="_blank" rel="noopener" class="cta__contact" data-track="whatsapp" data-src="cta">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
-            <span><i>Escribir</i><b>WhatsApp</b></span>
+          <a href={waLink(waMsg.general)} target="_blank" rel="noopener" class="cta__canal" data-track="whatsapp" data-src="cta">
+            <span class="small muted">¿Mantenimiento? Escríbanos</span>
+            <b>WhatsApp directo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
           </a>
         </div>
       </div>
-      <div class="cta__form reveal">
+      <div class="cta__form glass rv" style="--d:.1s">
+        <h3 class="h-display cta__form-t">Pida su muestra gratis</h3>
+        <p class="small muted cta__form-sub">Coordinamos la visita, tomamos la muestra y usted ve el estado de su combustible. Sin compromiso.</p>
         <LeadForm id="lead-home" />
       </div>
     </div>
@@ -194,108 +283,254 @@ import hero from '../assets/img/hero-generator.jpg';
 </Base>
 
 <style>
-  /* HERO */
-  .hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding-block: calc(var(--header-h) + 40px) 80px; overflow: hidden; }
-  .hero__bg { position: absolute; inset: 0; z-index: -2; }
-  .hero__bg img { width: 100%; height: 100%; object-fit: cover; }
-  .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, var(--navy-900) 8%, rgba(6,14,23,0.82) 42%, rgba(6,14,23,0.35) 100%), linear-gradient(0deg, var(--navy) 2%, transparent 30%); }
-  .hero__in { max-width: 880px; }
-  .hero__title { font-size: clamp(2.6rem, 1.4rem + 6vw, 6rem); margin: 22px 0 0; max-width: 16ch; }
-  .hero__sub { margin: 22px 0 0; max-width: 56ch; }
-  .hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
-  .hero__stats { display: flex; flex-wrap: wrap; gap: clamp(20px, 4vw, 44px); margin-top: 36px; }
-  .hstat { display: flex; flex-direction: column; gap: 5px; padding-left: clamp(16px, 3vw, 30px); border-left: 1px solid var(--rule-gold); }
-  .hstat:first-child { padding-left: 0; border-left: 0; }
-  .hstat b { font-family: var(--f-display); font-size: clamp(1.7rem, 1.2rem + 1.4vw, 2.2rem); color: var(--gold); line-height: 1; }
-  .hstat span { font-family: var(--f-body); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-dim); }
-  .hero__scroll { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); width: 26px; height: 42px; border: 1px solid var(--line-strong); border-radius: 14px; display: grid; place-items: start center; padding-top: 8px; }
-  .hero__scroll span { width: 3px; height: 8px; background: var(--gold); border-radius: 2px; animation: scroll 1.7s var(--ease) infinite; }
-  @keyframes scroll { 0% { opacity: 0; transform: translateY(-2px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
-  @media (max-width: 940px) { .hero__scroll { display: none; } }
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: calc(100svh - var(--header-h));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero__bg { position: absolute; inset: 0; overflow: clip; }
+  .hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 68% center; }
+  .hero__shade {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(5, 10, 22, 0.97) 22%, rgba(5, 10, 22, 0.78) 46%, rgba(5, 10, 22, 0.25) 78%, rgba(5, 10, 22, 0.55)),
+      linear-gradient(0deg, var(--bg) 2%, transparent 26%),
+      linear-gradient(180deg, rgba(5, 10, 22, 0.6), transparent 22%);
+  }
+  .hero__glow {
+    position: absolute;
+    left: -12%; top: 20%;
+    width: 56vw; height: 56vw; max-width: 760px; max-height: 760px;
+    background: radial-gradient(closest-side, rgba(47, 107, 255, 0.28), transparent 70%);
+    pointer-events: none;
+  }
+  .hero__in { position: relative; z-index: 2; padding-block: clamp(48px, 7vw, 90px); }
+  .hero__copy { max-width: 640px; }
+  .hero__copy h1 { margin-top: 22px; }
+  .hero__copy .grad-text { display: block; }
+  .hero__copy .lede { margin-top: 18px; max-width: 50ch; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .hero__status { display: flex; align-items: flex-start; gap: 10px; font-weight: 700; font-size: 0.95rem; color: var(--ink-70); }
+  .hero__status i { flex: none; width: 8px; height: 8px; margin-top: 0.5em; border-radius: 50%; background: var(--wa); box-shadow: 0 0 12px var(--wa); animation: pulse 2.2s ease-in-out infinite; }
+  .hero__oferta { margin-top: 16px; font-size: 0.95rem; color: var(--ink-70); max-width: 52ch; }
+  .hero__oferta b { color: var(--ambar); }
+  .hero__record { margin-top: clamp(26px, 4vw, 40px); max-width: 52ch; font-size: 0.98rem; padding-top: 18px; border-top: 1px solid var(--line); }
+  .hero__record b { color: var(--ambar); }
 
-  /* CLIENTS */
-  .clients { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 40px; margin-top: 24px; }
-  .clients span { font-family: var(--f-display); text-transform: uppercase; font-size: clamp(1rem, 0.8rem + 1vw, 1.5rem); color: var(--bone-faint); letter-spacing: 0.02em; transition: color 0.2s; }
-  .clients span:hover { color: var(--bone); }
-
-  /* SERVICES */
-  .svc { margin-top: clamp(36px, 5vw, 54px); border-top: 1px solid var(--line); }
-  .svc__row { display: grid; grid-template-columns: 60px minmax(190px, 1fr) 1.7fr; gap: clamp(14px, 3vw, 46px); align-items: start; padding: clamp(26px, 3vw, 38px) 0; border-bottom: 1px solid var(--line); transition: background 0.25s; }
-  .svc__row:hover { background: var(--navy-deep); }
-  .svc__n { font-family: var(--f-mono); font-size: 0.82rem; letter-spacing: 0.1em; color: var(--gold); padding-top: 8px; }
-  .svc__t { font-family: var(--f-display); text-transform: uppercase; font-size: 1.35rem; line-height: 1.05; margin: 0; }
-  .svc__d { margin: 0; }
-  @media (max-width: 760px) {
-    .svc__row { grid-template-columns: auto 1fr; column-gap: 16px; row-gap: 8px; }
-    .svc__n { grid-column: 1; grid-row: 1 / span 2; }
-    .svc__t { grid-column: 2; grid-row: 1; }
-    .svc__d { grid-column: 2; grid-row: 2; }
+  .hero__trust { position: relative; z-index: 2; border-top: 1px solid var(--line); background: rgba(5, 10, 22, 0.55); backdrop-filter: blur(10px); }
+  .hero__trust-in { display: flex; flex-direction: column; align-items: center; gap: 14px; padding-block: 16px; }
+  .hero__trust-label { letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; font-size: 0.68rem; }
+  /* los logos ocupan todo el ancho, de margen a margen */
+  .hero__trust-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 12px; width: 100%; }
+  @media (max-width: 480px) {
+    .hero__trust-logos .hero__client--logo { height: calc(var(--h, 30px) * 0.78); }
+  }
+  /* los logos no se mueven: un realce los recorre uno a uno */
+  .hero__client--logo {
+    height: var(--h, 30px);
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.55;
+    animation: logo-glow 10s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 2s);
+  }
+  @keyframes logo-glow {
+    0%, 20%, 100% { opacity: 0.55; filter: brightness(0) invert(1); }
+    7%, 13% { opacity: 1; filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(255, 176, 58, 0.9)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__client--logo { animation: none; opacity: 0.75; }
   }
 
-  /* SIGNATURE */
-  .sig { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 70px); align-items: center; }
-  .sig__copy .display { margin: 16px 0; }
-  .layers { list-style: none; margin: 24px 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-  .layers li { display: flex; gap: 13px; align-items: flex-start; font-size: var(--step--1); }
-  .layers .sw { width: 16px; height: 16px; border-radius: 3px; background: var(--c); margin-top: 3px; flex: none; border: 1px solid var(--line-strong); }
-  @media (max-width: 860px) { .sig { grid-template-columns: 1fr; } }
+  /* ---------- DEMO TANQUE ---------- */
+  .sec-demo { padding-top: clamp(26px, 4vw, 56px); }
+  .demo { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .demo__copy h2 { margin-top: 16px; }
+  .demo__copy .lede { margin-top: 16px; }
+  .demo__nota { margin-top: 18px; padding-left: 14px; border-left: 2px solid var(--ambar); }
+  @media (max-width: 920px) { .demo { grid-template-columns: 1fr; } }
 
-  /* PROCESS */
-  .proc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 50px; }
-  .proc__step { border-top: 2px solid var(--rule-gold); padding-top: 20px; }
-  .proc__n { font-family: var(--f-display); font-size: 2.4rem; color: var(--gold); line-height: 1; }
-  .proc__t { font-family: var(--f-display); text-transform: uppercase; font-size: 1.1rem; margin: 12px 0 10px; }
-  @media (max-width: 860px) { .proc { grid-template-columns: 1fr 1fr; gap: 22px; } }
-  @media (max-width: 460px) { .proc { grid-template-columns: 1fr; } }
+  /* ---------- PRUEBA ---------- */
+  .prueba { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+  .prueba__copy h2 { margin-top: 16px; }
+  .prueba__copy .lede { margin-top: 16px; }
+  .prueba__puntos { list-style: none; padding: 0; margin: 22px 0 28px; display: grid; gap: 12px; }
+  .prueba__puntos li { position: relative; padding-left: 30px; color: var(--ink-70); font-weight: 600; }
+  .prueba__puntos li::before {
+    content: '✓';
+    position: absolute; left: 0; top: 0;
+    width: 21px; height: 21px;
+    display: grid; place-items: center;
+    border-radius: 7px;
+    font-size: 0.72rem; font-weight: 900;
+    background: rgba(255, 176, 58, 0.16);
+    color: var(--ambar);
+    border: 1px solid rgba(255, 176, 58, 0.4);
+  }
+  @media (max-width: 900px) { .prueba { grid-template-columns: 1fr; } }
 
-  /* STATS */
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; text-align: center; }
-  .stat b { display: block; font-size: clamp(2.6rem, 1.6rem + 4vw, 4.6rem); color: var(--gold); line-height: 1; }
-  .stat span { display: block; margin-top: 12px; font-family: var(--f-body); font-weight: 600; font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; }
-  @media (max-width: 760px) { .stats { grid-template-columns: 1fr 1fr; gap: 36px 20px; } }
+  /* ---------- bandas ---------- */
+  .sec--band {
+    background:
+      radial-gradient(1000px 500px at 80% -10%, rgba(47, 107, 255, 0.12), transparent 60%),
+      linear-gradient(180deg, var(--bg-2), var(--bg));
+    border-block: 1px solid var(--line);
+  }
 
-  /* INDUSTRIES */
-  .inds { display: flex; flex-wrap: wrap; align-items: baseline; margin-top: clamp(32px, 4vw, 48px); list-style: none; padding: 0; }
-  .ind { display: inline-flex; align-items: baseline; }
-  .ind__t { font-family: var(--f-display); text-transform: uppercase; font-size: clamp(1.9rem, 1.1rem + 3.4vw, 3.6rem); line-height: 1.08; color: var(--bone); transition: color 0.2s; }
-  .ind:hover .ind__t { color: var(--gold); }
-  .ind:not(:last-child) .ind__t::after { content: '·'; color: var(--gold); margin: 0 0.38em; }
+  /* ---------- SERVICIOS: filas ilustradas, sin cajas ---------- */
+  .srv { margin-top: clamp(26px, 4vw, 44px); }
+  .srv__row {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: clamp(22px, 4vw, 60px);
+    align-items: center;
+    padding-block: clamp(26px, 3.5vw, 42px);
+    border-top: 1px solid var(--line);
+  }
+  .srv__row:last-of-type { border-bottom: 1px solid var(--line); }
+  .srv__row--flip { grid-template-columns: minmax(0, 1fr) 220px; }
+  .srv__row--flip .srv__illo { order: 2; }
+  .srv__illo :global(.illo) { width: 100%; max-width: 220px; height: auto; }
+  .srv__body { margin-top: 10px; max-width: 56ch; }
+  .srv__dato { margin-top: 14px; font-weight: 700; letter-spacing: 0.06em; color: var(--cyan); }
+  .srv__link {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 16px;
+    font-weight: 800; font-size: 0.95rem;
+    color: var(--ambar); text-decoration: none;
+  }
+  .srv__link svg { width: 17px; height: 17px; transition: transform 0.2s var(--ease); }
+  .srv__link:hover svg { transform: translateX(4px); }
+  @media (max-width: 720px) {
+    .srv__row, .srv__row--flip { grid-template-columns: 1fr; gap: 14px; }
+    .srv__row--flip .srv__illo { order: 0; }
+    .srv__illo { display: flex; justify-content: center; }
+    .srv__illo :global(.illo) { max-width: 190px; }
+  }
 
-  /* PROJECTS */
-  .proj { margin-top: clamp(36px, 5vw, 50px); }
-  .proj__cap { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gold); color: var(--navy-900); padding: 5px 9px; }
-  .proj__t { font-family: var(--f-display); text-transform: uppercase; font-size: 1.18rem; margin: 0 0 4px; }
-  .proj__loc { font-family: var(--f-body); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-deep); margin: 0; }
-  /* featured project: text over a tall photo */
-  .proj__feat { position: relative; display: block; border-radius: var(--radius); overflow: hidden; min-height: 420px; }
-  .proj__feat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
-  .proj__feat::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, var(--navy-900) 4%, rgba(4,9,15,0.55) 38%, transparent 70%); }
-  .proj__feat:hover img { transform: scale(1.04); }
-  .proj__feat-copy { position: absolute; left: 0; bottom: 0; z-index: 1; padding: clamp(22px, 3vw, 36px); max-width: 56ch; }
-  .proj__feat-copy .proj__cap { position: absolute; top: clamp(22px, 3vw, 36px); left: clamp(22px, 3vw, 36px); }
-  .proj__feat-copy .proj__t { font-size: clamp(1.5rem, 1rem + 1.8vw, 2.4rem); margin-top: 10px; }
-  .proj__feat-copy .proj__loc { margin-bottom: 10px; }
-  /* supporting row: image-led, no boxed body */
-  .proj__rest { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 2vw, 22px); margin-top: clamp(14px, 2vw, 22px); }
-  .proj__item { display: block; }
-  .proj__img { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: var(--radius); }
-  .proj__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-  .proj__item:hover .proj__img img { transform: scale(1.05); }
-  .proj__img .proj__cap { position: absolute; top: 10px; left: 10px; }
-  .proj__item .proj__t { font-size: 1.05rem; margin: 14px 0 3px; }
-  .proj__more { margin-top: 36px; }
-  @media (max-width: 760px) { .proj__rest { grid-template-columns: 1fr; } .proj__feat { min-height: 340px; } }
+  /* ---------- OBRAS ---------- */
+  .feat { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 0; margin-top: clamp(30px, 4vw, 48px); overflow: clip; }
+  .feat__media { min-height: 340px; position: relative; overflow: clip; }
+  .feat__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.08) contrast(1.05); transform: scale(1.02); }
+  @media (min-width: 861px) {
+    .feat__media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 72%, var(--bg-2) 99%);
+      pointer-events: none;
+    }
+  }
+  @media (max-width: 860px) {
+    .feat__media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 72%, var(--bg-2) 99%);
+      pointer-events: none;
+    }
+  }
+  .feat__copy { padding: clamp(26px, 4vw, 48px); display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .feat__num { font-size: clamp(2.6rem, 2rem + 3vw, 4.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .feat__num small { font-size: 0.4em; font-weight: 800; }
+  .feat__copy p.muted { max-width: 50ch; }
+  .feat__row { display: flex; gap: 14px 34px; flex-wrap: wrap; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--line); width: 100%; }
+  .feat__mini b { display: block; font-family: var(--f-display); font-size: 1.15rem; color: var(--ambar); }
+  @media (max-width: 860px) { .feat { grid-template-columns: 1fr; } .feat__media { min-height: 240px; } }
 
-  /* CTA */
-  .cta { background: linear-gradient(180deg, var(--navy-deep), var(--navy-900)); }
-  .cta__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 64px); align-items: center; }
-  .cta__copy .display { margin: 16px 0; }
-  .cta__contacts { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
-  .cta__contact { display: inline-flex; align-items: center; gap: 13px; padding: 14px 20px; border: 1px solid var(--line-strong); border-radius: var(--radius); transition: border-color 0.2s; }
-  .cta__contact:hover { border-color: var(--gold); }
-  .cta__contact svg { width: 22px; height: 22px; color: var(--gold); }
-  .cta__contact i { display: block; font-family: var(--f-body); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-dim); }
-  .cta__contact b { display: block; font-size: 1.05rem; }
-  .cta__form { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: clamp(24px, 3vw, 36px); }
-  @media (max-width: 860px) { .cta__grid { grid-template-columns: 1fr; } }
+  .gal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
+  .gal__item {
+    position: relative;
+    margin: 0;
+    border-radius: var(--r-md);
+    overflow: clip;
+    aspect-ratio: 4 / 5;
+    background: var(--bg);
+  }
+  .gal__item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgba(5, 10, 22, 0.55), inset 0 0 34px rgba(5, 10, 22, 0.32);
+    pointer-events: none;
+  }
+  /* scale base 1.02: evita el filo claro por redondeo de píxel en iOS */
+  .gal__item img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.08) contrast(1.05); transform: scale(1.02); transition: transform 0.5s var(--ease); }
+  .gal__item:hover img { transform: scale(1.06); }
+  .gal__item figcaption {
+    position: absolute; inset: auto 0 0 0;
+    padding: 34px 14px 12px;
+    background: linear-gradient(transparent, rgba(3, 6, 14, 0.92));
+  }
+  .gal__item figcaption b { display: block; font-size: 0.95rem; }
+  .gal__item figcaption span { color: var(--ink-70); }
+  @media (max-width: 860px) { .gal { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- PELÍCULA ---------- */
+  .cine { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(30px, 5vw, 70px); align-items: center; }
+  .cine__copy h2 { margin-top: 16px; }
+  .cine__copy .lede { margin-top: 16px; }
+  .cine__player { overflow: clip; padding: 10px; }
+  .cine__player video { width: 100%; height: auto; border-radius: calc(var(--r-lg) - 8px); background: #000; }
+  .cine__cta { margin-top: 14px; text-align: right; }
+  .cine__link { color: var(--ambar); font-weight: 800; text-decoration: none; margin-left: 6px; }
+  .cine__link:hover { text-decoration: underline; }
+  @media (max-width: 900px) { .cine { grid-template-columns: 1fr; } }
+
+  /* ---------- PROCESO ---------- */
+  .proc {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: clamp(30px, 4vw, 48px) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: paso;
+  }
+  .proc__step { position: relative; padding-top: 22px; }
+  .proc__step::before { content: ''; position: absolute; top: 0; left: 0; right: 18px; height: 1px; background: var(--line-2); }
+  .proc__step::after { content: ''; position: absolute; top: -2px; left: 0; width: 42px; height: 5px; border-radius: 4px; background: linear-gradient(90deg, var(--ambar), var(--ambar-2)); }
+  .proc__n {
+    display: inline-grid; place-items: center;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 176, 58, 0.55);
+    font-family: var(--f-display);
+    font-weight: 700; font-size: 1.05rem;
+    color: var(--ambar);
+    background: rgba(255, 176, 58, 0.07);
+    margin-bottom: 14px;
+  }
+  .proc__step h3 { font-size: 1.1rem; }
+  .proc__step p { margin-top: 8px; max-width: 30ch; }
+  @media (max-width: 860px) { .proc { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .proc { grid-template-columns: 1fr; } }
+
+  /* ---------- SOLICITUD ---------- */
+  .cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .cta__copy h2 { margin-top: 16px; }
+  .cta__copy .lede { margin-top: 16px; }
+  .cta__canales { margin-top: 26px; }
+  .cta__canal {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 20px 4px;
+    text-decoration: none;
+    border-top: 1px solid var(--line);
+    transition: padding-left 0.25s var(--ease);
+  }
+  .cta__canal:last-child { border-bottom: 1px solid var(--line); }
+  .cta__canal:hover { padding-left: 12px; }
+  .cta__canal b { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-display); font-size: clamp(1.4rem, 2.4vw, 1.9rem); letter-spacing: -0.01em; }
+  .cta__canal b svg { width: 20px; height: 20px; color: var(--ambar); transition: transform 0.25s var(--ease); }
+  .cta__canal:hover b svg { transform: translateX(6px); }
+  .cta__canal:hover b { color: var(--ambar); }
+  .cta__form { padding: clamp(24px, 3.5vw, 40px); }
+  .cta__form-t { margin-bottom: 6px; }
+  .cta__form-sub { margin: 0 0 20px; }
+  @media (max-width: 900px) { .cta { grid-template-columns: 1fr; } }
 </style>

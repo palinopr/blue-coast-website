@@ -1,40 +1,52 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, waLink, phoneDisplay } from '../lib/site';
+import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
+// El evento de conversión del embudo se dispara aquí (una sola vez), cuando
+// el DOM terminó de cargar y bcTrack ya existe.
 ---
 <Base
   title="Gracias | Blue Coast Developers"
   description="Recibimos su solicitud. Le contactaremos en minutos."
 >
-  <section class="section thanks">
-    <div class="container thanks__in">
-      <div class="thanks__mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  <section class="gracias" data-hero>
+    <div class="sheet gracias__in">
+      <div class="gracias__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
-      <p class="eyebrow" style="justify-content:center;display:flex;">Solicitud recibida</p>
-      <h1 class="display">Gracias. Le contactamos en minutos.</h1>
-      <p class="lead muted">Un tecnico de Blue Coast revisara su solicitud y se comunicara con usted en breve. Si es urgente, llamenos o escribanos ahora.</p>
-      <div class="thanks__cta">
-        <a href={`tel:${site.phone}`} class="btn btn--gold btn--lg" data-track="call" data-src="gracias">Llamar &middot; {phoneDisplay(site.phone)}</a>
-        <a href={waLink()} target="_blank" rel="noopener" class="btn btn--wa btn--lg" data-track="whatsapp" data-src="gracias">WhatsApp</a>
+      <h1 class="h-display">Recibido. <span class="grad-text">Le contactamos en minutos.</span></h1>
+      <p class="lede">
+        Un técnico de Blue Coast revisará su solicitud y se comunicará con usted en breve.
+        Si es urgente, use la vía rápida:
+      </p>
+      <div class="gracias__cta">
+        <a href={`tel:${site.phone}`} class="btn btn-ambar" data-track="call" data-src="gracias">Llamar · {phoneDisplay(site.phone)}</a>
+        <a href={waLink(waMsg.gracias)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="gracias">WhatsApp</a>
       </div>
-      <a href="/" class="thanks__home">Volver al inicio</a>
+      <a href="/" class="gracias__back small">← Volver al inicio</a>
     </div>
   </section>
 
   <script is:inline>
-    // Reinforce the conversion if a pixel is present and the user landed here.
-    if (window.bcTrack) window.bcTrack('lead_submit', { stage: 'thankyou' });
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.bcTrack) window.bcTrack('lead_submit', { stage: 'thankyou' });
+    });
   </script>
 </Base>
 
 <style>
-  .thanks { min-height: 70svh; display: grid; place-items: center; text-align: center; }
-  .thanks__in { max-width: 620px; }
-  .thanks__mark { width: 72px; height: 72px; margin: 0 auto 24px; border-radius: 50%; border: 1px solid var(--rule-gold); display: grid; place-items: center; color: var(--gold); }
-  .thanks__mark svg { width: 34px; height: 34px; }
-  .thanks .display { margin: 16px 0; }
-  .thanks__cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
-  .thanks__home { display: inline-block; margin-top: 26px; font-family: var(--f-body); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bone-dim); }
-  .thanks__home:hover { color: var(--gold); }
+  .gracias { min-height: 62svh; display: grid; place-items: center; padding-block: clamp(56px, 8vw, 100px); }
+  .gracias__in { max-width: 640px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .gracias__mark {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: var(--wa);
+    border: 1.5px solid rgba(37, 211, 102, 0.5);
+    background: rgba(37, 211, 102, 0.1);
+    box-shadow: 0 0 40px -8px rgba(37, 211, 102, 0.5);
+  }
+  .gracias__mark svg { width: 30px; height: 30px; }
+  .gracias__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  .gracias__back { color: var(--ink-70); text-decoration: none; font-weight: 700; margin-top: 10px; }
+  .gracias__back:hover { color: var(--ambar); }
 </style>

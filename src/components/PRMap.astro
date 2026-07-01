@@ -1,199 +1,130 @@
 ---
-// Interactive Puerto Rico coverage map. Geometry from US Census TIGERweb
-// (public domain), projected + simplified into src/lib/prmap.ts.
-// All 78 municipios render as the coverage base; municipios with a delivered
-// project are highlighted gold with an animated pin. Hover/tap reveals names.
-// Self-contained: scroll-reveal via IntersectionObserver, no JS framework.
-import { PR_VIEWBOX, MUNICIPIOS, COVERAGE_PINS, COVERED_COUNT, PROJECT_COUNT } from '../lib/prmap';
-const countByName = Object.fromEntries(COVERAGE_PINS.map((p) => [p.name, p.count]));
-const coverageSorted = [...COVERAGE_PINS].sort((a, b) => b.count - a.count);
+// Mapa de cobertura de Puerto Rico: 78 municipios (geometría TIGER).
+// Municipios con obra entregada brillan en ámbar. El buscador cualifica el
+// lead: resalta el municipio y reescribe el WhatsApp con el mensaje listo.
+import { PR_VIEWBOX, MUNICIPIOS, COVERED_MUNIS, COVERED_COUNT, PROJECT_COUNT } from '../lib/prmap';
+import { waLink, waMsg } from '../lib/site';
 ---
 <div class="prmap" data-prmap>
-  <div class="prmap__head">
-    <p class="eyebrow">Cobertura</p>
-    <h2 class="display">Servicio en los <span class="gold">78 municipios</span> de Puerto Rico</h2>
-    <p class="lead muted">Servimos toda la isla. En dorado, los municipios donde ya hemos protegido los generadores de nuestros clientes.</p>
+  <div class="prmap__search glass">
+    <label class="small muted" for="muni-q">¿Cubrimos su municipio? Sí — verifíquelo:</label>
+    <div class="prmap__row">
+      <input id="muni-q" list="munis-list" type="text" placeholder="Escriba su municipio — p. ej. Ponce" autocomplete="off" data-muni-input />
+      <datalist id="munis-list">
+        {MUNICIPIOS.map((m) => <option value={m.name} />)}
+      </datalist>
+      <a href={waLink(waMsg.cobertura())} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="cobertura" data-muni-cta>
+        WhatsApp
+      </a>
+    </div>
+    <p class="small prmap__readout" data-muni-readout aria-live="polite">
+      {COVERED_COUNT} municipios con obra entregada · {PROJECT_COUNT} trabajos realizados
+    </p>
   </div>
 
   <figure class="prmap__fig">
     <div class="prmap__scroll">
-    <svg
-      viewBox={PR_VIEWBOX}
-      class="prmap__svg"
-      role="img"
-      aria-label="Mapa de Puerto Rico: servicio en los 78 municipios, con los municipios donde Blue Coast ha realizado proyectos resaltados en dorado"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <g class="prmap__munis">
-        {MUNICIPIOS.map((m, i) => {
-          const c = countByName[m.name] ?? 0;
-          return (
+      <svg viewBox={PR_VIEWBOX} class="prmap__svg" role="img" aria-label="Mapa de Puerto Rico: cobertura en los 78 municipios" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="glowamb" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="2.4" result="b" />
+            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        <g>
+          {MUNICIPIOS.map((m) => (
             <path
               d={m.d}
-              class:list={['prmap__muni', { 'is-covered': c > 0 }]}
-              style={`--i:${i}`}
+              class:list={['prmap__muni', { 'is-covered': COVERED_MUNIS.has(m.name) }]}
               data-name={m.name}
-              data-count={c}
               tabindex="0"
-              aria-label={c > 0 ? `${m.name}, ${c} proyecto${c > 1 ? 's' : ''}` : m.name}
-            />
-          );
-        })}
-      </g>
-      <g class="prmap__pins">
-        {COVERAGE_PINS.map((p) => (
-          <g class="prmap__pin" transform={`translate(${p.x} ${p.y})`} data-name={p.name} data-count={p.count}>
-            <circle class="prmap__pin-pulse" r="4" />
-            <circle class="prmap__pin-dot" r="3" />
-          </g>
-        ))}
-      </g>
-    </svg>
+              aria-label={COVERED_MUNIS.has(m.name) ? `${m.name}: obra entregada` : m.name}
+            >
+              <title>{m.name}</title>
+            </path>
+          ))}
+        </g>
+      </svg>
     </div>
-
-    <figcaption class="prmap__cap" data-prmap-cap>
-      <span class="prmap__count"><b data-prmap-count>78</b> / 78 municipios</span>
-      <span class="prmap__hint" data-prmap-hint>{COVERED_COUNT} municipios con proyectos &middot; {PROJECT_COUNT} trabajos</span>
+    <figcaption class="prmap__legend small muted">
+      <span><i class="sw"></i> Cobertura</span>
+      <span><i class="sw sw--amb"></i> Obra entregada</span>
+      <span class="prmap__count"><b>78/78</b> municipios</span>
     </figcaption>
   </figure>
-
-  <ul class="prmap__legend">
-    <li><span class="sw sw--cov"></span>Cobertura en toda la isla</li>
-    <li><span class="sw sw--proj"></span>Municipio con proyecto</li>
-  </ul>
-
-  <ul class="prmap__chips" aria-label="Municipios con proyectos realizados">
-    {coverageSorted.map((p) => (
-      <li class="prmap__chip"><b>{p.name}</b><span>{p.count}</span></li>
-    ))}
-  </ul>
 </div>
 
 <style>
-  .prmap { padding-block: clamp(64px, 9vw, 130px); }
-  .prmap__head { max-width: 720px; }
-  .prmap__head .display { margin-top: 16px; font-size: var(--step-3); }
-  .prmap__head .lead { margin-top: 16px; }
+  .prmap__search { padding: clamp(18px, 2.5vw, 26px); max-width: 760px; }
+  .prmap__search label { display: block; margin-bottom: 10px; font-weight: 700; }
+  .prmap__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+  @media (max-width: 620px) { .prmap__row { grid-template-columns: 1fr; } }
+  .prmap__row input {
+    background: rgba(5, 10, 22, 0.65);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-sm);
+    color: var(--ink);
+    padding: 0.85em 1em;
+    font-size: 1rem;
+    min-height: 54px;
+  }
+  .prmap__row input:focus { outline: none; border-color: var(--ambar); box-shadow: 0 0 0 3px rgba(255, 176, 58, 0.18); }
+  .prmap__readout { margin: 12px 0 0; color: var(--ink-70); }
+  .prmap__readout.is-hit { color: var(--ambar); font-weight: 700; }
 
-  .prmap__fig { margin: clamp(28px, 5vw, 44px) 0 0; }
-  .prmap__svg { width: 100%; height: auto; overflow: visible; display: block; }
+  .prmap__fig { margin: clamp(26px, 4vw, 40px) 0 0; }
+  .prmap__scroll { overflow-x: auto; scrollbar-width: none; }
+  .prmap__scroll::-webkit-scrollbar { display: none; }
+  .prmap__svg { width: 100%; min-width: 660px; height: auto; overflow: visible; }
 
   .prmap__muni {
-    fill: var(--surface);
-    stroke: var(--navy-900);
-    stroke-width: 0.6;
-    transition: fill 0.2s, opacity 0.5s var(--ease), transform 0.5s var(--ease);
-  }
-  /* JS present: start hidden for staggered reveal; no-JS sees the full map */
-  .prmap.js .prmap__muni { opacity: 0; transform: translateY(8px); }
-  /* staggered reveal once visible */
-  .prmap.is-in .prmap__muni {
-    opacity: 1;
-    transform: none;
-    transition-delay: calc(var(--i) * 7ms);
-  }
-  .prmap__muni.is-covered { fill: var(--gold-deep); }
-  .prmap__muni:hover,
-  .prmap__muni:focus-visible {
-    fill: var(--gold);
+    fill: rgba(47, 107, 255, 0.1);
+    stroke: rgba(148, 170, 210, 0.4);
+    stroke-width: 0.7;
+    transition: fill 0.18s ease-out;
     outline: none;
-    cursor: pointer;
   }
-  .prmap__muni.is-covered:hover,
-  .prmap__muni.is-covered:focus-visible { fill: var(--gold-bright); }
+  .prmap__muni.is-covered { fill: var(--ambar-2); stroke: rgba(255, 200, 120, 0.8); filter: url(#glowamb); }
+  .prmap__muni:hover, .prmap__muni:focus-visible { fill: var(--cyan); cursor: pointer; }
+  .prmap__muni.is-picked { fill: var(--ambar); filter: url(#glowamb); }
 
-  .prmap__pin { pointer-events: none; transition: opacity 0.4s var(--ease) 0.6s; }
-  .prmap.js .prmap__pin { opacity: 0; }
-  .prmap.is-in .prmap__pin { opacity: 1; }
-  .prmap__pin-dot { fill: var(--gold-bright); }
-  .prmap__pin-pulse { fill: var(--gold); transform-origin: center; animation: pin-pulse 2.4s var(--ease) infinite; }
-  @keyframes pin-pulse {
-    0% { transform: scale(1); opacity: 0.7; }
-    70% { transform: scale(3.4); opacity: 0; }
-    100% { opacity: 0; }
-  }
-
-  .prmap__cap {
-    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-    gap: 10px 24px; margin-top: 22px;
-    font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
-  }
-  .prmap__count b { font-family: var(--f-display); font-size: 1.5rem; color: var(--gold); letter-spacing: 0.02em; margin-right: 4px; }
-  .prmap__count { color: var(--bone-dim); display: inline-flex; align-items: baseline; }
-  .prmap__hint { color: var(--bone-faint); transition: color 0.2s; }
-  .prmap__hint.is-active { color: var(--gold); }
-
-  .prmap__legend { list-style: none; display: flex; flex-wrap: wrap; gap: 14px 28px; margin: 22px 0 0; padding: 0; }
-  .prmap__legend li { display: inline-flex; align-items: center; gap: 9px; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-dim); }
-  .prmap__legend .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line-strong); }
-  .sw--cov { background: var(--surface); }
-  .sw--proj { background: var(--gold-deep); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .prmap.js .prmap__muni { opacity: 1; transform: none; transition: fill 0.2s; }
-    .prmap.js .prmap__pin { opacity: 1; }
-    .prmap__pin-pulse { animation: none; }
-  }
-  .prmap__chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: clamp(20px, 3vw, 30px) 0 0; padding: 0; }
-  .prmap__chip { display: inline-flex; align-items: center; gap: 9px; padding: 7px 9px 7px 13px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(201,161,74,0.06); transition: border-color 0.2s, background 0.2s; }
-  .prmap__chip:hover { border-color: var(--rule-gold); background: rgba(201,161,74,0.12); }
-  .prmap__chip b { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.03em; color: var(--bone); font-weight: 700; }
-  .prmap__chip span { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--gold); color: var(--navy-900); font-family: var(--f-display); font-size: 0.85rem; line-height: 1; }
+  .prmap__legend { display: flex; align-items: center; gap: 14px 28px; flex-wrap: wrap; margin-top: 18px; }
+  .prmap__legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .sw { width: 12px; height: 12px; border-radius: 4px; background: rgba(47, 107, 255, 0.25); border: 1px solid var(--line-2); display: inline-block; }
+  .sw--amb { background: var(--ambar-2); border-color: var(--ambar); box-shadow: 0 0 10px rgba(255, 150, 20, 0.6); }
+  .prmap__count { margin-left: auto; }
+  .prmap__count b { font-family: var(--f-display); font-size: 1.5rem; color: var(--ambar); margin-right: 4px; }
 </style>
 
 <script>
   const root = document.querySelector<HTMLElement>('[data-prmap]');
   if (root) {
-    root.classList.add('js');
-    const countEl = root.querySelector<HTMLElement>('[data-prmap-count]');
-    const hintEl = root.querySelector<HTMLElement>('[data-prmap-hint]');
+    const input = root.querySelector<HTMLInputElement>('[data-muni-input]');
+    const cta = root.querySelector<HTMLAnchorElement>('[data-muni-cta]');
+    const readout = root.querySelector<HTMLElement>('[data-muni-readout]');
     const munis = Array.from(root.querySelectorAll<SVGPathElement>('.prmap__muni'));
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (countEl && !reduce) countEl.textContent = '0';
+    const byName = new Map(munis.map((m) => [m.dataset.name!.toLowerCase(), m]));
+    const base = readout?.textContent ?? '';
 
-    // Count-up to 78, started when the map scrolls into view
-    const runCount = () => {
-      if (!countEl) return;
-      const total = 78;
-      if (reduce) { countEl.textContent = String(total); return; }
-      const dur = 1100, t0 = performance.now();
-      const tick = (now: number) => {
-        const p = Math.min((now - t0) / dur, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        countEl.textContent = String(Math.round(eased * total));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
+    const pick = (raw: string) => {
+      const name = raw.trim().toLowerCase();
+      munis.forEach((m) => m.classList.remove('is-picked'));
+      const hit = byName.get(name);
+      if (!hit || !readout || !cta) {
+        if (readout) { readout.textContent = base; readout.classList.remove('is-hit'); }
+        return;
+      }
+      hit.classList.add('is-picked');
+      const proper = hit.dataset.name!;
+      readout.textContent = `✓ Sí, cubrimos ${proper}. Escríbanos y coordinamos la visita.`;
+      readout.classList.add('is-hit');
+      const msg = `Hola, estoy en ${proper} y necesito servicio de diésel para mi generador.`;
+      cta.href = cta.href.split('?')[0] + '?text=' + encodeURIComponent(msg);
+      hit.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
     };
 
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { root.classList.add('is-in'); runCount(); io.disconnect(); }
-      }),
-      { threshold: 0.2 }
-    );
-    io.observe(root);
-
-    // Hover/tap shows the municipio name in the hint slot
-    const defaultHint = hintEl?.textContent ?? '';
-    const show = (name: string, count: number) => {
-      if (!hintEl) return;
-      hintEl.textContent = count > 0 ? `${name}: ${count} proyecto${count > 1 ? 's' : ''}` : name;
-      hintEl.classList.add('is-active');
-    };
-    const reset = () => {
-      if (!hintEl) return;
-      hintEl.textContent = defaultHint;
-      hintEl.classList.remove('is-active');
-    };
-    munis.forEach((m) => {
-      const name = m.dataset.name || '';
-      const count = parseInt(m.dataset.count || '0', 10);
-      m.addEventListener('pointerenter', () => show(name, count));
-      m.addEventListener('focus', () => show(name, count));
-      m.addEventListener('pointerleave', reset);
-      m.addEventListener('blur', reset);
-      m.addEventListener('click', () => show(name, count));
-    });
+    input?.addEventListener('change', () => pick(input.value));
+    input?.addEventListener('input', () => { if (byName.has(input.value.trim().toLowerCase())) pick(input.value); });
+    munis.forEach((m) => m.addEventListener('click', () => { if (input) input.value = m.dataset.name!; pick(m.dataset.name!); }));
   }
 </script>

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 52">
-  <rect width="48" height="52" fill="#0b1622"/>
-  <polygon points="14,5 34,5 45,26 34,47 14,47 3,26" fill="none" stroke="#c9a14a" stroke-width="2.6" stroke-linejoin="round"/>
-  <text x="24" y="34" text-anchor="middle" font-family="Anton, Arial, sans-serif" font-size="22" font-weight="700" fill="#f3f0ea">B</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 46">
+  <rect width="40" height="46" fill="#f5f1e6"/>
+  <path d="M20 2.5C27.5 14 33 22.2 33 29.5A13 13 0 0 1 7 29.5C7 22.2 12.5 14 20 2.5Z" fill="none" stroke="#0d2440" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M21.8 16.4 13.6 28.2h5.1l-1.4 7.6 9.1-12.2h-5.2l1.6-7.2z" fill="#c4821f"/>
 </svg>

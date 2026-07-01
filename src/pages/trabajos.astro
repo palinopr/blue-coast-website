@@ -1,134 +1,123 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageHeader from '../components/PageHeader.astro';
-import { site, waLink, phoneDisplay, projects, stats } from '../lib/site';
+import MuestraBanner from '../components/MuestraBanner.astro';
+import { site, waLink, waMsg, phoneDisplay, obras } from '../lib/site';
 import { Image } from 'astro:assets';
-import { img } from '../lib/images';
+import type { ImageMetadata } from 'astro';
 
-const allProjects = [
-  ...projects,
-  { client: 'Hospital Menonita Cayey', loc: 'Cayey, PR', cap: 'Diesel', img: '/assets/img/hospital-menonita-cayey.jpg', desc: 'Servicio de tanque diesel.' },
-  { client: 'Hospital Menonita Guayama', loc: 'Guayama, PR', cap: 'Diesel', img: '/assets/img/hospital-menonita-guayama.jpg', desc: 'Servicio de tanque diesel.' },
-  { client: 'Paulson AGI', loc: 'Puerto Rico', cap: 'Diesel', img: '/assets/img/paulson-agi-tower.jpg', desc: 'Mantenimiento de sistema de combustible.' },
-];
+import fotoDamas from '../assets/img/field/hospital-damas-ponce.jpg';
+
+const fieldImgs = import.meta.glob<{ default: ImageMetadata }>('/src/assets/img/field/*.jpg', { eager: true });
+const byName = Object.fromEntries(Object.entries(fieldImgs).map(([p, m]) => [p.split('/').pop()!, m.default]));
+const galeria = obras.filter((o) => o.foto && byName[o.foto] && o.cliente !== 'Hospital de Damas');
 ---
 <Base
-  title="Trabajos Realizados | Blue Coast Developers Puerto Rico"
-  description="Proyectos reales de limpieza y pulido de combustible diesel en hospitales, industrias y condominios de todo Puerto Rico."
+  title="Trabajos realizados | Blue Coast Developers Puerto Rico"
+  description="Trabajos reales de limpieza y pulido de combustible diésel en hospitales, industria y condominios de Puerto Rico — con cliente, municipio y capacidad del tanque."
 >
-  <PageHeader
-    eyebrow="Trabajos realizados"
-    title="Proyectos reales en Puerto Rico"
-    sub="Resultados que se ven, confiabilidad que se siente."
-    current="Trabajos"
-  />
+  <section class="cover" data-hero>
+    <div class="sheet">
+      <span class="kicker rv">Trabajos reales</span>
+      <h1 class="h-display rv" style="--d:.05s">Obra entregada, <span class="grad-text">con nombre y galones.</span></h1>
+      <p class="lede rv" style="--d:.1s">
+        Fotos de nuestros técnicos en el sitio de trabajo — no banco de imágenes.
+        La evidencia es el argumento.
+      </p>
+    </div>
+  </section>
 
-  <!-- PORTFOLIO -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Exhibiciones de campo</h2>
-        <p class="lead muted">Hospitales, industrias y condominios que confian su energia de respaldo a Blue Coast Developers.</p>
-      </div>
-      <div class="proj">
-        <a href={waLink()} target="_blank" rel="noopener" class="proj__feat reveal">
-          <Image src={img(allProjects[0].img)} alt={`${allProjects[0].client} — tanque diesel`} widths={[800, 1400]} sizes="(max-width: 900px) 100vw, 60vw" format="webp" loading="lazy" />
-          <div class="proj__feat-copy">
-            <span class="proj__cap">{allProjects[0].cap}</span>
-            <h3 class="proj__t">{allProjects[0].client}</h3>
-            <p class="proj__loc">{allProjects[0].loc}</p>
-            <p class="muted">{allProjects[0].desc}</p>
-          </div>
-        </a>
-        <div class="proj__rest">
-          {allProjects.slice(1).map((p) => (
-            <article class="proj__item reveal">
-              <div class="proj__img"><Image src={img(p.img)} alt={`${p.client} — tanque diesel`} widths={[400, 800]} sizes="(max-width: 760px) 100vw, 33vw" format="webp" loading="lazy" /><span class="proj__cap">{p.cap}</span></div>
-              <h3 class="proj__t">{p.client}</h3>
-              <p class="proj__loc">{p.loc}</p>
-              <p class="muted proj__desc">{p.desc}</p>
-            </article>
-          ))}
+  <section class="sec sec--tightop">
+    <div class="sheet">
+      <div class="feat edge rv">
+        <div class="feat__media">
+          <Image src={fotoDamas} alt="Tanque de 93,000 galones del Hospital de Damas en Ponce" widths={[420, 720]} sizes="(max-width: 860px) 92vw, 40vw" format="webp" loading="eager" />
+        </div>
+        <div class="feat__copy">
+          <span class="kicker">Proyecto destacado</span>
+          <p class="feat__num h-display grad-text">93,000 <small>gal</small></p>
+          <h2 class="h-display">Hospital de Damas · Ponce</h2>
+          <p class="muted">
+            Pulido de combustible a gran escala para el sistema de respaldo del hospital.
+            El proyecto de mayor capacidad en nuestro registro.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- COVERAGE / IMPACT -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="display">Toda la isla, un solo estandar</h2>
-      </div>
-      <div class="stats">
-        {stats.map((s) => (
-          <div class="stat reveal"><b class="display">{s.big}</b><span class="muted">{s.label}</span></div>
+      <div class="gal">
+        {galeria.map((o, i) => (
+          <figure class="gal__item rv" style={`--d:${0.04 * i}s`}>
+            <Image src={byName[o.foto!]} alt={`${o.cliente} — ${o.alcance.toLowerCase()}`} widths={[420, 640]} sizes="(max-width: 720px) 92vw, 32vw" format="webp" loading="lazy" />
+            <figcaption><b>{o.cliente}</b><span class="small">{o.municipio} · {o.tanque}</span></figcaption>
+          </figure>
         ))}
       </div>
+
+      <div class="registro rv">
+        <h2 class="h-display registro__t">Registro de servicio</h2>
+        <ul class="registro__list">
+          {obras.map((o) => (
+            <li>
+              <b>{o.cliente}</b>
+              <span class="muted small">{o.municipio}</span>
+              <span class="registro__gal">{o.tanque}</span>
+              <span class="muted small registro__alc">{o.alcance}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section cta">
-    <div class="container cta__in reveal">
-      <h2 class="display">Sumemos su tanque a esta lista</h2>
-      <p class="lead muted">Evaluamos el estado real de su combustible y le entregamos un reporte con la evidencia del trabajo. Respondemos en minutos.</p>
-      <div class="cta__actions">
-        <a href="/contacto" class="btn btn--gold btn--lg">Solicitar evaluacion gratis</a>
-      </div>
-      <div class="cta__contacts">
-        <a href={`tel:${site.phone}`} class="cta__contact" data-track="call" data-src="trabajos">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span><i>Llamar</i><b>{phoneDisplay(site.phone)}</b></span>
-        </a>
-        <a href={waLink()} target="_blank" rel="noopener" class="cta__contact" data-track="whatsapp" data-src="trabajos">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
-          <span><i>Escribir</i><b>WhatsApp</b></span>
-        </a>
-      </div>
-    </div>
-  </section>
+  <MuestraBanner />
 </Base>
 
 <style>
-  /* PROJECTS */
-  .proj { margin-top: clamp(36px, 5vw, 50px); }
-  .proj__cap { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gold); color: var(--navy-900); padding: 5px 9px; }
-  .proj__t { font-family: var(--f-display); text-transform: uppercase; font-size: 1.18rem; margin: 0 0 4px; }
-  .proj__loc { font-family: var(--f-body); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-deep); margin: 0; }
-  .proj__feat { position: relative; display: block; border-radius: var(--radius); overflow: hidden; min-height: 440px; }
-  .proj__feat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
-  .proj__feat::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, var(--navy-900) 4%, rgba(4,9,15,0.55) 38%, transparent 70%); }
-  .proj__feat:hover img { transform: scale(1.04); }
-  .proj__feat-copy { position: absolute; left: 0; bottom: 0; z-index: 1; padding: clamp(22px, 3vw, 36px); max-width: 56ch; }
-  .proj__feat-copy .proj__cap { position: absolute; top: clamp(22px, 3vw, 36px); left: clamp(22px, 3vw, 36px); }
-  .proj__feat-copy .proj__t { font-size: clamp(1.5rem, 1rem + 1.8vw, 2.4rem); margin-top: 10px; }
-  .proj__feat-copy .proj__loc { margin-bottom: 10px; }
-  .proj__rest { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(16px, 2vw, 26px); margin-top: clamp(16px, 2vw, 26px); }
-  .proj__item { display: block; }
-  .proj__img { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: var(--radius); }
-  .proj__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-  .proj__item:hover .proj__img img { transform: scale(1.05); }
-  .proj__img .proj__cap { position: absolute; top: 10px; left: 10px; }
-  .proj__item .proj__t { font-size: 1.08rem; margin: 14px 0 3px; }
-  .proj__desc { font-size: var(--step--1); margin: 10px 0 0; }
-  @media (max-width: 760px) { .proj__feat { min-height: 340px; } }
+  .cover { padding-block: clamp(56px, 8vw, 110px) clamp(20px, 3vw, 40px); }
+  .cover h1 { margin-top: 18px; max-width: 20ch; }
+  .cover .lede { margin-top: 16px; max-width: 54ch; }
+  .sec--tightop { padding-top: clamp(24px, 4vw, 56px); }
 
-  /* STATS */
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; text-align: center; margin-top: 50px; }
-  .stat b { display: block; font-size: clamp(2.6rem, 1.6rem + 4vw, 4.6rem); color: var(--gold); line-height: 1; }
-  .stat span { display: block; margin-top: 12px; font-family: var(--f-body); font-weight: 600; font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; }
-  @media (max-width: 760px) { .stats { grid-template-columns: 1fr 1fr; gap: 36px 20px; } }
+  .feat { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); overflow: clip; }
+  .feat__media { min-height: 320px; position: relative; overflow: clip; }
+  .feat__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.08) contrast(1.05); transform: scale(1.02); }
+  @media (min-width: 861px) {
+    .feat__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 72%, var(--bg-2) 99%); pointer-events: none; }
+  }
+  @media (max-width: 860px) {
+    .feat { grid-template-columns: 1fr; }
+    .feat__media { min-height: 240px; }
+    .feat__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 72%, var(--bg-2) 99%); pointer-events: none; }
+  }
+  .feat__copy { padding: clamp(26px, 4vw, 48px); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .feat__num { font-size: clamp(2.6rem, 2rem + 3vw, 4.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .feat__num small { font-size: 0.4em; font-weight: 800; }
+  .feat__copy p.muted { max-width: 50ch; }
 
-  /* CTA */
-  .cta { background: linear-gradient(180deg, var(--navy-deep), var(--navy-900)); }
-  .cta__in { max-width: 64ch; }
-  .cta__in .display { margin: 16px 0; }
-  .cta__actions { margin-top: 28px; }
-  .cta__contacts { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
-  .cta__contact { display: inline-flex; align-items: center; gap: 13px; padding: 14px 20px; border: 1px solid var(--line-strong); border-radius: var(--radius); transition: border-color 0.2s; }
-  .cta__contact:hover { border-color: var(--gold); }
-  .cta__contact svg { width: 22px; height: 22px; color: var(--gold); }
-  .cta__contact i { display: block; font-family: var(--f-body); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone-dim); }
-  .cta__contact b { display: block; font-size: 1.05rem; }
+  .gal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .gal__item { position: relative; margin: 0; border-radius: var(--r-md); overflow: clip; aspect-ratio: 4 / 5; background: var(--bg); }
+  .gal__item img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.08) contrast(1.05); transform: scale(1.02); transition: transform 0.5s var(--ease); }
+  .gal__item:hover img { transform: scale(1.06); }
+  .gal__item figcaption { position: absolute; inset: auto 0 0 0; padding: 34px 14px 12px; background: linear-gradient(transparent, rgba(3, 6, 14, 0.92)); }
+  .gal__item figcaption b { display: block; font-size: 0.95rem; }
+  .gal__item figcaption span { color: var(--ink-70); }
+  @media (max-width: 860px) { .gal { grid-template-columns: repeat(2, 1fr); } }
+
+  .registro { margin-top: clamp(44px, 6vw, 72px); }
+  .registro__t { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.2rem); margin-bottom: 18px; }
+  .registro__list { list-style: none; margin: 0; padding: 0; }
+  .registro__list li {
+    display: grid;
+    grid-template-columns: minmax(160px, 1.2fr) 0.7fr 0.6fr 1.2fr;
+    gap: 10px 22px;
+    align-items: baseline;
+    padding-block: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .registro__list li:last-child { border-bottom: 1px solid var(--line); }
+  .registro__list b { font-family: var(--f-display); font-weight: 600; font-size: 1rem; }
+  .registro__gal { color: var(--ambar); font-weight: 800; }
+  @media (max-width: 640px) {
+    .registro__list li { grid-template-columns: 1fr auto; }
+    .registro__alc { display: none; }
+  }
 </style>

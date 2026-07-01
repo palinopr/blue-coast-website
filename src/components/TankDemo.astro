@@ -1,0 +1,316 @@
+---
+// DEMO: así trabaja BCD en sitio. Corte transversal de un tanque de diésel
+// con sus capas (lodo, sedimento, agua, diésel degradado) y, al lado, la
+// unidad de pulido MONTADA EN LA CAMA DE UN CAMIÓN — como en los trabajos
+// reales. Al entrar en pantalla corre el ciclo: mangueras fluyendo, capas
+// drenando y el diésel volviendo a su color ámbar limpio. SVG + CSS puro.
+---
+<div class="tank" data-tank>
+  <svg viewBox="0 0 800 560" role="img" aria-label="Demostración animada: unidad de pulido montada en camión limpiando un tanque de diésel contaminado">
+    <defs>
+      <linearGradient id="t-shell" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#233752" />
+        <stop offset=".18" stop-color="#3f5d85" />
+        <stop offset=".5" stop-color="#1b2c46" />
+        <stop offset=".85" stop-color="#31496c" />
+        <stop offset="1" stop-color="#1a2a44" />
+      </linearGradient>
+      <linearGradient id="t-diesel-sucio" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6b5426" />
+        <stop offset="1" stop-color="#42300f" />
+      </linearGradient>
+      <linearGradient id="t-diesel-limpio" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffc24e" />
+        <stop offset="1" stop-color="#e08c12" />
+      </linearGradient>
+      <linearGradient id="t-agua" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4a6d85" />
+        <stop offset="1" stop-color="#33505f" />
+      </linearGradient>
+      <linearGradient id="t-unit" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2e4266" />
+        <stop offset="1" stop-color="#16223c" />
+      </linearGradient>
+      <clipPath id="t-interior"><rect x="158" y="92" width="216" height="380" rx="10" /></clipPath>
+    </defs>
+
+    <!-- suelo: trabajo en exterior -->
+    <line x1="40" y1="506" x2="770" y2="506" stroke="#2c4166" stroke-width="2" />
+    <line x1="60" y1="522" x2="200" y2="522" stroke="#1d2f4d" stroke-width="2" stroke-dasharray="2 14" />
+    <line x1="560" y1="522" x2="740" y2="522" stroke="#1d2f4d" stroke-width="2" stroke-dasharray="2 14" />
+
+    <!-- mangueras del circuito -->
+    <path class="hose" d="M376 468 H509 a22 22 0 0 0 22 -22 V412" />
+    <path class="hose hose--flow" d="M376 468 H509 a22 22 0 0 0 22 -22 V412" />
+    <path class="hose" d="M531 300 V132 a24 24 0 0 0 -24 -24 H272 V84" />
+    <path class="hose hose--flow hose--flow2" d="M531 300 V132 a24 24 0 0 0 -24 -24 H272 V84" />
+
+    <!-- camión con la unidad de pulido -->
+    <g class="truck">
+      <!-- plataforma / cama -->
+      <rect x="452" y="416" width="252" height="18" rx="5" fill="#22355a" stroke="#41598a" stroke-width="1.4" />
+      <!-- cabina -->
+      <path d="M704 434 V352 a14 14 0 0 1 14 -14 h20 a16 16 0 0 1 14 9 l16 34 a18 18 0 0 1 2 8 v45 Z" fill="url(#t-unit)" stroke="#41598a" stroke-width="1.4" />
+      <path d="M722 350 h14 a8 8 0 0 1 7 5 l12 26 h-33 Z" fill="#0e1930" stroke="#41598a" stroke-width="1.2" />
+      <rect x="704" y="416" width="66" height="18" rx="4" fill="#1a2a48" stroke="#41598a" stroke-width="1.2" />
+      <!-- chasis y ruedas -->
+      <rect x="452" y="434" width="318" height="12" rx="4" fill="#101c34" stroke="#2c4166" stroke-width="1" />
+      <g class="wheel">
+        <circle cx="512" cy="472" r="30" fill="#0b1322" stroke="#41598a" stroke-width="3" />
+        <circle cx="512" cy="472" r="12" fill="#1a2a48" stroke="#5b7db8" stroke-width="2" />
+      </g>
+      <g class="wheel">
+        <circle cx="676" cy="472" r="30" fill="#0b1322" stroke="#41598a" stroke-width="3" />
+        <circle cx="676" cy="472" r="12" fill="#1a2a48" stroke="#5b7db8" stroke-width="2" />
+      </g>
+      <!-- unidad de pulido sobre la cama -->
+      <g class="unit">
+        <rect x="486" y="300" width="90" height="116" rx="10" fill="url(#t-unit)" stroke="#41598a" stroke-width="1.5" />
+        <rect class="unit__lamp" x="500" y="314" width="62" height="9" rx="4.5" />
+        <g class="unit__fan" transform-origin="531 366">
+          <circle cx="531" cy="366" r="22" fill="none" stroke="#5b7db8" stroke-width="1.5" />
+          <path d="M531 366 531 348M531 366l15 9M531 366l-15 9" stroke="#8fb2ea" stroke-width="3" stroke-linecap="round" />
+        </g>
+        <line x1="500" y1="400" x2="562" y2="400" stroke="#ffb03a" stroke-width="2" opacity=".5" />
+      </g>
+      <!-- tanque auxiliar en la cama -->
+      <rect x="592" y="342" width="100" height="74" rx="12" fill="url(#t-unit)" stroke="#41598a" stroke-width="1.4" />
+      <ellipse cx="642" cy="342" rx="50" ry="10" fill="#31496c" stroke="#5c7fb4" stroke-width="1.2" />
+      <text class="t-mini t-mini--dim" x="642" y="384" text-anchor="middle">RESIDUOS</text>
+      <text class="t-mini t-caption" x="596" y="540" text-anchor="middle">UNIDAD DE PULIDO — MONTADA EN CAMIÓN · SERVICIO EN SITIO</text>
+    </g>
+
+    <!-- tanque del cliente -->
+    <g>
+      <rect x="142" y="74" width="248" height="424" rx="24" fill="url(#t-shell)" stroke="#4a6693" stroke-width="1.5" />
+      <ellipse cx="266" cy="74" rx="124" ry="20" fill="#33507a" stroke="#5c7fb4" stroke-width="1.5" />
+      <rect x="250" y="40" width="34" height="20" rx="5" fill="#33507a" stroke="#5c7fb4" stroke-width="1.5" />
+      <rect x="154" y="88" width="224" height="388" rx="12" fill="#0b1322" stroke="#4a6693" stroke-width="1.2" />
+    </g>
+
+    <!-- interior: capas -->
+    <g clip-path="url(#t-interior)">
+      <rect class="layer layer--diesel" x="158" y="120" width="216" height="352" fill="url(#t-diesel-sucio)" />
+      <rect class="layer layer--diesel-limpio" x="158" y="120" width="216" height="352" fill="url(#t-diesel-limpio)" />
+      <path class="layer layer--agua" d="M158 356c28 -6 54 6 82 0s54 6 82 0 36 4 52 0V472H158Z" fill="url(#t-agua)" opacity=".92" />
+      <path class="layer layer--sed" d="M158 396c34 -10 62 12 100 4s64 8 116 -2V472H158Z" fill="#4a3218" />
+      <path class="layer layer--lodo" d="M158 430c30 -12 60 10 96 4s72 6 120 -4V472H158Z" fill="#20150a" />
+
+      <g class="motas">
+        {Array.from({ length: 13 }).map((_, i) => (
+          <circle
+            class="mota"
+            cx={172 + ((i * 53) % 190)}
+            cy={132 + ((i * 37) % 170)}
+            r={i % 3 === 0 ? 2.6 : 1.7}
+            style={`--dur:${7 + (i % 5)}s; --del:${(i * 0.9) % 6}s`}
+          />
+        ))}
+      </g>
+
+      <g class="flujo">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <circle class="flujo__b" cx={318 + i * 6} cy={462 - i * 8} r="2.2" style={`--del:${i * 0.35}s`} />
+        ))}
+      </g>
+    </g>
+
+    <!-- boca de succión -->
+    <rect x="330" y="461" width="46" height="14" rx="7" fill="#2a3c5c" stroke="#41598a" stroke-width="1.2" />
+
+    <!-- regla de nivel -->
+    <g class="t-mini t-mini--dim">
+      {Array.from({ length: 9 }).map((_, i) => (
+        <g>
+          <line x1="128" x2="140" y1={112 + i * 44} y2={112 + i * 44} stroke="#5b7db8" stroke-width="1" />
+          <text x="120" y={116 + i * 44} text-anchor="end">{(8 - i) * 10}%</text>
+        </g>
+      ))}
+    </g>
+
+    <!-- anotaciones -->
+    <g class="nota nota--diesel">
+      <line x1="300" y1="48" x2="300" y2="24" />
+      <text y="16" text-anchor="middle">
+        <tspan x="300" class="nota__t nota__t--sucio">DIÉSEL DEGRADADO — turbio, microbios activos</tspan>
+        <tspan x="300" class="nota__t nota__t--limpio">DIÉSEL PULIDO ✓ — color ámbar, certificado</tspan>
+      </text>
+    </g>
+    <g class="nota nota--capa nota--agua">
+      <line x1="374" y1="366" x2="404" y2="366" /><circle cx="374" cy="366" r="3" />
+      <text x="410" y="362">AGUA</text>
+      <text x="410" y="375" class="nota__sub">condensación</text>
+    </g>
+    <g class="nota nota--capa nota--sed">
+      <line x1="374" y1="406" x2="396" y2="406" /><circle cx="374" cy="406" r="3" />
+      <text x="402" y="410">SEDIMENTO</text>
+    </g>
+    <g class="nota nota--capa nota--lodo">
+      <line x1="374" y1="442" x2="388" y2="442" /><circle cx="374" cy="442" r="3" />
+      <text x="394" y="439">LODO</text>
+      <text x="394" y="452" class="nota__sub">tapa filtros</text>
+    </g>
+
+    <!-- sello final -->
+    <g class="sello-ok">
+      <rect x="176" y="256" width="180" height="54" rx="12" />
+      <text x="266" y="279" text-anchor="middle" class="sello-ok__t">TANQUE LISTO ✓</text>
+      <text x="266" y="297" text-anchor="middle" class="sello-ok__s">reporte certificado NFPA 110</text>
+    </g>
+  </svg>
+
+  <div class="tank__ctl">
+    <button class="tank__btn" data-tank-btn>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <span data-tank-label>Ver el pulido en acción</span>
+    </button>
+    <p class="small muted" data-tank-status aria-live="polite">Así está un tanque sin mantenimiento después de unos años.</p>
+  </div>
+</div>
+
+<style>
+  .tank svg { width: 100%; height: auto; }
+
+  .t-mini { font-family: var(--f-ui); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; fill: #9fb4d8; }
+  .t-mini--dim { fill: #5d7195; font-weight: 600; }
+
+  /* mangueras */
+  .hose { fill: none; stroke: #2c4166; stroke-width: 10; stroke-linecap: round; }
+  .hose--flow { stroke: var(--ambar); stroke-width: 4; stroke-dasharray: 14 18; opacity: 0; transition: opacity 0.5s; }
+  [data-tank].on .hose--flow { opacity: 1; animation: flow 0.9s linear infinite; }
+  .hose--flow2 { animation-delay: 0.45s !important; }
+  @keyframes flow { to { stroke-dashoffset: -32; } }
+
+  /* unidad */
+  .unit__lamp { fill: #22314f; transition: fill 0.4s; }
+  [data-tank].on .unit__lamp { fill: var(--ambar); filter: drop-shadow(0 0 8px rgba(255, 176, 58, 0.9)); }
+  .unit__fan { transform-box: fill-box; transform-origin: center; }
+  [data-tank].on .unit__fan { animation: spin 1.1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* capas: reset rápido, drenado lento y pausado durante el ciclo */
+  .layer { transition: transform 0.5s ease, opacity 0.5s ease; transform-box: fill-box; transform-origin: bottom; }
+  [data-tank].on .layer { transition: transform 5.5s cubic-bezier(0.45, 0, 0.2, 1), opacity 4.2s ease; }
+  .layer--diesel-limpio { opacity: 0; }
+  [data-tank].on .layer--diesel-limpio { opacity: 1; transition-duration: 6s; transition-delay: 2.8s; }
+  [data-tank].on .layer--agua { transform: scaleY(0.02); opacity: 0; transition-delay: 1s; }
+  [data-tank].on .layer--sed { transform: scaleY(0.03); opacity: 0; transition-delay: 1.9s; }
+  [data-tank].on .layer--lodo { transform: scaleY(0.05); opacity: 0; transition-delay: 2.9s; }
+
+  /* partículas: la animación se APAGA durante el pulido (si solo se pausara,
+     los puntos quedarían flotando sobre el diésel limpio) */
+  .mota { fill: #8a6a30; animation: settle var(--dur) linear var(--del) infinite; }
+  @keyframes settle {
+    0% { transform: translateY(-16px); opacity: 0; }
+    12% { opacity: 0.85; }
+    88% { opacity: 0.85; }
+    100% { transform: translateY(185px); opacity: 0; }
+  }
+  [data-tank].on .mota { animation: none; opacity: 0; transition: opacity 1.2s ease 0.8s; }
+
+  /* flujo de succión */
+  .flujo__b { fill: var(--ambar); opacity: 0; }
+  [data-tank].on .flujo__b { animation: succion 1s ease-in var(--del) infinite; }
+  @keyframes succion { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: 0.9; } 100% { opacity: 0; transform: translate(22px, 12px); } }
+
+  /* anotaciones */
+  .nota line { stroke: #5d7195; stroke-width: 1; stroke-dasharray: 3 4; }
+  .nota circle { fill: var(--ambar); }
+  .nota text { font-family: var(--f-ui); font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; fill: #cddaf2; }
+  .nota .nota__sub { font-weight: 600; fill: #7d92b8; letter-spacing: 0.03em; font-size: 10px; }
+  .nota--capa { transition: opacity 0.5s; }
+  [data-tank].on .nota--agua { opacity: 0; transition: opacity 2s 1.4s; }
+  [data-tank].on .nota--sed { opacity: 0; transition: opacity 2s 2.3s; }
+  [data-tank].on .nota--lodo { opacity: 0; transition: opacity 2s 3.2s; }
+  .nota__t { transition: opacity 0.6s; }
+  .nota__t--limpio { opacity: 0; }
+  [data-tank].on .nota__t--sucio { opacity: 0; transition-delay: 3.8s; }
+  [data-tank].on .nota__t--limpio { opacity: 1; fill: var(--ambar); transition-delay: 4s; }
+
+  /* sello final */
+  .sello-ok { opacity: 0; transform: scale(0.92); transform-box: fill-box; transform-origin: center; transition: opacity 0.4s, transform 0.4s; }
+  [data-tank].on .sello-ok { opacity: 1; transform: scale(1); transition: opacity 0.8s 7s, transform 0.8s 7s cubic-bezier(0.22, 1, 0.36, 1); }
+  .sello-ok rect { fill: rgba(6, 12, 24, 0.88); stroke: var(--ambar); stroke-width: 1.5; }
+  .sello-ok__t { font-family: var(--f-display); font-size: 16px; font-weight: 700; letter-spacing: 0.04em; fill: var(--ambar); }
+  .sello-ok__s { font-family: var(--f-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; fill: #9fb4d8; }
+
+  /* control */
+  .tank__ctl { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+  .tank__btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 50px; padding: 0.7em 1.5em;
+    border-radius: 13px;
+    border: 1px solid rgba(255, 176, 58, 0.5);
+    background: rgba(255, 176, 58, 0.1);
+    color: var(--ambar);
+    font-weight: 800; font-size: 0.98rem;
+    transition: background 0.2s, transform 0.2s var(--ease);
+  }
+  .tank__btn:hover { background: rgba(255, 176, 58, 0.2); transform: translateY(-2px); }
+  .tank__btn svg { width: 18px; height: 18px; }
+  .tank__ctl p { margin: 0; max-width: 42ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mota, .unit__fan, .hose--flow, .flujo__b { animation: none !important; }
+  }
+
+  /* en pantallas pequeñas el SVG se reduce ~2.2×: subimos las etiquetas y
+     los nombres de capa entran DENTRO del tanque (afuera chocan con el camión) */
+  @media (max-width: 720px) {
+    .t-mini { font-size: 15px; }
+    .t-caption { font-size: 11px; letter-spacing: 0.04em; }
+    .nota text { font-size: 19px; }
+    .nota .nota__sub, .nota text.nota__sub { display: none; }
+    .nota--capa line, .nota--capa circle { display: none; }
+    .nota--capa text { fill: #f2e9d8; paint-order: stroke; stroke: rgba(10, 8, 4, 0.75); stroke-width: 3px; }
+    .nota--agua { transform: translate(-238px, 4px); }
+    .nota--sed { transform: translate(-230px, 0); }
+    .nota--lodo { transform: translate(-222px, 2px); }
+    .sello-ok__t { font-size: 18px; }
+    .sello-ok__s { font-size: 10.5px; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tank]');
+  if (root) {
+    const btn = root.querySelector<HTMLButtonElement>('[data-tank-btn]');
+    const label = root.querySelector<HTMLElement>('[data-tank-label]');
+    const status = root.querySelector<HTMLElement>('[data-tank-status]');
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const run = () => {
+      root.classList.add('on');
+      if (label) label.textContent = 'Repetir demostración';
+      if (status) status.textContent = 'La unidad del camión recircula el diésel: extrae lodo, sedimento y agua hasta devolverlo limpio.';
+    };
+    const reset = () => {
+      root.classList.remove('on');
+      if (status) status.textContent = 'Así está un tanque sin mantenimiento después de unos años.';
+    };
+
+    btn?.addEventListener('click', () => {
+      if (root.classList.contains('on')) {
+        reset();
+        clearTimeout(timer);
+        timer = setTimeout(run, 900); // las capas se restauran en ~0.5 s
+      } else {
+        run();
+      }
+    });
+
+    // Auto-arranque al entrar en pantalla — no con movimiento reducido
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            timer = setTimeout(run, 1400);
+            io.disconnect();
+          }
+        },
+        { threshold: 0.5 }
+      );
+      io.observe(root);
+    }
+  }
+</script>

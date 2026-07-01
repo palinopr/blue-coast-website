@@ -1,0 +1,24 @@
+{
+  "name": "blue-coast-explainer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Video explicativo Blue Coast Developers (Remotion)",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render BlueCoastExplainer out/blue-coast-explainer.mp4",
+    "still": "remotion still BlueCoastExplainer out/poster.png --frame=1740",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.290",
+    "@remotion/google-fonts": "^4.0.290",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.290"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.8.0"
+  }
+}

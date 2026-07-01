@@ -1,0 +1,35 @@
+---
+// Ilustración: limpieza de tanque — manguera de succión extrayendo el lodo.
+---
+<svg class="illo" viewBox="0 0 180 140" aria-hidden="true">
+  <defs>
+    <linearGradient id="il-shell" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2b4266" /><stop offset=".5" stop-color="#456894" /><stop offset="1" stop-color="#243a5c" />
+    </linearGradient>
+    <linearGradient id="il-fuel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0a832" /><stop offset="1" stop-color="#c07708" />
+    </linearGradient>
+    <clipPath id="il-cut"><rect x="26" y="30" width="88" height="88" rx="8" /></clipPath>
+  </defs>
+  <rect x="20" y="22" width="100" height="102" rx="14" fill="url(#il-shell)" stroke="#557bb0" />
+  <rect x="26" y="30" width="88" height="88" rx="8" fill="#0c1526" />
+  <g clip-path="url(#il-cut)">
+    <rect x="26" y="52" width="88" height="66" fill="url(#il-fuel)" opacity=".9" />
+    <path class="lodo" d="M26 100c14 -6 30 6 46 2s28 4 42 -2V118H26Z" fill="#241708" />
+  </g>
+  <path class="manguera" d="M96 108 C120 108 118 70 142 70" fill="none" stroke="#2c4166" stroke-width="8" stroke-linecap="round" />
+  <path class="manguera-flujo" d="M96 108 C120 108 118 70 142 70" fill="none" stroke="#b98a3c" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round" />
+  <rect x="136" y="52" width="30" height="40" rx="7" fill="#182742" stroke="#41598a" />
+  <rect x="142" y="58" width="18" height="6" rx="3" fill="#ffb03a" opacity=".85" />
+  <g class="brillo" fill="#ffd98a">
+    <path d="M52 40l2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" />
+    <path d="M88 46l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4Z" opacity=".8" />
+  </g>
+  <style>
+    .manguera-flujo { animation: il-flow 1.1s linear infinite; }
+    @keyframes il-flow { to { stroke-dashoffset: -18; } }
+    .brillo { animation: il-tw 2.6s ease-in-out infinite; transform-origin: center; }
+    @keyframes il-tw { 50% { opacity: 0.35; } }
+    @media (prefers-reduced-motion: reduce) { .manguera-flujo, .brillo { animation: none; } }
+  </style>
+</svg>

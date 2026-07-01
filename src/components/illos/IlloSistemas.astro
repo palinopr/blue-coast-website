@@ -1,0 +1,39 @@
+---
+// Ilustración: sistemas de combustible — generador alimentado por su tanque.
+---
+<svg class="illo" viewBox="0 0 180 140" aria-hidden="true">
+  <defs>
+    <linearGradient id="is-gen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a3c5c" /><stop offset="1" stop-color="#141f36" />
+    </linearGradient>
+  </defs>
+  <!-- tanque pequeño -->
+  <rect x="18" y="46" width="52" height="66" rx="12" fill="url(#is-gen)" stroke="#41598a" />
+  <rect x="24" y="76" width="40" height="30" rx="7" fill="#7a5a18" />
+  <rect x="24" y="70" width="40" height="8" rx="4" fill="#ffb03a" opacity=".85" />
+  <text x="44" y="62" text-anchor="middle" font-family="var(--f-ui)" font-size="9" font-weight="800" letter-spacing=".08em" fill="#9fb4d8">DIÉSEL</text>
+  <!-- línea de combustible -->
+  <path class="linea" d="M70 96h34" stroke="#2c4166" stroke-width="8" stroke-linecap="round" />
+  <path class="linea-flujo" d="M70 96h34" stroke="#ffb03a" stroke-width="3" stroke-dasharray="7 9" stroke-linecap="round" />
+  <!-- generador -->
+  <rect x="104" y="58" width="60" height="56" rx="10" fill="url(#is-gen)" stroke="#41598a" />
+  <circle class="vent" cx="124" cy="86" r="14" fill="none" stroke="#5b7db8" stroke-width="2" />
+  <g class="vent__aspas" transform-origin="124 86">
+    <path d="M124 86V72M124 86l12 7M124 86l-12 7" stroke="#8fb2ea" stroke-width="2.6" stroke-linecap="round" />
+  </g>
+  <rect x="146" y="70" width="12" height="20" rx="3" fill="#0f1a30" stroke="#41598a" />
+  <rect class="led" x="148.5" y="73" width="7" height="5" rx="2" fill="#25d366" />
+  <!-- rayo de energía -->
+  <path class="rayo" d="M140 34l-10 16h8l-6 14 16-18h-9l7-12Z" fill="#ffb03a" />
+  <style>
+    .linea-flujo { animation: is-flow 1s linear infinite; }
+    @keyframes is-flow { to { stroke-dashoffset: -16; } }
+    .vent__aspas { animation: is-spin 1.6s linear infinite; }
+    @keyframes is-spin { to { transform: rotate(360deg); } }
+    .rayo { animation: is-zap 2.4s ease-in-out infinite; }
+    @keyframes is-zap { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+    .led { animation: is-led 1.4s steps(2) infinite; }
+    @keyframes is-led { 50% { opacity: 0.4; } }
+    @media (prefers-reduced-motion: reduce) { .linea-flujo, .vent__aspas, .rayo, .led { animation: none; } }
+  </style>
+</svg>
