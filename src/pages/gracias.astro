@@ -1,36 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
-// El evento de conversión del embudo se dispara aquí (una sola vez), cuando
-// el DOM terminó de cargar y bcTrack ya existe.
 ---
 <Base
   title="Gracias | BCD Diesel"
-  description="Recibimos su solicitud. Le contactaremos en minutos."
+  description="Escríbanos directamente por WhatsApp para coordinar su muestra gratis."
 >
   <section class="gracias" data-hero>
     <div class="sheet gracias__in">
       <div class="gracias__mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
-      <h1 class="h-display">Recibido. <span class="grad-text">Le contactamos en minutos.</span></h1>
+      <h1 class="h-display">Continuemos por <span class="grad-text">WhatsApp.</span></h1>
       <p class="lede">
-        Un técnico de BCD Diesel revisará su solicitud y se comunicará con usted en breve.
-        Si es urgente, use la vía rápida:
+        Ya no necesita completar un formulario. Abra WhatsApp y un técnico de BCD Diesel
+        coordinará su muestra gratis directamente con usted.
       </p>
       <div class="gracias__cta">
-        <a href={`tel:${site.phone}`} class="btn btn-ambar" data-track="call" data-src="gracias">Llamar · {phoneDisplay(site.phone)}</a>
-        <a href={waLink(waMsg.gracias)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="gracias">WhatsApp</a>
+        <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="gracias">Abrir WhatsApp</a>
+        <a href={`tel:${site.phone}`} class="btn btn-glass" data-track="call" data-src="gracias">Emergencia · {phoneDisplay(site.phone)}</a>
       </div>
       <a href="/" class="gracias__back small">← Volver al inicio</a>
     </div>
   </section>
 
-  <script is:inline>
-    window.addEventListener('DOMContentLoaded', function () {
-      if (window.bcTrack) window.bcTrack('lead_submit', { stage: 'thankyou' });
-    });
-  </script>
 </Base>
 
 <style>

@@ -1,41 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
-import LeadForm from '../components/LeadForm.astro';
 import PRMap from '../components/PRMap.astro';
 import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
 ---
 <Base
   title="Contacto | BCD Diesel — Pida su muestra gratis"
-  description="Pida su muestra de diésel gratis por WhatsApp, teléfono o formulario. Servicio en los 78 municipios de Puerto Rico. Respondemos en minutos, 24/7."
+  description="Pida su muestra de diésel gratis directamente por WhatsApp. Servicio en los 78 municipios de Puerto Rico. Respondemos en minutos, 24/7."
 >
   <section class="cover" data-hero>
     <div class="sheet">
       <span class="kicker rv">Contacto</span>
       <h1 class="h-display rv" style="--d:.05s">Hablemos de <span class="grad-text">su tanque.</span></h1>
       <p class="lede rv" style="--d:.1s">
-        Dos vías rápidas y un formulario. Respondemos en minutos, no en días.
+        Una conversación directa por WhatsApp. Sin formularios y sin esperar días.
       </p>
     </div>
   </section>
 
   <section class="sec sec--tightop" id="contacto">
     <div class="sheet cta">
-      <div class="cta__copy">
-        <div class="cta__canales rv">
-          <a href={`tel:${site.phone}`} class="cta__canal" data-track="call" data-src="contacto">
-            <span class="small muted">¿Emergencia? Llame ahora · 24/7</span>
-            <b>{phoneDisplay(site.phone)} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
-          </a>
-          <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="cta__canal" data-track="whatsapp" data-src="contacto">
-            <span class="small muted">¿Muestra gratis o mantenimiento? Escríbanos</span>
-            <b>WhatsApp directo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
-          </a>
-        </div>
+      <div class="cta__whatsapp glass rv">
+        <span class="cta__wa-label"><i aria-hidden="true"></i> WhatsApp directo</span>
+        <h2 class="h-display">Pida su muestra gratis. Sin formularios.</h2>
+        <p class="muted">Abra el chat y envíe el mensaje listo. Le preguntaremos municipio, tipo de facilidad y capacidad aproximada del tanque.</p>
+        <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa cta__wa-btn" data-track="whatsapp" data-src="contacto-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zM6.6 20.2c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.465-.81z"/></svg>
+          Abrir WhatsApp y pedir mi muestra
+        </a>
+        <span class="small cta__response">Respondemos en minutos · 78 municipios</span>
       </div>
-      <div class="cta__form glass rv" style="--d:.1s">
-        <h2 class="h-display cta__form-t">Pida su muestra gratis</h2>
-        <p class="small muted cta__form-sub">Coordinamos la visita, tomamos la muestra y usted ve el estado de su combustible. Sin compromiso.</p>
-        <LeadForm id="lead-contacto" />
+      <div class="cta__secondary rv" style="--d:.1s">
+        <span class="kicker">Emergencias 24/7</span>
+        <h2 class="h-display">Si el generador no puede esperar, llame ahora.</h2>
+        <p class="muted">Para servicio urgente, averías o asistencia inmediata con el sistema de combustible.</p>
+        <a href={`tel:${site.phone}`} class="cta__call" data-track="call" data-src="contacto">
+          <span class="small muted">Línea directa</span>
+          <b>{phoneDisplay(site.phone)} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
+        </a>
       </div>
     </div>
   </section>
@@ -60,24 +61,25 @@ import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
   .sec--tightop { padding-top: clamp(24px, 4vw, 56px); }
 
   .cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
-  .cta__canales { display: block; }
-  .cta__canal {
-    display: flex; flex-direction: column; gap: 4px;
-    padding: 20px 4px;
-    text-decoration: none;
-    color: var(--ink);
-    border-top: 1px solid var(--line);
-    transition: padding-left 0.25s var(--ease);
+  .cta__whatsapp {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(28px, 4vw, 48px);
+    background: radial-gradient(600px 280px at 100% 0%, rgba(37, 211, 102, 0.2), transparent 58%), rgba(148, 170, 210, 0.06);
   }
-  .cta__canal:last-child { border-bottom: 1px solid var(--line); }
-  .cta__canal:hover { padding-left: 12px; }
-  .cta__canal b { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-display); font-size: clamp(1.25rem, 2.2vw, 1.7rem); letter-spacing: -0.01em; overflow-wrap: anywhere; }
-  .cta__canal b svg { width: 20px; height: 20px; color: var(--ambar); flex: none; transition: transform 0.25s var(--ease); }
-  .cta__canal:hover b svg { transform: translateX(6px); }
-  .cta__canal:hover b { color: var(--ambar); }
-  .cta__form { padding: clamp(24px, 3.5vw, 40px); }
-  .cta__form-t { margin-bottom: 6px; font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem); }
-  .cta__form-sub { margin: 0 0 20px; }
+  .cta__wa-label { display: inline-flex; align-items: center; gap: 9px; color: var(--wa); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
+  .cta__wa-label i { width: 8px; height: 8px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 12px var(--wa); animation: pulse 2.2s ease-in-out infinite; }
+  .cta__whatsapp h2, .cta__secondary h2 { margin-top: 18px; font-size: clamp(1.7rem, 1.25rem + 1.5vw, 2.4rem); }
+  .cta__whatsapp p, .cta__secondary p { margin-top: 14px; }
+  .cta__wa-btn { width: 100%; margin-top: 26px; min-height: 60px; }
+  .cta__response { display: block; margin-top: 13px; color: var(--ink-70); text-align: center; font-weight: 700; }
+  .cta__secondary { padding-block: clamp(12px, 2vw, 24px); }
+  .cta__call { display: flex; flex-direction: column; gap: 5px; margin-top: 28px; padding: 20px 4px; color: var(--ink); text-decoration: none; border-block: 1px solid var(--line); transition: padding-left 0.25s var(--ease); }
+  .cta__call:hover { padding-left: 12px; }
+  .cta__call b { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-display); font-size: clamp(1.35rem, 2.2vw, 1.8rem); overflow-wrap: anywhere; }
+  .cta__call svg { width: 20px; height: 20px; color: var(--ambar); transition: transform 0.25s var(--ease); }
+  .cta__call:hover b { color: var(--ambar); }
+  .cta__call:hover svg { transform: translateX(6px); }
   @media (max-width: 900px) { .cta { grid-template-columns: 1fr; } }
 
   .sec--band {

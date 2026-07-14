@@ -9,7 +9,9 @@ export const site = {
   phone: env.PUBLIC_PHONE || '+19393432109',
   whatsapp: env.PUBLIC_WHATSAPP || '19393432109',
   ga4: env.PUBLIC_GA4_ID || '',
-  pixel: env.PUBLIC_META_PIXEL_ID || '',
+  // El Pixel ID es publico. Se activa por defecto solo en produccion para no
+  // contaminar Meta Events Manager con PageViews del servidor local.
+  pixel: env.PUBLIC_META_PIXEL_ID || (env.PROD ? '901901336287190' : ''),
 } as const;
 
 export const phoneDisplay = (p: string) => {
@@ -21,7 +23,7 @@ export const phoneDisplay = (p: string) => {
 // mensaje de su sección para que el lead llegue ya cualificado.
 export const waMsg = {
   general: 'Hola, quiero solicitar una evaluación de combustible para mis tanques.',
-  muestra: 'Hola, quiero mi muestra GRATIS de diésel para mi tanque.',
+  muestra: 'Hola, quiero solicitar mi muestra GRATIS de diésel. Mi municipio es: ',
   gracias: 'Hola, acabo de enviar mi solicitud de muestra gratis en la página.',
   inspeccion: 'Hola, quiero una inspección del diésel de mi tanque.',
   emergencia: 'Hola, tengo una emergencia con el generador. Necesito servicio.',

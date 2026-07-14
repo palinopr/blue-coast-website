@@ -82,8 +82,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         params = params || {};
         if (window.gtag && ga4) gtag('event', event, Object.assign({ transport_type: 'beacon' }, params));
         if (window.fbq && pixel) {
-          var fb = { whatsapp_click: 'Contact', call_click: 'Contact', lead_submit: 'Lead' }[event] || 'Lead';
-          fbq('track', fb, params);
+          var fb = { whatsapp_click: 'Contact', call_click: 'Contact' }[event];
+          if (fb) fbq('track', fb, params);
         }
       };
     </script>
