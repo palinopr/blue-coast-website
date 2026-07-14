@@ -5,20 +5,20 @@ import { site, waLink, waMsg, phoneDisplay, obras } from '../lib/site';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-import fotoDamas from '../assets/img/field/hospital-damas-ponce.jpg';
+import fotoDamas from '../assets/img/field/hospital-damas-ponce-2.jpg';
 
 const fieldImgs = import.meta.glob<{ default: ImageMetadata }>('/src/assets/img/field/*.jpg', { eager: true });
 const byName = Object.fromEntries(Object.entries(fieldImgs).map(([p, m]) => [p.split('/').pop()!, m.default]));
-const galeria = obras.filter((o) => o.foto && byName[o.foto] && o.cliente !== 'Hospital de Damas');
+const galeria = obras.filter((o) => o.foto && byName[o.foto] && o.foto !== 'hospital-damas-ponce-2.jpg');
 ---
 <Base
-  title="Trabajos realizados | Blue Coast Developers Puerto Rico"
-  description="Trabajos reales de limpieza y pulido de combustible diésel en hospitales, industria y condominios de Puerto Rico — con cliente, municipio y capacidad del tanque."
+  title="Trabajos realizados | BCD Diesel Puerto Rico"
+  description="Trabajos reales de limpieza y pulido de combustible diésel en hospitales, industria, comercios y condominios de Puerto Rico — con tipo de proyecto, municipio y capacidad del tanque."
 >
   <section class="cover" data-hero>
     <div class="sheet">
       <span class="kicker rv">Trabajos reales</span>
-      <h1 class="h-display rv" style="--d:.05s">Obra entregada, <span class="grad-text">con nombre y galones.</span></h1>
+      <h1 class="h-display rv" style="--d:.05s">Obra entregada, <span class="grad-text">con capacidad y evidencia.</span></h1>
       <p class="lede rv" style="--d:.1s">
         Fotos de nuestros técnicos en el sitio de trabajo — no banco de imágenes.
         La evidencia es el argumento.
@@ -30,12 +30,12 @@ const galeria = obras.filter((o) => o.foto && byName[o.foto] && o.cliente !== 'H
     <div class="sheet">
       <div class="feat edge rv">
         <div class="feat__media">
-          <Image src={fotoDamas} alt="Tanque de 93,000 galones del Hospital de Damas en Ponce" widths={[420, 720]} sizes="(max-width: 860px) 92vw, 40vw" format="webp" loading="eager" />
+          <Image src={fotoDamas} alt="Tanque de 93,000 galones en proyecto hospitalario en Ponce" widths={[420, 720]} sizes="(max-width: 860px) 92vw, 40vw" format="webp" loading="eager" />
         </div>
         <div class="feat__copy">
           <span class="kicker">Proyecto destacado</span>
           <p class="feat__num h-display grad-text">93,000 <small>gal</small></p>
-          <h2 class="h-display">Hospital de Damas · Ponce</h2>
+          <h2 class="h-display">Proyecto hospitalario · Ponce</h2>
           <p class="muted">
             Pulido de combustible a gran escala para el sistema de respaldo del hospital.
             El proyecto de mayor capacidad en nuestro registro.

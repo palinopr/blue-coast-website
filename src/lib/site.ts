@@ -2,20 +2,19 @@
 const env = import.meta.env;
 
 export const site = {
-  name: 'Blue Coast Developers',
+  name: 'BCD Diesel',
   tagline: 'Gestión integral de combustible diésel',
   domain: 'www.bluecoastpr.com',
   email: 'info@bluecoastpr.com',
-  phone: env.PUBLIC_PHONE || '+19399699999',
-  phoneAlt: env.PUBLIC_PHONE_ALT || '+17873470799',
-  whatsapp: env.PUBLIC_WHATSAPP || '19399699999',
+  phone: env.PUBLIC_PHONE || '+19393432109',
+  whatsapp: env.PUBLIC_WHATSAPP || '19393432109',
   ga4: env.PUBLIC_GA4_ID || '',
   pixel: env.PUBLIC_META_PIXEL_ID || '',
 } as const;
 
 export const phoneDisplay = (p: string) => {
   const d = p.replace(/[^0-9]/g, '').slice(-10);
-  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+  return `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}`;
 };
 
 // Mensajes prellenados de WhatsApp por contexto. Cada enlace wa.me lleva el
@@ -65,8 +64,8 @@ export const servicios: Servicio[] = [
   {
     code: 'SRV·B',
     title: 'Pulido de combustible',
-    body: 'Filtración y recirculación multietapa que separan agua, sedimento y microbios hasta restaurar la calidad del diésel almacenado.',
-    incluye: ['Filtración multietapa', 'Separación de agua', 'Recirculación hasta restaurar la calidad', 'Análisis de muestra'],
+    body: 'Filtración y recirculación multietapa que separan agua, sedimento y lodo hasta restaurar la calidad del diésel almacenado.',
+    incluye: ['Filtración multietapa', 'Separación de agua', 'Remoción de lodo', 'Análisis de muestra'],
     dato: 'RESULTADO · DIÉSEL COLOR ÁMBAR LIMPIO',
   },
   {
@@ -80,9 +79,32 @@ export const servicios: Servicio[] = [
     code: 'SRV·D',
     title: 'Sistemas de combustible para generadores',
     body: 'Diagnóstico y soporte técnico del sistema de combustible de respaldo, del tanque al motor.',
-    incluye: ['Diagnóstico del sistema de combustible', 'Soporte técnico de punta a punta'],
+    incluye: ['Diagnóstico del sistema de combustible', 'Instalación de tubería de suplido', 'Soporte técnico de punta a punta'],
     dato: 'COBERTURA · 78 MUNICIPIOS · 24/7',
   },
+  {
+    code: 'SRV·E',
+    title: 'Reparación, pintura e instalación de tanques',
+    body: 'Reparamos, pintamos e instalamos tanques nuevos para mantener el sistema seguro, identificado y listo para operar.',
+    incluye: ['Reparación y pintura', 'Instalación de tanques nuevos', 'Rotulación y preparación del área'],
+    dato: 'SERVICIO · TANQUES NUEVOS Y EXISTENTES',
+  },
+  {
+    code: 'SRV·F',
+    title: 'Construcción de diques',
+    body: 'Construimos diques de contención para ayudar a controlar derrames y proteger el área alrededor del tanque.',
+    incluye: ['Diques de contención', 'Preparación de área', 'Soporte para cumplimiento operacional'],
+    dato: 'SEGURIDAD · CONTENCIÓN ALREDEDOR DEL TANQUE',
+  },
+];
+
+export const serviciosLista = [
+  'Toma de muestras del diésel sin costo',
+  'Reparación y pintura de tanques',
+  'Construcción de diques',
+  'Instalación de tanques nuevos',
+  'Instalación de tubería de suplido de diésel de tanque a tanque',
+  'Limpieza y pulido del tanque y su combustible',
 ];
 
 // ---------- procedimiento ----------
@@ -107,9 +129,9 @@ export const pasos = [
   },
   {
     n: '4',
-    title: 'Reporte y certificación',
-    body: 'Entregamos un reporte de condición con la evidencia del trabajo, listo para auditoría.',
-    dato: 'DOCUMENTACIÓN LISTA PARA AUDITORÍA',
+    title: 'Prueba de laboratorio y reporte',
+    body: 'Cuando aplica, enviamos muestra a laboratorio y entregamos el reporte junto con la evidencia del trabajo.',
+    dato: 'REPORTE CON PRUEBA DE LABORATORIO',
   },
 ];
 
@@ -135,19 +157,27 @@ export interface Obra {
 }
 
 export const obras: Obra[] = [
-  { cliente: 'Hospital de Damas', municipio: 'Ponce', tanque: '93,000 gal', alcance: 'Pulido a gran escala', foto: 'hospital-damas-ponce.jpg' },
-  { cliente: 'Hospital Auxilio Mutuo', municipio: 'San Juan', tanque: '20,000 gal', alcance: 'Limpieza y mantenimiento', foto: 'hospital-auxilio-mutuo.jpg' },
-  { cliente: 'Boston Scientific', municipio: 'Puerto Rico', tanque: '20,000 gal', alcance: 'Limpieza y pulido', foto: 'boston-scientific.jpg' },
-  { cliente: 'Hospital Menonita', municipio: 'Cayey', tanque: '30,000 gal', alcance: 'Servicio de tanque', foto: 'hospital-menonita-cayey.jpg' },
-  { cliente: 'Hospital Menonita', municipio: 'Guayama', tanque: '12,000 gal', alcance: 'Servicio de tanque', foto: 'hospital-menonita-guayama.jpg' },
-  { cliente: 'Torre del Cardenal', municipio: 'Puerto Rico', tanque: '6,000 gal', alcance: 'Limpieza de tanque residencial', foto: 'torre-del-cardenal.jpg' },
-  { cliente: 'Paulson AGI Tower', municipio: 'Puerto Rico', tanque: '20,000 gal', alcance: 'Mantenimiento de sistema', foto: 'paulson-agi-tower.jpg' },
+  { cliente: 'Proyecto hospitalario', municipio: 'Ponce', tanque: '93,000 gal', alcance: 'Pulido a gran escala', foto: 'hospital-damas-ponce-2.jpg' },
+  { cliente: 'Proyecto hospitalario', municipio: 'San Juan', tanque: '20,000 gal', alcance: 'Limpieza y mantenimiento', foto: 'hospital-auxilio-mutuo.jpg' },
+  { cliente: 'Proyecto farmacéutico', municipio: 'Dorado', tanque: '20,000 gal', alcance: 'Limpieza y pulido', foto: 'boston-scientific.jpg' },
+  { cliente: 'Proyecto hospitalario', municipio: 'Cayey', tanque: '30,000 gal', alcance: 'Servicio de tanque', foto: 'hospital-menonita-cayey.jpg' },
+  { cliente: 'Proyecto hospitalario', municipio: 'Guayama', tanque: '12,000 gal', alcance: 'Servicio de tanque', foto: 'hospital-menonita-guayama.jpg' },
+  { cliente: 'Proyecto de condominio', municipio: 'Puerto Rico', tanque: '6,000 gal', alcance: 'Limpieza de tanque residencial', foto: 'torre-del-cardenal.jpg' },
+  { cliente: 'Proyecto comercial', municipio: 'Puerto Rico', tanque: '20,000 gal', alcance: 'Mantenimiento de sistema', foto: 'paulson-agi-tower.jpg' },
 ];
 
-// Cifras publicadas por Blue Coast en su material vigente.
+export const confianza = [
+  { big: '+30', label: 'hospitales' },
+  { big: '+20', label: 'farmacéuticas' },
+  { big: '+15', label: 'hoteles' },
+  { big: '+10', label: 'condominios' },
+  { big: '+30', label: 'comerciales' },
+];
+
+// Cifras publicadas por BCD Diesel en su material vigente.
 export const cifras = [
   { big: '+15', label: 'años de experiencia en Puerto Rico' },
-  { big: '500+', label: 'tanques intervenidos' },
-  { big: '93K', label: 'galones, el proyecto mayor (Ponce)' },
+  { big: '2,000+', label: 'tanques intervenidos' },
+  { big: '93K', label: 'galones en proyecto mayor' },
   { big: '78', label: 'municipios en cobertura' },
 ];
