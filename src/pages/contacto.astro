@@ -5,7 +5,7 @@ import PRMap from '../components/PRMap.astro';
 import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
 ---
 <Base
-  title="Contacto | Blue Coast Developers — Pida su muestra gratis"
+  title="Contacto | BCD Diesel — Pida su muestra gratis"
   description="Pida su muestra de diésel gratis por WhatsApp, teléfono o formulario. Servicio en los 78 municipios de Puerto Rico. Respondemos en minutos, 24/7."
 >
   <section class="cover" data-hero>
@@ -26,17 +26,9 @@ import { site, waLink, waMsg, phoneDisplay } from '../lib/site';
             <span class="small muted">¿Emergencia? Llame ahora · 24/7</span>
             <b>{phoneDisplay(site.phone)} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
           </a>
-          <a href={`tel:${site.phoneAlt}`} class="cta__canal" data-track="call" data-src="contacto">
-            <span class="small muted">Teléfono alterno</span>
-            <b>{phoneDisplay(site.phoneAlt)} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
-          </a>
           <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="cta__canal" data-track="whatsapp" data-src="contacto">
             <span class="small muted">¿Muestra gratis o mantenimiento? Escríbanos</span>
             <b>WhatsApp directo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
-          </a>
-          <a href={`mailto:${site.email}`} class="cta__canal">
-            <span class="small muted">Cotizaciones formales y documentación</span>
-            <b>{site.email} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></b>
           </a>
         </div>
       </div>

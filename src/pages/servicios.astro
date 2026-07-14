@@ -5,13 +5,14 @@ import IlloLimpieza from '../components/illos/IlloLimpieza.astro';
 import IlloPulido from '../components/illos/IlloPulido.astro';
 import IlloPreventivo from '../components/illos/IlloPreventivo.astro';
 import IlloSistemas from '../components/illos/IlloSistemas.astro';
-import { site, waLink, waMsg, phoneDisplay, servicios, pasos } from '../lib/site';
+import IlloDique from '../components/illos/IlloDique.astro';
+import { site, waLink, waMsg, phoneDisplay, servicios, serviciosLista, pasos } from '../lib/site';
 
 const planes = [
   {
     name: 'Plan Inspección',
     sub: 'Visibilidad continua de su combustible',
-    feats: ['Muestreo de combustible', 'Reporte de condición anual', 'Recomendaciones por escrito'],
+    feats: ['Muestreo de combustible', 'Prueba de laboratorio disponible', 'Recomendaciones por escrito'],
     rec: false,
   },
   {
@@ -23,14 +24,14 @@ const planes = [
   {
     name: 'Plan Cumplimiento',
     sub: 'Para hospitales e industria regulada',
-    feats: ['Documentación lista para auditoría (NFPA 110)', 'Respuesta prioritaria', 'Historial y evidencia de cada servicio'],
+    feats: ['Prueba de laboratorio con reporte', 'Respuesta prioritaria', 'Historial y evidencia de cada servicio'],
     rec: false,
   },
 ];
 ---
 <Base
-  title="Servicios | Blue Coast Developers — Limpieza de tanques y pulido de diésel en Puerto Rico"
-  description="Limpieza de tanques diésel, pulido de combustible, mantenimiento preventivo y sistemas de combustible para generadores. Planes de mantenimiento para hospitales, condominios e industria en Puerto Rico."
+  title="Servicios | BCD Diesel — Limpieza de tanques y pulido de diésel en Puerto Rico"
+  description="Toma de muestras sin costo, limpieza de tanques diésel, pulido de combustible, reparación, pintura, diques, tuberías y mantenimiento preventivo para generadores en Puerto Rico."
 >
   <section class="cover" data-hero>
     <div class="sheet">
@@ -40,6 +41,9 @@ const planes = [
         Del análisis del diésel a la rehabilitación completa del tanque. Cada servicio
         indica exactamente qué incluye, sin letra pequeña.
       </p>
+      <ul class="servicios-lista rv" style="--d:.12s">
+        {serviciosLista.map((s) => <li>{s}</li>)}
+      </ul>
       <div class="cover__cta rv" style="--d:.15s">
         <a href={waLink(waMsg.muestra)} target="_blank" rel="noopener" class="btn btn-wa" data-track="whatsapp" data-src="servicios-hero">Pedir muestra gratis</a>
         <a href={`tel:${site.phone}`} class="btn btn-glass" data-track="call" data-src="servicios-hero">Llamar · {phoneDisplay(site.phone)}</a>
@@ -56,7 +60,8 @@ const planes = [
               {s.code === 'SRV·A' && <IlloLimpieza />}
               {s.code === 'SRV·B' && <IlloPulido />}
               {s.code === 'SRV·C' && <IlloPreventivo />}
-              {s.code === 'SRV·D' && <IlloSistemas />}
+              {(s.code === 'SRV·D' || s.code === 'SRV·E') && <IlloSistemas />}
+              {s.code === 'SRV·F' && <IlloDique />}
             </div>
             <div>
               <h2 class="h-display srv__t">{s.title}</h2>
@@ -125,6 +130,29 @@ const planes = [
   .cover { padding-block: clamp(56px, 8vw, 110px) clamp(20px, 3vw, 40px); }
   .cover h1 { margin-top: 18px; max-width: 22ch; }
   .cover .lede { margin-top: 16px; max-width: 56ch; }
+  .servicios-lista {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 24px;
+    max-width: 860px;
+    color: var(--ink-70);
+    font-weight: 700;
+  }
+  .servicios-lista li { position: relative; padding-left: 18px; }
+  .servicios-lista li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ambar);
+  }
+  @media (max-width: 640px) { .servicios-lista { grid-template-columns: 1fr; } }
   .cover__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
   .sec--tightop { padding-top: clamp(24px, 4vw, 56px); }
 

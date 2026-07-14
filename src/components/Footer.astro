@@ -1,5 +1,5 @@
 ---
-import { nav, site, waLink, waMsg, phoneDisplay } from '../lib/site';
+import { nav, site, phoneDisplay } from '../lib/site';
 const year = new Date().getFullYear();
 ---
 <footer class="ftr">
@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
             <path d="M20 2.5C27.5 14 33 22.2 33 29.5A13 13 0 0 1 7 29.5C7 22.2 12.5 14 20 2.5Z" stroke="#59c2ff" stroke-width="2.4" stroke-linejoin="round"/>
             <path d="M21.8 16.4 13.6 28.2h5.1l-1.4 7.6 9.1-12.2h-5.2l1.6-7.2z" fill="var(--ambar)"/>
           </svg>
-          <b>Blue Coast Developers</b>
+          <b>BCD Diesel</b>
         </div>
         <p class="muted small ftr__desc">
           Gestión integral de combustible diésel: limpieza de tanques, pulido de combustible
@@ -25,9 +25,7 @@ const year = new Date().getFullYear();
       <div class="ftr__col">
         <h4>Contacto directo</h4>
         <a href={`tel:${site.phone}`} data-track="call" data-src="footer">{phoneDisplay(site.phone)}</a>
-        <a href={`tel:${site.phoneAlt}`} data-track="call" data-src="footer">{phoneDisplay(site.phoneAlt)}</a>
-        <a href={waLink(waMsg.general)} target="_blank" rel="noopener" data-track="whatsapp" data-src="footer">WhatsApp</a>
-        <a href={`mailto:${site.email}`}>{site.email}</a>
+        <p class="small muted ftr__social">Instagram · Facebook · TikTok</p>
       </div>
     </div>
     <div class="ftr__base small muted">
@@ -52,6 +50,7 @@ const year = new Date().getFullYear();
   .ftr__col h4 { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-45); margin-bottom: 14px; }
   .ftr__col a { display: block; padding: 6px 0; color: var(--ink-70); text-decoration: none; font-weight: 600; }
   .ftr__col a:hover { color: var(--ambar); }
+  .ftr__social { margin: 10px 0 0; }
   .ftr__base {
     display: flex; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap;
     padding-block: 20px; border-top: 1px solid var(--line);

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.0.0",
   "private": true,
-  "description": "Blue Coast Developers - sitio corporativo y embudo de captacion (Astro)",
+  "description": "BCD Diesel - sitio corporativo y embudo de captacion (Astro)",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

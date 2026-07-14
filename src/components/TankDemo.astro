@@ -32,6 +32,7 @@
         <stop offset="1" stop-color="#16223c" />
       </linearGradient>
       <clipPath id="t-interior"><rect x="158" y="92" width="216" height="380" rx="10" /></clipPath>
+      <clipPath id="t-residuos"><rect x="592" y="342" width="100" height="74" rx="12" /></clipPath>
     </defs>
 
     <!-- suelo: trabajo en exterior -->
@@ -75,8 +76,14 @@
       </g>
       <!-- tanque auxiliar en la cama -->
       <rect x="592" y="342" width="100" height="74" rx="12" fill="url(#t-unit)" stroke="#41598a" stroke-width="1.4" />
+      <g clip-path="url(#t-residuos)">
+        <rect class="residuo__fill" x="592" y="342" width="100" height="74" fill="#4a3218" opacity=".82" />
+        <path class="residuo__lodo" d="M592 394c18 -6 30 5 48 0s30 4 52 -2v24H592Z" fill="#20150a" opacity=".9" />
+      </g>
       <ellipse cx="642" cy="342" rx="50" ry="10" fill="#31496c" stroke="#5c7fb4" stroke-width="1.2" />
-      <text class="t-mini t-mini--dim" x="642" y="384" text-anchor="middle">RESIDUOS</text>
+      <text class="t-mini t-mini--dim" x="642" y="374" text-anchor="middle">RESIDUOS</text>
+      <text class="t-mini t-mini--dim" x="642" y="388" text-anchor="middle">LODO · AGUA</text>
+      <text class="t-mini t-mini--dim" x="642" y="402" text-anchor="middle">SEDIMENTO</text>
       <text class="t-mini t-caption" x="596" y="540" text-anchor="middle">UNIDAD DE PULIDO — MONTADA EN CAMIÓN · SERVICIO EN SITIO</text>
     </g>
 
@@ -132,14 +139,14 @@
     <g class="nota nota--diesel">
       <line x1="300" y1="48" x2="300" y2="24" />
       <text y="16" text-anchor="middle">
-        <tspan x="300" class="nota__t nota__t--sucio">DIÉSEL DEGRADADO — turbio, microbios activos</tspan>
-        <tspan x="300" class="nota__t nota__t--limpio">DIÉSEL PULIDO ✓ — color ámbar, certificado</tspan>
+        <tspan x="300" class="nota__t nota__t--sucio">DIÉSEL DEGRADADO — turbio, lodo y sedimento</tspan>
+        <tspan x="300" class="nota__t nota__t--limpio">DIÉSEL PULIDO ✓ — color ámbar limpio</tspan>
       </text>
     </g>
     <g class="nota nota--capa nota--agua">
       <line x1="374" y1="366" x2="404" y2="366" /><circle cx="374" cy="366" r="3" />
       <text x="410" y="362">AGUA</text>
-      <text x="410" y="375" class="nota__sub">condensación</text>
+      <text x="410" y="375" class="nota__sub">separada</text>
     </g>
     <g class="nota nota--capa nota--sed">
       <line x1="374" y1="406" x2="396" y2="406" /><circle cx="374" cy="406" r="3" />
@@ -155,7 +162,7 @@
     <g class="sello-ok">
       <rect x="176" y="256" width="180" height="54" rx="12" />
       <text x="266" y="279" text-anchor="middle" class="sello-ok__t">TANQUE LISTO ✓</text>
-      <text x="266" y="297" text-anchor="middle" class="sello-ok__s">reporte certificado NFPA 110</text>
+      <text x="266" y="297" text-anchor="middle" class="sello-ok__s">prueba de laboratorio opcional</text>
     </g>
   </svg>
 
@@ -164,7 +171,7 @@
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
       <span data-tank-label>Ver el pulido en acción</span>
     </button>
-    <p class="small muted" data-tank-status aria-live="polite">Así está un tanque sin mantenimiento después de unos años.</p>
+    <p class="small muted" data-tank-status aria-live="polite">Así se separan el lodo, el agua y el sedimento antes del pulido.</p>
   </div>
 </div>
 
@@ -187,6 +194,22 @@
   .unit__fan { transform-box: fill-box; transform-origin: center; }
   [data-tank].on .unit__fan { animation: spin 1.1s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  .residuo__fill,
+  .residuo__lodo {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    transform: scaleY(0);
+    transition: transform 0.6s ease;
+  }
+  [data-tank].on .residuo__fill {
+    transform: scaleY(1);
+    transition: transform 4.6s cubic-bezier(0.45, 0, 0.2, 1) 1.6s;
+  }
+  [data-tank].on .residuo__lodo {
+    transform: scaleY(1);
+    transition: transform 4.2s cubic-bezier(0.45, 0, 0.2, 1) 2.4s;
+  }
 
   /* capas: reset rápido, drenado lento y pausado durante el ciclo */
   .layer { transition: transform 0.5s ease, opacity 0.5s ease; transform-box: fill-box; transform-origin: bottom; }
@@ -286,7 +309,7 @@
     };
     const reset = () => {
       root.classList.remove('on');
-      if (status) status.textContent = 'Así está un tanque sin mantenimiento después de unos años.';
+      if (status) status.textContent = 'Así se separan el lodo, el agua y el sedimento antes del pulido.';
     };
 
     btn?.addEventListener('click', () => {

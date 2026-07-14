@@ -1,7 +1,7 @@
 // Puerto Rico municipios coverage map - geometry from US Census TIGERweb
 // (public domain), projected to a 1000x274 viewBox and Douglas-Peucker
 // simplified. Coverage (COVERAGE_PINS / COVERED_MUNIS) is derived from the
-// Blue Coast client list; each covered municipio has >=1 real client project.
+// BCD Diesel client list; each covered municipio has >=1 real client project.
 // Do not hand-edit paths; regenerate via the build pipeline.
 export const PR_VIEWBOX = '0 0 1000 274';
 export interface Muni { name: string; geoid: string; d: string; }
@@ -87,7 +87,7 @@ export const MUNICIPIOS: Muni[] = [
 ];
 
 export interface CoveragePin { name: string; x: number; y: number; count: number; }
-// Municipios with at least one delivered Blue Coast project.
+// Municipios with at least one delivered BCD Diesel project.
 export const COVERAGE_PINS: CoveragePin[] = [
   { name: 'Aibonito', x: 611, y: 161, count: 2 },
   { name: 'Bayamón', x: 644.3, y: 84.6, count: 2 },
